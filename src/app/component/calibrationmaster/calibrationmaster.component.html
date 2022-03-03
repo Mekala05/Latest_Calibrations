@@ -330,8 +330,8 @@
               (change)="locationdata($event)"
               [disabled]="test"
             >
-            <option disabledd selected value="undefined">--Select--</option>
-            <option
+              <option disabledd selected value="undefined">--Select--</option>
+              <option
                 *ngFor="let data of Location; let i = index"
                 [value]="data.ShortName + ',' + data.BranchUnit"
               >
@@ -374,7 +374,7 @@
               [disabled]="test"
             >
             <option disabledd selected value="undefined">--Select--</option>
-            <option value="Quarterly||3">Quarterly</option>
+              <option value="Quarterly||3">Quarterly</option>
               <option value="Week">Week</option>
               <option value="Year">Year</option>
               <option value="Month">Month</option>
