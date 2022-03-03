@@ -108,7 +108,6 @@ export class CalibrationmasterlistComponent implements OnInit, AfterViewInit {
 
   getUsers(id: any): void {
     // debugger;
-    alert(id);
     this.router.navigate([`header/Calibration`], { queryParams: { id: id } });
   }
 
@@ -189,7 +188,7 @@ export class CalibrationmasterlistComponent implements OnInit, AfterViewInit {
       this.dataservice
         .calibrationmasterlist_postUser(this.registerDetails)
         .subscribe(
-          (data) => {
+          (data: any) => {
             // alert("Added");
             // console.log("Inserted"+data);
             if (data.data) {
@@ -217,7 +216,7 @@ export class CalibrationmasterlistComponent implements OnInit, AfterViewInit {
               }
             }
           },
-          (err) => console.log('its error')
+          (err: any) => console.log('its error')
         );
     }
   }
@@ -283,7 +282,7 @@ export class CalibrationmasterlistComponent implements OnInit, AfterViewInit {
   onKeyIns(x: any) {
     this.dataservice
       .calibrationmasterlist_postUser(this.registerDetails)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         console.log(data.data[0]);
         this.registerDetails.InstrumentName = data.data[0].InstrumentName;
         this.registerDetails.Location = data.data[0].Location;

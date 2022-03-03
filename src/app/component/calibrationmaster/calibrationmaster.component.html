@@ -107,8 +107,8 @@
               (change)="locationdata($event)"
               [disabled]="test"
             >
-              <option value="">--select--</option>
-              <option
+            <option disabledd selected value="undefined">--Select--</option>
+            <option
                 *ngFor="let data of Location; let i = index"
                 [value]="data.ShortName + ',' + data.BranchUnit"
               >
@@ -330,8 +330,8 @@
               (change)="locationdata($event)"
               [disabled]="test"
             >
-              <option value="">--select--</option>
-              <option
+            <option disabledd selected value="undefined">--Select--</option>
+            <option
                 *ngFor="let data of Location; let i = index"
                 [value]="data.ShortName + ',' + data.BranchUnit"
               >
@@ -373,8 +373,8 @@
               [(ngModel)]="registerDetails.MxLifeTime"
               [disabled]="test"
             >
-              <option value=""> --Select-- </option>
-              <option value="Quarterly||3">Quarterly</option>
+            <option disabledd selected value="undefined">--Select--</option>
+            <option value="Quarterly||3">Quarterly</option>
               <option value="Week">Week</option>
               <option value="Year">Year</option>
               <option value="Month">Month</option>

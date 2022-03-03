@@ -1161,12 +1161,13 @@ export class CalibrationmasterComponent implements OnInit {
     // this.locationselect = selectedLaw;
     //console.log('00000000          ' + selectedLaw);
     var shortname = selectedLaw.split(',');
+    // console.log('short', shortname);
+
     var instrument_code: any = this.InstrumentCodeof;
     console.log(instrument_code);
     let code = instrument_code.split('||');
     let typesortname = this.valueof;
     let tsortname = typesortname.split('||');
-
     console.log('inssd', code[0]);
     this.registerDetails.InstrumentRefferenceCode = shortname[0];
     this.registerDetails.InstrumentCode = shortname[0];
