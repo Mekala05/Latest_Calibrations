@@ -8,6 +8,9 @@
   <!-- Table End -->
 
   <!-- form start -->
+   <button class="btn btn-primary back-button mb-2" (click)="back()">    
+   Back
+ </button> 
   <div class="new_bor pt-1 pb-3">
     <div class="row px-4 pt-3 align-items-center">
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
@@ -22,8 +25,9 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.category"
               (change)="category($event)"
+              [disabled]="test"
             >
-              <option disabled selected value="undefined">--Select--</option>
+              <option disabledd selected value="undefined">--Select--</option>
               <option
                 *ngFor="let data of Category; let i = index"
                 [value]="data.category"
@@ -47,8 +51,9 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.type"
               (change)="typemaster($event)"
+              [disabled]="test"
             >
-              <option disabled selected value="undefined">--Select--</option>
+              <option disabledd selected value="undefined">--Select--</option>
               <option
                 *ngFor="let data of Type; let i = index"
                 [value]="data.type + '||' + data.shortName"
@@ -74,8 +79,9 @@
               id="code"
               [(ngModel)]="registerDetails.MasterType"
               (change)="code($event)"
+              [disabled]="test"
             >
-              <option value="undefined" disabled selected>--Select--</option>
+              <option value="undefined" disabledd selected>--Select--</option>
               <option
                 *ngFor="let data of instrument; let i = index"
                 [value]="data.code + '||' + data.shortName"
@@ -99,6 +105,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.Location"
               (change)="locationdata($event)"
+              [disabled]="test"
             >
               <option value="">--select--</option>
               <option
@@ -136,7 +143,7 @@
           </div>
           <div class="col-8">
             <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.Department">
-              <option disabled selected value="undefined">--Select--</option>
+              <option disabledd selected value="undefined">--Select--</option>
               <option *ngFor="let data of Departmentof; let i = index" [value]="data.Department">
                 {{data.Department}}
               </option>
@@ -160,6 +167,7 @@
               id=""
               class="form-control input_text" 
               [(ngModel)]="registerDetails.SAPRefferenceCode"
+              [disabled]="test"
             >
               <option value="undefined" selected>--Select--</option>
               <option
@@ -194,7 +202,7 @@
           </div>
           <div class="col-8">
             <select name="" id="" class="form-control input_text" id="code" value="{{codeValue}}" [(ngModel)]="registerDetails.InstrumentCode" readonly >
-              <option disabled selected value="undefined">--Select--</option>
+              <option disabledd selected value="undefined">--Select--</option>
                <option *ngFor="let data of instrument; let i = index" [value]="data.id+','+data.code">
                 {{data.InstrumentCode}}-{{data.shortName}}-{{data.BranchUnit}}
               </option>
@@ -215,6 +223,7 @@
               type="text"
               class="form-control input_text"
               [(ngModel)]="registerDetails.InstrumentName"
+              [disabled]="test"
             />
           </div>
         </div>
@@ -234,6 +243,7 @@
               id="code"
               value="{{ codeValue }}"
               [(ngModel)]="registerDetails.InstrumentRefferenceCode"
+              [disabled]="test"
             />
           </div>
         </div>
@@ -249,8 +259,9 @@
               id=""
               class="form-control input_text"
               [(ngModel)]="registerDetails.make"
+              [disabled]="test"
             >
-              <option disabled selected value="undefined">--Select--</option>
+              <option disabledd selected value="undefined">--Select--</option>
               <option
                 *ngFor="let data of Make; let i = index"
                 [value]="data.description"
@@ -268,11 +279,12 @@
             <mat-label class="gene_name newname">Range</mat-label>
           </div>
           <div class="col-8">
-            <input
+            <textarea
               type="text"
               class="form-control input_text"
               [(ngModel)]="registerDetails.range"
-            />
+              [disabled]="test"
+            > </textarea>
           </div>
         </div>
       </div>
@@ -294,11 +306,12 @@
             <mat-label class="gene_name newname">Specification</mat-label>
           </div>
           <div class="col-8">
-            <input
+            <textarea
               type="text"
               class="form-control input_text"
               [(ngModel)]="registerDetails.masterspecification"
-            />
+              [disabled]="test"
+            > </textarea>
           </div>
         </div>
       </div>
@@ -306,14 +319,25 @@
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
-            <mat-label class="gene_name newname">Current Location</mat-label>
+            <mat-label class="gene_name newname"> Current Location </mat-label>
           </div>
           <div class="col-8">
-            <input
-              type="text"
+            <select
+              name=""
+              id=""
               class="form-control input_text"
               [(ngModel)]="registerDetails.CurrentLocation"
-            />
+              (change)="locationdata($event)"
+              [disabled]="test"
+            >
+              <option value="">--select--</option>
+              <option
+                *ngFor="let data of Location; let i = index"
+                [value]="data.ShortName + ',' + data.BranchUnit"
+              >
+                {{ data.BranchUnit }}-{{ data.ShortName }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
@@ -329,6 +353,7 @@
               [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
               class="form-control input_text"
               [(ngModel)]="registerDetails.date"
+              [disabled]="test"
             />
           </div>
         </div>
@@ -346,6 +371,7 @@
               id=""
               class="form-control input_text"
               [(ngModel)]="registerDetails.MxLifeTime"
+              [disabled]="test"
             >
               <option value=""> --Select-- </option>
               <option value="Quarterly||3">Quarterly</option>
@@ -363,6 +389,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.MxLifeTimeNumber"
               *ngIf="isShown"
+              [disabled]="test"
             />
           </div>
         </div>

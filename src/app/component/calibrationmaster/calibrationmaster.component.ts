@@ -4,10 +4,9 @@ import { master } from './model';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterModule, Routes } from '@angular/router';
-
+import { Location } from '@angular/common';
 // import { FileUploadService } from 'src/app/services/file-upload.service';
 
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
@@ -40,6 +39,7 @@ export class CalibrationmasterComponent implements OnInit {
   event: any[] = [];
   element: any[] = [];
   mydata: any[] = [];
+  test = false;
   changedNumber: any;
   public collectiondata: any[] = [];
   public CurrentLocation: any[] = [];
@@ -141,6 +141,7 @@ export class CalibrationmasterComponent implements OnInit {
     private datePipe: DatePipe,
     private routers: ActivatedRoute,
     private http: HttpClient,
+    public location: Location,
     // private uploadService: FileUploadService,
     private router: Router // private router: Router
   ) {
@@ -315,6 +316,11 @@ export class CalibrationmasterComponent implements OnInit {
       // this.BackUpdata = data.data;
     });
   }
+
+  back() {
+    this.location.back();
+  }
+
   update() {
     if (
       this.registerDetails.Description === '' ||
@@ -1073,6 +1079,7 @@ export class CalibrationmasterComponent implements OnInit {
       .subscribe((data) => {
         this.collection = data.data;
         this.BackUpdata = data.data;
+        this.test = true;
         (this.registerDetails.Description = ''),
           (this.registerDetails.Specification = ''),
           (this.registerDetails.Observation = ''),
