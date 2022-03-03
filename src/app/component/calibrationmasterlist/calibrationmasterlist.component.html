@@ -1,0 +1,130 @@
+<!-- <div class="pt-2 mb-2">
+  <div class="searchbox">
+     <button   routerLink="header/calibrationrequest" class="btn btn-dark my-1" (click)="newbutton()">
+    New
+  </button>  
+  
+  <div class="searchbox">
+    <div class="has-search text-right">
+      <span class="fa fa-search form-control-feedback" slot="end"></span>
+      <input
+        type="text"
+        class="search"
+        placeholder="Search"
+        (keyup)="onKeySearch($event)"
+        (input)="Empty()"
+        placeholder="Search {{ SearchField }}"
+        [(ngModel)]="searchvalue"
+      />
+    </div>
+  </div>
+  
+  </div>
+    <table class="table table-borderless table-hover " >
+      <thead>
+        <tr class="header_color">
+          <td
+            scope="col"
+            *ngFor="let head of TableHeading; let i = index"
+            class="gene_name tablethtd"
+            [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+            (click)="Click_Head(i, head.name)"
+          >
+            {{ head.name }}
+          </td>
+        </tr>
+      </thead>
+      <tbody class="table table-sm text-nowrap">
+        <tr
+        *ngFor="
+          let data of collection | searchfilter: searchvalue:['InstrumentCode',];
+          let i = index
+        "
+      >
+        <tr *ngFor="let data of collection; let i = index">
+          <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
+          <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
+          <td class="gene_name tablethtd">{{ data.Location }}</td>
+          <td class="gene_name tablethtd">{{ data.Department }}</td>
+          <button class="btn btn-dark my-1" (click)="getUsers(data.id)">
+            Edit
+          </button>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[2, 3, 5, 10]"
+              aria-label="Select page">
+</mat-paginator> -->
+
+
+
+
+
+
+
+<div class="mat-elevation-z8">
+  <div class="example-header">
+    <mat-form-field class="px-16" style="width: 25%;left: 74%;">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search..." autocomplete="off" style="width: 25%">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+<div>
+  <button class="btn btn-primary submit-button mb-2" (click)="newbutton()">    
+   New
+ </button> 
+</div>
+  
+
+
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="InstrumentCode">
+        <th mat-header-cell *matHeaderCellDef> InstrumentCode </th>
+        <td mat-cell *matCellDef="let element"> {{element.InstrumentCode}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="InstrumentName">
+        <th mat-header-cell *matHeaderCellDef> InstrumentName </th>
+        <td mat-cell *matCellDef="let element"> {{element.InstrumentName}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Location">
+        <th mat-header-cell *matHeaderCellDef> Location </th>
+        <td mat-cell *matCellDef="let element"> {{element.Location}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Department">
+        <th mat-header-cell *matHeaderCellDef> Department </th>
+        <td mat-cell *matCellDef="let element"> {{element.Department}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon (click)="getUsers(element.id)" [ngStyle]="{'cursor':'pointer' }">edit</mat-icon>
+          <!-- <mat-icon (click)="deleterfqmaster(element.id)" [ngStyle]="{'cursor':'pointer' }">delete</mat-icon> -->
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+    <mat-paginator [pageSizeOptions]="[10, 100, 1000]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+  
+
+
+  <!-- Copyright 2022 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->

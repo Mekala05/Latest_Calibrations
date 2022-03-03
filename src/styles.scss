@@ -1,0 +1,72 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+// @import url("https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css");
+// @import "src/assets/globalCSS/Comman.scss";
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.remove-border-bottom .mat-tab-label {
+  border-bottom: 1px solid;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  display: none;
+}
+
+span.mat-button-wrapper {
+  position: relative;
+}
+
+.mat-drawer-inner-container.ng-tns-c92-0 {
+  overflow-x: hidden;
+}
+
+.mat-menu-panel {
+  margin-left: 15rem !important;
+  background-color: #526271;
+  color: white !important;
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 0px !important;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.gray.modal-dialog.modal-lg {
+  padding-top: 5rem;
+}
+
+* {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+ul li a {
+  color: #003466 !important;
+  border-color: black;
+  font-family: "Montserrat", sans-serif;
+}
+
+.nav-tabs .nav-link:focus {
+  border-color: #000000 #000000 #ffff !important;
+}
+
+.mat-dialog-container {
+  border: 2px solid black;
+}

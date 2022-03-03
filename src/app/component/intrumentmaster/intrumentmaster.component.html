@@ -1,0 +1,147 @@
+<div>
+  <div class="pt-3">
+    <!-- <div>
+      <mat-label class="heading">Intrument Master</mat-label>
+    </div> -->
+  </div>
+
+  <!-- Table End -->
+
+  <!-- form start -->
+  <div class="new_bor pt-1 pb-3">
+    <div class="row px-4 pt-3 align-items-center">
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Category</mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.categoryId" (change)="category($event)">
+              <option disabled selected value="undefined">--Select--</option>
+              <option *ngFor="let data of Category; let i = index" [value]="data.category">
+                {{data.category}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Type</mat-label>
+          </div>
+          <div class="col-8">
+            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.typeId">
+              <option disabled selected value="undefined">--Select--</option>
+              <option *ngFor="let data of Type; let i = index" [value]="data.type">
+                {{data.type}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Instrument Equipment Gauges</mat-label>
+          </div>
+          <div class="col-8">
+            <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentName" />
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Short Name</mat-label>
+          </div>
+          <div class="col-8">
+            <input type="text" class="form-control input_text" maxlength="3" [(ngModel)]="registerDetails.shortName" (keyup)="keyFunc($event)" />
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
+      
+          <div class="row form-group">
+            <div class="col-4" >
+              <span>
+                <button mat-stroked-button class="submit-button" (click)="reset()">CLEAR</button>
+              </span>
+            </div>
+            <div class="col-4" >
+              <span>
+                <button mat-flat-button id="color_sv" class="submit-button" *ngIf="!registerDetails.id" (click)="store()">
+                  ADD
+                </button>
+                <button mat-flat-button id="color_sv" class="submit-button" *ngIf="registerDetails.id"
+                (click)="update()">Update</button>
+              </span>
+            </div>
+          </div>
+        
+      </div>
+    
+    </div>
+  </div>
+</div>
+<br />
+<div class="searchbox">
+  <div class="has-search text-right">
+    <span class="fa fa-search form-control-feedback" slot="end"></span>
+    <input
+      type="text"
+      class="search"
+      placeholder="Search"
+      (keyup)="onKeySearch($event)"
+      (input)="Empty()"
+      placeholder="Search {{ SearchField }}"
+      [(ngModel)]="searchvalue"
+    />
+  </div>
+</div>
+<div class="pt-3 mb-3">
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="header_color">
+        <td
+          scope="col"
+          *ngFor="let head of TableHeading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm">
+      <tr *ngFor="let data of collection | searchfilter: searchvalue:['InstrumentName',]; let i = index">
+        <td class="gene_name tablethtd">{{ i + 1 }}</td>
+        <td class="gene_name tablethtd">{{ data.categoryId }}</td>
+        <td class="gene_name tablethtd">{{ data.typeId }}</td>
+        <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
+        <td class="gene_name tablethtd">{{ data.shortName }}</td>
+        <td class="gene_name tablethtd">{{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}</td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{user_name}}</td>
+        <td class="gene_name tablethtd">{{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}</td>
+        <td class="gene_name tablethtd">{{ data.updatedBy }}{{user_name}}</td>
+        <td class="gene_name tablethtd icons">
+          <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="getUser(data)" ></i>
+        </td>
+        <td class="gene_name tablethtd dicons">
+          <i class="fa fa-trash" aria-hidden="true" (click)="deleteUsers(data.id)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

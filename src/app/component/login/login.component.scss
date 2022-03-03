@@ -1,0 +1,47 @@
+$width: 100%;
+$font-family: 'Montserrat', sans-serif;
+
+.img {
+    background-image: url('../../../assets/img/component/login/bgimg.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // height: 635px;
+    min-height: 100%;
+}
+
+mat-card {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+    position: relative;
+    top: 7em;
+    opacity: 0.7;
+    padding: 3em;
+}
+
+.full-width-input {
+  width: $width;
+}
+
+.login_button {
+    width: $width;
+    background-color: #3F5161;
+    color: white;
+    font-family: $font-family;
+}
+
+.login_bottom {
+    font-size: smaller;
+    font-family: $font-family;
+}
+
+.login_sign {
+    font-size: large;
+    font-weight: 600;
+    font-family: $font-family;
+}
+
+.login_logo {
+    width: 50%;
+}

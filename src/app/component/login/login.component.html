@@ -1,0 +1,50 @@
+<div class="img">
+  <div class="container">
+    <mat-card class="signin-content pt-4">
+      <div class="row">
+        <div class="col-12 text-center">
+          <!-- <img src="../../../assets/img/component/login/logo.png" class="rounded login_logo" alt="..." /> -->
+        </div>
+        <div class="col-12 text-center pt-4">
+          <mat-label class="login_sign">SIGN IN</mat-label>
+        </div>
+      </div>
+      <div class="row text-center pt-4">
+        <form class="full-width-input">
+          <p>
+            <mat-form-field class="full-width-input" appearance="outline">
+              <mat-label>UserName</mat-label>
+              <input matInput autocomplete="off" [(ngModel)]="logindetail.email" placeholder="ENTER YOUR NAME"
+                name="username" />
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field class="full-width-input" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput autocomplete="off" [type]="hide ? 'password' : 'text'" placeholder="ENTER YOUR PASSWORD"
+                [(ngModel)]="logindetail.password" name="password" />
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </p>
+
+          <div class="text-center">
+            <button [disabled]="" type="submit" class="login_button" mat-raised-button (click)="login()">
+              LOGIN
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="row pt-4">
+        <mat-label class="login_bottom">If you forgot your password, Please contact your admin</mat-label>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<!-- <mat-error *ngIf="isFieldInvalid('userName')">
+                      Please inform your user name
+                    </mat-error> -->

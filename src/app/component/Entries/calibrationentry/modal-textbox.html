@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Reason</h1>
+
+<div mat-dialog-content>
+
+    <mat-form-field appearance="fill">
+      <mat-label></mat-label>
+     
+        <mat-label>reason</mat-label>
+        <input matInput >
+      
+    </mat-form-field>
+  </div>
+  <!-- <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Scrap</button>
+  </div> -->
+
+
+  <div mat-dialog-actions>
+      <button routerLink="header/ScrapApproval" mat-button (click)="onNoClick()">  
+      Scrap</button>
+  </div>
+
+  <div mat-dialog-actions>
+      <button routerLink="header/calibrationrequest" mat-button (click)="onNoClick()">  
+      Service</button>
+  </div>
+
+
+  <div mat-dialog-actions>
+    <button routerLink="header/calibrationrequest"   mat-button (click)="onNoClick()">  
+    Reservice</button>
+</div>
+
+<div mat-dialog-actions>
+  <button routerLink="/header/Calibration"  mat-button (click)="onNoClick()">  
+  Recalibration</button>
+</div>
+
+
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary"  style="margin-left: 150px"(click)="onNoClick()">submit</button>
+  </div>
+

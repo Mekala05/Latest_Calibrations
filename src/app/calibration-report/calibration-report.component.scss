@@ -1,0 +1,173 @@
+$font-family: "Montserrat", sans-serif;
+
+.side_line {
+  border-right: 1px solid;
+  position: relative;
+  height: 20px;
+  top: 9px;
+}
+.dropdown_exp {
+  bottom: 0;
+  height: 6px;
+  position: absolute;
+  border-right: 1px solid #003466;
+  border-bottom: 1px solid #003466;
+  width: 5px;
+}
+.gene_name {
+  font-family: $font-family;
+}
+.heading {
+  color: #003466;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  font-family: $font-family;
+}
+.color {
+  color: #003466;
+}
+.search {
+  outline: none;
+  box-shadow: none !important;
+  border: 1px solid #707070 !important;
+  height: 32px;
+  font-size: 16px;
+  border-radius: 5px;
+  padding-left: 0.5rem;
+  background-color: transparent;
+  min-width: 15em;
+}
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.2rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+  padding-left: 13rem;
+}
+table {
+  width: 100%;
+  border: 1px solid #707070;
+  font-family: $font-family;
+}
+tr {
+  border: 1px solid #cfcfcf;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.table tr.active td {
+  background-color: #dfdfdf !important;
+  color: white;
+}
+
+.tablethtd {
+  padding-left: 1.01rem;
+}
+.header_color {
+  background-color: #f7f7f7;
+  font-weight: 400 !important;
+}
+.input_text {
+  outline: none;
+  box-shadow: none !important;
+  border: 1px solid #3f5161;
+  height: 2rem;
+  border-radius: 4px;
+  padding-left: 0.5rem;
+  font-size: 0.9rem;
+  color: #191919;
+}
+.new_bor {
+  border: 1px solid #707070;
+  width: 100%;
+  margin-top: 2rem;
+}
+#color_sv {
+  background-color: #3f5161;
+  color: white;
+}
+.newname {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.submit-button {
+  line-height: 1.9rem;
+  font-size: 0.7rem;
+  font-family: $font-family;
+}
+/* // --------- Radio Button ----------- */
+.radio {
+  display: flex;
+  align-items: flex-end;
+  font-family: $font-family;
+}
+::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: #427cac !important;
+}
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  color: #427cac !important;
+  background-color: #427cac !important;
+}
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: rgba(149, 195, 238, 0.26);
+}
+/* // Media Query // */
+@media only screen and (min-width: 1200px) {
+  .searchbox {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .search {
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid #707070 !important;
+    height: 32px;
+    font-size: 16px;
+    border-radius: 5px;
+    padding-left: 0.5rem;
+    background-color: transparent;
+    min-width: 14em;
+  }
+  .has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.1rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    padding-left: 12rem;
+  }
+}
+.icons {
+  font-size: large;
+  color: green;
+}
+.dicons {
+  font-size: large;
+  color: red;
+}
+.Viewbtn {
+  border-radius: 5px;
+  background-color: rgb(184, 222, 243);
+  border-color: white;
+  border-style: solid;
+}
+.chk {
+  font-size: 100rem;
+}
+.ex {
+  border-style: solid;
+}

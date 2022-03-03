@@ -1,0 +1,204 @@
+<div class="container-fluid">
+  <div class="row">
+    <mat-toolbar>
+      <div class="col-sm">
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with menu icon"
+          (click)="sidenavToggle()"
+        >
+          <mat-icon>sort</mat-icon>
+        </button>
+        <span>
+          <!-- <img
+            src="../../../assets/img/component/sidenav/lcc logo.svg"
+            alt=""
+          /> -->
+          Calibration
+        </span>
+      </div>
+
+      <div class="col-sm headername">
+        <span>{{ headervalue }}</span>
+      </div>
+
+      <div
+        class="col-sm d-flex align-items-center"
+        style="justify-content: space-evenly"
+      >
+        <span class="has-search">
+          <span class="fa fa-search form-control-feedback" slot="end"></span>
+          <input type="text" class="search" placeholder="Search anything" />
+        </span>
+        <button
+          mat-icon-button
+          class="example-icon favorite-icon px-4"
+          disableRipple
+          aria-label="Example icon-button with heart icon"
+        >
+          <img
+            src="../../../assets/img/component/sidenav/notification.svg"
+            alt=""
+            style="max-height: 25px"
+          />
+        </button>
+
+        <button mat-icon-button class="user-icon">
+          <img
+            src="../../../assets/img/component/sidenav/User (2).svg"
+            alt=""
+            style="max-height: 25px"
+            (click)="showusermenu()"
+          />
+        </button>
+
+        <div class="user_menu" *ngIf="usermenu">
+          <div class="header-menu">
+            <mat-label class="profile_name">{{ username }} Calibration</mat-label
+            ><br />
+            <!-- <label for="">Current Access Branch</label> : <mat-label class="profile_name">{{ current_access_branch }}</mat-label> -->
+          </div>
+
+          <div class="userform">
+            <!-- <div class="row form-group align-items-center mt-2">
+              <div class="col-4">
+                <mat-label class="newname">Division</mat-label>
+              </div>
+              <div class="col-8">
+                <select class="form-control input_text">
+                  <option>--Select Division--</option>
+                  <option *ngFor="let d of Divition">{{ d }}</option>
+                </select>
+              </div>
+            </div> -->
+
+            <!-- <div class="row form-group align-items-center mt-2">
+              <div class="col-4">
+                <mat-label class="gene_name newname">Access Branch</mat-label>
+              </div>
+              <div class="col-8">
+                <p-multiSelect
+                  [options]="accessbranch2"
+                  optionValue="name"
+                  optionLabel="name"
+                ></p-multiSelect>
+              </div>
+            </div> -->
+
+            <div class="row form-group align-items-center mt-2">
+              <div class="col-12">
+                <button
+                  mat-flat-button
+                  id="color_sv"
+                  type="button"
+                  class="submit-button"
+                  (click)="logout()"
+                >
+                  LOGOUT
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">
+            <img
+              src="../../../assets/img/component/sidenav/logout-svgrepo-com(1).svg"
+              alt=""
+              style="max-height: 20px"
+            />
+            <span class="logoutfix">Logout</span>
+          </button>
+        </mat-menu> -->
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<mat-sidenav-container class="m-sidenav-container">
+  <mat-sidenav
+    [ngClass]="{ 'm-sidenav': true, 'm-sidenav-small': sidenavSmall }"
+    mode="side"
+    fixedInViewport="true"
+    opened
+  >
+    <div class="m-sidenav__handle">
+      <mat-nav-list style="padding: 1rem 0 0 0.5rem">
+        <!-- <mat-label class="side_nav_title">TMS</mat-label> -->
+
+        <ng-container *ngFor="let menu of menus">
+          <ng-container *ngIf="menu.children && menu.children.length > 0">
+            <mat-label
+              class="side_nav_title1"
+              *ngIf="menu.name == 'Local Transpotation'"
+              >FMS</mat-label
+            >
+            <mat-list-item
+              class="nav_name"
+              [routerLink]="[menu.url]"
+              (click)="header(menu.name)"
+              [matMenuTriggerFor]="branchesMenu"
+            >
+              <img class="img_icon" [src]="menu.icon" alt="" />
+              <a class="f_name" [ngClass]="{ d1: true, d2: sidenavSmall }">
+                {{ menu.name }}
+              </a>
+              <span class="sidearrow">
+                <span class="sidearrow"></span>
+                <mat-icon [ngClass]="{ d1: true, d2: sidenavSmall }">
+                  keyboard_arrow_right
+                </mat-icon>
+              </span>
+              <mat-menu #branchesMenu="matMenu">
+                <ng-container *ngFor="let children of menu.children">
+                  <button
+                    mat-menu-item
+                    (click)="header(children.name)"
+                    [routerLink]="[children.url]"
+                  >
+                    {{ children.name }}
+                  </button>
+                </ng-container>
+              </mat-menu>
+            </mat-list-item>
+          </ng-container>
+
+          <ng-container
+            *ngIf="
+              !menu.children || (menu.children && menu.children.length === 0)
+            "
+          >
+            <mat-list-item class="nav_name">
+              <img class="img_icon" [src]="menu.icon" alt="" />
+              <span
+                class="f_name"
+                [ngClass]="{ d1: true, d2: sidenavSmall }"
+                [routerLink]="[menu.url]"
+                >{{ menu.name }}</span
+              >
+            </mat-list-item>
+          </ng-container>
+        </ng-container>
+
+        <!-- <mat-list-item disableRipple>
+          <span
+            class="has-search1 menu_search"
+            [ngClass]="{ d1: true, d2: sidenavSmall }"
+          >
+            <span class="fa fa-search form-control-feedback" slot="end"></span>
+            <input type="text" class="search1" placeholder="Find" />
+          </span>
+        </mat-list-item> -->
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content
+    [ngClass]="{ 'm-main': true, 'm-main-large': sidenavSmall }"
+  >
+    <p>
+      <router-outlet></router-outlet>
+    </p>
+  </mat-sidenav-content>
+</mat-sidenav-container>

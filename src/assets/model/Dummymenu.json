@@ -1,0 +1,227 @@
+[
+  {
+    "id": "1",
+    "icon": "../../../assets/img/component/sidenav/DB.svg",
+    "name": "Dashboard",
+    "url": "/dashboard"
+  },
+  {
+    "id": "2",
+    "icon": "../../../assets/img/component/sidenav/DB.svg",
+    "name": "Master",
+    "url": "/dashboard",
+    "children": [
+      {
+        "id": "3",
+        "icon": "../../../assets/img/component/sidenav/Invoice.svg",
+        "name": "category",
+        "url": "/header/category"
+      },
+      
+      {
+        "id": "3",
+        "icon": "../../../assets/img/component/sidenav/Invoice.svg",
+        "name": "Type Master",
+        "url": "/header/Type"
+      },
+      {
+        "id": "4",
+        "icon": "../../../assets/img/component/sidenav/Accounts.svg",
+        "name": "Instrument/ Equipment/ Gauges",
+        "url": "/header/Intrument"
+      },
+      
+      
+      {
+        "id": "4",
+        "icon": "../../../assets/img/component/sidenav/Accounts.svg",
+        "name": "Make Master",
+        "url": "/header/Make"
+      },
+      {
+        "id": "11",
+        "icon": "../../../assets/img/component/sidenav/Operation.svg",
+        "name": "Calibration Location Master",
+        "url": "/header/CalibrationLocationmaster"
+      },
+
+      {
+        "id": "3",
+        "icon": "../../../assets/img/component/sidenav/Accounts.svg",
+        "name": "Calibration master list",
+        "url": "/header/Calibrationmasterlist"
+      },
+
+      
+
+      {
+        "id": "5",
+        "icon": "../../../assets/img/component/sidenav/Operation.svg",
+        "name": "Calibration Type",
+        "url": "/header/Calibrationtype"
+      },
+      {
+        "id": "6",
+        "icon": "../../../assets/img/component/sidenav/Operation.svg",
+        "name": "CalibrationRequestType",
+        "url": "/header/CalibrationRequestType"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "icon": "../../../assets/img/component/sidenav/DB.svg",
+    "name": "Entries",
+    "url": "/entries",
+    "children": [
+      {
+        "id": "2",
+        "icon": "../../../assets/img/component/sidenav/Operation.svg",
+        "name": "Monthly Calibration Schedule",
+        "url": "/header/Schedule",
+        "children": [ 
+          {             
+        "id": "3",
+        "icon": "../../../assets/img/component/sidenav/Invoice.svg",
+        "name": "Calibration Request",
+        "url": "/header/calibrationrequest"
+          }
+        ]
+
+      },
+      
+      {
+        "id": "3",
+        "icon": "../../../assets/img/component/sidenav/Invoice.svg",
+        "name": "Calibration Request",
+        "url": "/header/calibrationrequest"
+      },
+      {
+        "id": "4",
+        "icon": "../../../assets/img/component/sidenav/Accounts.svg",
+        "name": "Calibration Entry",
+        "url": "/header/calibrationentry"
+      }
+
+      
+    ]
+  },
+
+{
+  "id": "3",
+  "icon": "../../../assets/img/component/sidenav/DB.svg",
+  "name": "Breakage",
+  "url": "/breakage",
+  "children": [
+    {
+      "id": "5",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "Breakage Request",
+      "url": "/header/BreakageRequest"
+    },
+    {
+      "id": "6",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "Breakage List Details",
+      "url": "/header/BreakageListDetails"
+    },
+    {
+      "id": "7",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "Breakage Details",
+      "url": "/header/BreakageDetails"
+    }
+  ]
+
+},
+
+
+{
+  "id": "3",
+  "icon": "../../../assets/img/component/sidenav/DB.svg",
+  "name": "Scrap Approval",
+  "url": "/ScrapApproval",
+  "children": [
+
+    {
+      "id": "4",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "Scrap Approval List",
+      "url": "/header/ScrapApprovalList"
+    },
+    {
+      "id": "5",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "Scrap Approval",
+      "url": "/header/ScrapApproval"
+    }
+    
+    
+  ]
+
+},
+
+
+
+{
+  "id": "4",
+  "icon": "../../../assets/img/component/sidenav/DB.svg",
+  "name": "Issue/Return",
+  "url": "/issue",
+  "children": [
+
+    {
+      "id": "5",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "IssueReturn",
+      "url": "/header/IssueReturn"
+    },
+
+    {
+      "id": "5",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "Return List",
+      "url": "/header/ReturnList"
+    },
+    {
+      "id": "5",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "Return",
+      "url": "/header/Return"
+    }
+  
+  ]
+},
+
+
+{
+  "id": "4",
+  "icon": "../../../assets/img/component/sidenav/DB.svg",
+  "name": "Report",
+  "url": "/Report",
+  "children": [
+
+
+    {
+      "id": "5",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "CalibrationMaster List Report",
+      "url": "/header/CalibrationMasterListReport"
+
+      
+    }
+  
+  
+  ]
+}
+
+
+
+
+
+
+
+
+
+  
+]

@@ -1,0 +1,790 @@
+<div>
+  <div class="pt-3">
+    <!-- <div>
+      <mat-label class="heading">Calibration Master</mat-label>
+    </div> -->
+  </div>
+
+  <!-- Table End -->
+
+  <!-- form start -->
+  <div class="new_bor pt-1 pb-3">
+    <div class="row px-4 pt-3 align-items-center">
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Category</mat-label>
+          </div>
+          <div class="col-8">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.category"
+              (change)="category($event)"
+            >
+              <option disabled selected value="undefined">--Select--</option>
+              <option
+                *ngFor="let data of Category; let i = index"
+                [value]="data.category"
+              >
+                {{ data.category }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Type</mat-label>
+          </div>
+          <div class="col-8">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.type"
+              (change)="typemaster($event)"
+            >
+              <option disabled selected value="undefined">--Select--</option>
+              <option
+                *ngFor="let data of Type; let i = index"
+                [value]="data.type + '||' + data.shortName"
+              >
+                {{ data.type }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">
+              Instrument Equipment Gauges
+            </mat-label>
+          </div>
+          <div class="col-8">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              id="code"
+              [(ngModel)]="registerDetails.MasterType"
+              (change)="code($event)"
+            >
+              <option value="undefined" disabled selected>--Select--</option>
+              <option
+                *ngFor="let data of instrument; let i = index"
+                [value]="data.code + '||' + data.shortName"
+              >
+                {{ data.shortName }}-{{ data.InstrumentName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Location </mat-label>
+          </div>
+          <div class="col-8">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Location"
+              (change)="locationdata($event)"
+            >
+              <option value="">--select--</option>
+              <option
+                *ngFor="let data of Location; let i = index"
+                [value]="data.ShortName + ',' + data.BranchUnit"
+              >
+                {{ data.BranchUnit }}-{{ data.ShortName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Department</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Department"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- 
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Department</mat-label>
+          </div>
+          <div class="col-8">
+            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.Department">
+              <option disabled selected value="undefined">--Select--</option>
+              <option *ngFor="let data of Departmentof; let i = index" [value]="data.Department">
+                {{data.Department}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+ -->
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">
+              SAP Refference Code</mat-label
+            >
+          </div>
+          <div class="col-8">
+            {{registerDetails?.SAPRefferenceCode}}
+            <select
+              name=""
+              id=""
+              class="form-control input_text" 
+              [(ngModel)]="registerDetails.SAPRefferenceCode"
+            >
+              <option value="undefined" selected>--Select--</option>
+              <option
+              *ngFor="let data of SAPRefferenceCode; let i = index" [value]="data.ItemCode"
+              >
+              {{ data.ItemCode }} - {{ data.ItemName }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Instrument Code</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              id="code"
+              [(ngModel)]="registerDetails.InstrumentCode"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Instrument Code</mat-label>
+          </div>
+          <div class="col-8">
+            <select name="" id="" class="form-control input_text" id="code" value="{{codeValue}}" [(ngModel)]="registerDetails.InstrumentCode" readonly >
+              <option disabled selected value="undefined">--Select--</option>
+               <option *ngFor="let data of instrument; let i = index" [value]="data.id+','+data.code">
+                {{data.InstrumentCode}}-{{data.shortName}}-{{data.BranchUnit}}
+              </option>
+            </select> 
+          </div>
+        </div>         
+       
+      </div>  -->
+
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Instrument Name</mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentName" /> -->
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.InstrumentName"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"
+              >Instrument Refference Code</mat-label
+            >
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              id="code"
+              value="{{ codeValue }}"
+              [(ngModel)]="registerDetails.InstrumentRefferenceCode"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Make</mat-label>
+          </div>
+          <div class="col-8">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.make"
+            >
+              <option disabled selected value="undefined">--Select--</option>
+              <option
+                *ngFor="let data of Make; let i = index"
+                [value]="data.description"
+              >
+                {{ data.description }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Range</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.range"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Range</mat-label>
+          </div>
+          <div class="col-8">
+            <input type="number" class="form-control input_text" [(ngModel)]="registerDetails.range"/>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Specification</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.masterspecification"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Current Location</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.CurrentLocation"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Installation Date</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              bsDatepicker
+              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.date"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Maximum Life Time</mat-label>
+          </div>
+          <div class="col-5">
+            <select
+              (change)="lifeTime($event)"
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.MxLifeTime"
+            >
+              <option value=""> --Select-- </option>
+              <option value="Quarterly||3">Quarterly</option>
+              <option value="Week">Week</option>
+              <option value="Year">Year</option>
+              <option value="Month">Month</option>
+              <option value="Day">Day</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <input
+              type="text"
+              (keyup)="onKeyDate($event)"
+              id="mxLifeTimeNumber"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.MxLifeTimeNumber"
+              *ngIf="isShown"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Due Date</mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <input type="text" bsDatepicker   class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+            <input
+              type="text"
+              bsDatepicker
+              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.dueDate"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          
+          <div class="col-xl-3">
+            <input type="file" name= "image" [(ngModel)]="registerDetails.file" />
+          </div>
+          <div class="col-6">
+            
+            </div>
+        </div>
+      </div> -->
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <!-- <div class="col-4"> -->
+          <!-- <button type="button" class="Viewbtn">VIEW</button> -->
+          <!-- </div> -->
+          <div class="col-2">
+            <mat-label class="gene_name newname">Active</mat-label>
+            <input type="checkbox" id="scales" name="scales" checked />
+          </div>
+          <!-- <div class="col-2">
+            <input type="checkbox" class="form-control ex" id="active"  [(ngModel)]="registerDetails.active"  (change)="GetStats($event)" checked/>
+          </div> -->
+          <!-- <div class="col-2">
+            <mat-label class="gene_name newname">AMC</mat-label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" class="form-control ex"  value="0" [(ngModel)]="registerDetails.amccheckbox" (change)="GetStats($event)"/>
+          </div> -->
+          <div class="col-2">
+            <mat-label class="gene_name newname">AMC</mat-label>
+            <input type="checkbox" id="scales" name="scales" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pt-3">
+  <div>
+    <u> <mat-label class="heading"> Error Description</mat-label></u>
+  </div>
+</div>
+<div class="new_bor pb-1">
+  <div class="row px-4 pt-3 align-items-center">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <div class="col-4">
+          <mat-label class="gene_name newname"> Description</mat-label>
+        </div>
+        <div class="col-8">
+          <textarea
+            type="text"
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.Description"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <div class="col-4">
+          <mat-label class="gene_name newname"> Specification</mat-label>
+        </div>
+        <div class="col-8">
+          <textarea
+            type="text"
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.Specification"
+            required
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <div class="col-4">
+          <mat-label class="gene_name newname"> Observation</mat-label>
+        </div>
+        <div class="col-8">
+          <textarea
+            type="text"
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.Observation"
+            required
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <div class="col-4">
+          <mat-label class="gene_name newname"> Remark</mat-label>
+        </div>
+        <div class="col-8">
+          <textarea
+            type="text"
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.Remark"
+            required
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <!-- <div class="col-3">
+          <input type="number" class="form-control input_text" [(ngModel)]="registerDetails.MxLifeTimeNumber" />
+        </div> -->
+        <div class="col-xl-3">
+          <!-- <input type="file" [(ngModel)]="registerDetails.file" /> -->
+        </div>
+        <div class="col-6">
+          <!-- <button type="button" class="Viewbtn" style="margin-left: 150px;">view</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row px-4 pt-3 align-items-center">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+    <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12"></div>
+    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group">
+        <div class="col-6">
+          <span>
+            <button
+                  mat-flat-button
+                  class="error-button btn-success mr-2"
+                  *ngIf="!registerDetails.id"
+                  (click)="adderror()"
+                >
+                <mat-icon > + </mat-icon>                </button>
+            <button mat-stroked-button class="submit-button" (click)="reset()">
+              CLEAR
+            </button>
+          </span>
+        </div>
+        <div class="col-6">
+          <body>
+            <form
+              action="/upload-images"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <span>
+                <button
+                  mat-flat-button
+                  id="color_sv"
+                  class="submit-button"
+                  *ngIf="!registerDetails.id"
+                  (click)="store()"
+                >
+                  ADD
+                </button>
+                <button
+                  mat-flat-button
+                  id="color_sv"
+                  class="submit-button"
+                  *ngIf="registerDetails.id"
+                  (click)="update()"
+                >
+                  Update
+                </button>
+              </span>
+            </form>
+          </body>
+        </div>
+      </div>
+    </div>
+
+    <!-- <h2>PDF Viewer</h2>
+
+<div id="outerContainer">
+  <div class="pdf-container">
+    <pdf-viewer
+      [src]=""
+      [rotation]="0"
+      [original-size]="false"
+      [show-all]="true"
+      [fit-to-page]="false"
+      [zoom]="1"
+      [zoom-scale]="'page-width'"
+      [stick-to-page]="false"
+      [render-text]="true"
+      [external-link-target]="'blank'"
+      [autoresize]="true"
+      [show-borders]="false"
+    ></pdf-viewer>
+  </div>
+</div>
+
+
+
+ 
+
+ -->
+    <br />
+  </div>
+</div>
+<br />
+
+<div class="addrow">
+  <div>
+    <!-- <button     mat-flat-button id="color_sv" class="submit-button" (click)="AddRow()">    
+       Attachment
+    </button> -->
+    <button class="btn btn-primary addrow-button mb-2" (click)="AddRow()">
+      Attachment
+    </button>
+  </div>
+</div>
+<div class="pt-3 mb-3">
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="header_color">
+        <td
+          scope="col"
+          *ngFor="let head of Heading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? '#dfdfdf ' : '#dfdfdf'"
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm">
+      <tr
+        *ngFor="
+          let data of collectiondata
+            | searchfilter: searchvalue:['Description'];
+          let i = index
+        "
+      >
+        <td class="gene_name tablethtd">{{ i + 1 }}</td>
+
+        <td class="gene_name tablethtd icons">
+          <input type='file' accept="image/*,video/*" name="image" (change)="selectimage($event)" multiple/>
+
+
+          <!-- <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="item" [ngClass]="{'active': i == 0}"  *ngFor="let list of mydata;let i = index">
+                <div class="img-video-div">
+                  <img *ngIf="list.type == 'img'" [src]="list.url" />
+                  <video *ngIf="list.type == 'video'" [src]="list.url" controls></video>
+                </div>
+              </div>  
+            </div>
+      
+            <a *ngIf="mydata.length > 0" class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+            <a *ngIf="mydata.length > 0" class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
+          <!-- </div> -->
+
+          <!-- <input
+            type="file"
+            name
+            [(ngModel)]="registerDetails.file"
+            multiple
+            (change)="selectimage($event)"
+          /> -->
+          <!-- <input  (change)="fileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01"> -->
+          <!-- <span  class="input-group-text upload"  (click)="upload()"  id="btnUpload">Upload</span> -->
+        </td>
+        <td class="gene_name tablethtd dicons">
+          <button mat-flat-button id="color_sv" class="submit-button">
+            view
+          </button>
+        </td>
+
+        <td class="gene_name tablethtd icons">
+          <button mat-stroked-button class="submit-button">Download</button>
+        </td>
+        <td class="gene_name tablethtd dicons">
+          <i class="fa fa-trash" aria-hidden="true" (click)="delete()"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br />
+<div class="searchbox">
+  <div class="has-search text-right">
+    <span class="fa fa-search form-control-feedback" slot="end"></span>
+    <input
+      type="text"
+      class="search"
+      placeholder="Search"
+      (keyup)="onKeySearch($event)"
+      (input)="Empty()"
+      placeholder="Search {{ SearchField }}"
+      [(ngModel)]="searchvalue"
+    />
+  </div>
+</div>
+<div class="pt-3 mb-3">
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="header_color">
+        <td
+          scope="col"
+          *ngFor="let head of TableHeading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm">
+      <tr
+        *ngFor="
+          let data of collection | searchfilter: searchvalue:['Description'];
+          let i = index
+        "
+      >
+        <td class="gene_name tablethtd">{{ i + 1 }}</td>
+        <td class="gene_name tablethtd">{{ data.Description }}</td>
+        <td class="gene_name tablethtd">{{ data.Specification }}</td>
+        <td class="gene_name tablethtd">{{ data.Observation }}</td>
+        <td class="gene_name tablethtd">{{ data.Remark }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.createdAt | date: "dd-MMM-yyyy" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.updatedAt | date: "dd-MMM-yyyy" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.updatedBy }}{{ user_name }}</td>
+        <td class="gene_name tablethtd icons">
+          <i
+            class="fa fa-pencil-square-o"
+            aria-hidden="true"
+            (click)="getUser(data)"
+          ></i>
+        </td>
+        <td class="gene_name tablethtd dicons">
+          <i
+            class="fa fa-trash"
+            aria-hidden="true"
+            (click)="deleteUsers(data.id)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <div class="addrow">
+  <div >
+    <button class="btn btn-primary submit-button mb-2" (click)="AddRow()">    
+      AddRow
+    </button>
+  </div>
+</div>
+<div class="pt-3 mb-3">
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="header_color">
+        <td
+          scope="col"
+          *ngFor="let head of Heading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? '#dfdfdf ' : '#dfdfdf'" 
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm">
+      <tr *ngFor="let data of collectiondata |searchfilter: searchvalue:['Description',]; let i = index">
+        <td class="gene_name tablethtd">{{ i + 1 }}</td>
+      
+        <td class="gene_name tablethtd icons">
+          <input type="file">
+
+        </td>
+        <td class="gene_name tablethtd dicons">
+          <button class="btn btn-primary submit-button mb-1" >    
+            view
+          </button>
+
+        </td>
+       
+        <td class="gene_name tablethtd icons">
+          <button class="btn btn-primary submit-button mb-1" >    
+            Download
+          </button> 
+        </td>
+
+
+      </tr>
+    </tbody>
+
+
+  
+  </table>
+</div> -->
