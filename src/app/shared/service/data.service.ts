@@ -202,7 +202,7 @@ export class DataService {
     );
   }
 
-  MasterTest_getViewData(id: any) {
+  MasterTest_getViewData(id?: any) {
     return this.http.get<any>(
       `${environment.Calibration_Master}/particular1/${id}`
     );
