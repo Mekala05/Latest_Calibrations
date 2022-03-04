@@ -5,9 +5,9 @@ let configExport = {};
 
 
 configExport.dbConfig = {
-    'username': "sa",
+    'username': "calibration_test",
     'password': "p@ssw0rd",
-    'database': "CALIBRATION_ 2022",
+    'database': "Test_16_Dec",
     host: 'localhost',
     port: 1433,
     dialect: "mssql",
