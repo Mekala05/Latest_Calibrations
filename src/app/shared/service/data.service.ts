@@ -5,7 +5,7 @@ import {
   HttpHeaders,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const server = environment.url;
@@ -19,7 +19,13 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient) {}
+  // private setImageViewPopup: any;
+  // public setImageViewPopupObserve: Observable<string>;
+
+  constructor(private http: HttpClient) {
+    // this.setImageViewPopup = new BehaviorSubject('');
+    // this.setImageViewPopupObserve = this.setImageViewPopup.asObservable();
+  }
 
   // Login Api
   loginPost(data: any) {
@@ -743,4 +749,8 @@ export class DataService {
       `${environment.CalibrationReport}/saprefcodeitems`
     );
   }
+
+  // public setImageViewPopupTrigger(data: string): void {
+  //   this.setImageViewPopup.next(data);
+  // }
 }

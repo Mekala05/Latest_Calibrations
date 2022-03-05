@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
 import { master } from './model';
 import { ToastrService } from 'ngx-toastr';
@@ -8,12 +8,18 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterModule, Routes } from '@angular/router';
 import { Location } from '@angular/common';
 // import { FileUploadService } from 'src/app/services/file-upload.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import {
+  NgxFileDropEntry,
+  FileSystemFileEntry,
+  FileSystemDirectoryEntry,
+} from 'ngx-file-drop';
 // import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { CommonModelService } from 'src/app/shared/service/common-model.service';
 //import { Console } from 'console';
 
 @Injectable({
@@ -26,6 +32,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CalibrationmasterComponent implements OnInit {
   src = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
+  public files: NgxFileDropEntry[] = [];
   public previousDate!: Date;
   public registerDetails: master = {};
   public collection: any[] = [];
@@ -37,10 +44,16 @@ export class CalibrationmasterComponent implements OnInit {
   attachmentdelete: any[] = [];
   images: any;
   event: any[] = [];
+  closeResult = '';
   element: any[] = [];
   mydata: any[] = [];
   test = false;
   changedNumber: any;
+  AmcChecked: any;
+  viewDoc: any[] = [];
+  @Output() fileUploadChangeEmitter = new EventEmitter<any>();
+  public file: any;
+  public imagePreviewUrl: any;
   public collectiondata: any[] = [];
   public CurrentLocation: any[] = [];
   public text: any;
@@ -84,6 +97,9 @@ export class CalibrationmasterComponent implements OnInit {
   public Heading = [
     {
       name: 'SI No',
+    },
+    {
+      name: 'File Section',
     },
     {
       name: 'Choosefile',
@@ -142,6 +158,7 @@ export class CalibrationmasterComponent implements OnInit {
     private routers: ActivatedRoute,
     private http: HttpClient,
     public location: Location,
+    public modalService: NgbModal,
     // private uploadService: FileUploadService,
     private router: Router // private router: Router
   ) {
@@ -151,14 +168,14 @@ export class CalibrationmasterComponent implements OnInit {
           .MasterTest_getViewData(this.routers.snapshot.queryParams.id)
           .subscribe(
             (data: any) => {
-              console.log('id', this.routers.snapshot.queryParams.id);
               let instrument: any = [];
               data.data.map((item: any) => {
                 if (item.id === +this.routers.snapshot.queryParams.id) {
                   instrument.push(item);
                 }
               });
-
+              this.collection = instrument;
+              this.BackUpdata = instrument;
               this.registerDetails.InstrumentName =
                 instrument[0].InstrumentName;
 
@@ -175,8 +192,7 @@ export class CalibrationmasterComponent implements OnInit {
               this.registerDetails.MasterType = instrument[0].MasterType;
               this.registerDetails.InstrumentRefferenceCode =
                 instrument[0].InstrumentRefferenceCode;
-              // this.registerDetails.InstrumentName = data.data[0].InstrumentName;
-              // this.registerDetails.InstrumentCode = data.data[0].InstrumentCode;
+
               this.registerDetails.Location = instrument[0].Location;
               this.registerDetails.CurrentLocation =
                 instrument[0].CurrentLocation;
@@ -192,7 +208,6 @@ export class CalibrationmasterComponent implements OnInit {
               this.registerDetails.MxLifeTime = instrument[0].MxLifeTime;
               this.registerDetails.SAPRefferenceCode =
                 instrument[0].SAPRefferenceCode;
-              console.log('sapreference', instrument[0].SAPRefferenceCode);
 
               this.registerDetails.Observation = instrument[0].Observation;
               this.registerDetails.MxLifeTimeNumber =
@@ -213,15 +228,9 @@ export class CalibrationmasterComponent implements OnInit {
     this.getCategory();
     this.getType();
     this.getMake();
-    // this.Instrument();
     this.type();
     this.tabledata();
-    // this.SAPRefferenceCodefun();
-    //this.Departmentof();
-
-    // this.getLocation();
-
-    // this.Branchunit();
+    this.AmcChecked = false;
 
     this.registerDetails.date = new Date();
     this.registerDetails.dueDate = new Date();
@@ -240,8 +249,6 @@ export class CalibrationmasterComponent implements OnInit {
   public loadInstrument(): void {}
   private tabledata1(): void {
     this.dataservice.MasterTest_getViewtablerecord1().subscribe((data) => {
-      console.log('getview', data);
-
       this.collection = data.data;
       this.BackUpdata = data.data;
     });
@@ -322,6 +329,8 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   update() {
+    console.log('duedate', this.registerDetails.dueDate);
+
     if (
       this.registerDetails.Description === '' ||
       this.registerDetails.Specification === '' ||
@@ -330,7 +339,6 @@ export class CalibrationmasterComponent implements OnInit {
       this.registerDetails.MasterType === '' ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
-      // this.registerDetails.make === '' ||
       this.registerDetails.range === '' ||
       this.registerDetails.masterspecification === '' ||
       this.registerDetails.date === undefined ||
@@ -354,20 +362,16 @@ export class CalibrationmasterComponent implements OnInit {
       this.registerDetails.InstrumentName === '' ||
       this.registerDetails.make === '' ||
       this.registerDetails.range === '' ||
-      // this.registerDetails.masterspecification === '' ||
       this.registerDetails.MxLifeTime === '' ||
       this.registerDetails.MxLifeTimeNumber === '' ||
       this.registerDetails.MxLifeTimeNumber === '' ||
       this.registerDetails.Specification === undefined ||
       this.registerDetails.category === undefined ||
-      // this.registerDetails.type === undefined ||
       this.registerDetails.MasterType === undefined ||
       this.registerDetails.SAPRefferenceCode === '' ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
-      // this.registerDetails.make === '' ||
       this.registerDetails.range === '' ||
-      // this.registerDetails.masterspecification === '' ||
       this.registerDetails.date === undefined ||
       this.registerDetails.MxLifeTime === '' ||
       this.registerDetails.MxLifeTimeNumber === '' ||
@@ -382,23 +386,19 @@ export class CalibrationmasterComponent implements OnInit {
       this.registerDetails.Observation === '' ||
       this.registerDetails.Remark === '' ||
       this.registerDetails.category === '' ||
-      // this.registerDetails.type === '' ||
       this.registerDetails.MasterType === '' ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
-      // this.registerDetails.make === '' ||
       this.registerDetails.range === '' ||
-      // this.registerDetails.file === '' ||
-
-      // this.registerDetails.masterspecification === '' ||
       this.registerDetails.MxLifeTime === '' ||
       this.registerDetails.MxLifeTimeNumber === '' ||
       this.registerDetails.InstrumentRefferenceCode === ''
     ) {
       alert('Enter the Details');
     } else {
-      console.log(`dsd  ${this.registerDetails.InstrumentCode}`);
-      // this.submitted = true;
+      this.collection = [];
+      this.collection.push(this.registerDetails);
+
       this.dataservice
         .MasterTest_updateSingleUser(
           this.registerDetails.id,
@@ -406,9 +406,13 @@ export class CalibrationmasterComponent implements OnInit {
         )
         .subscribe(
           (data) => {
-            // alert("Update");
-            // console.log(data);
             if (data.data) {
+              this.dataservice
+                .MasterTest_getViewtablerecord1()
+                .subscribe((data) => {
+                  this.collection = data.data;
+                  this.BackUpdata = data.data;
+                });
               this.toastr.success(
                 'Updated!!!',
                 'Calibration Master & Error Description Updated Successfully.',
@@ -416,12 +420,20 @@ export class CalibrationmasterComponent implements OnInit {
                   timeOut: 3000,
                 }
               );
+
               let currentUrl = this.router.url;
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.onSameUrlNavigation = 'reload';
               this.router.navigate([currentUrl]);
               this.tabledata();
+              this.registerDetails.Description = '';
+              this.registerDetails.Specification = '';
+              this.registerDetails.Observation = '';
+              this.registerDetails.Remark = '';
+              console.log(this.registerDetails.Description);
             } else {
+              console.log('inside else');
+
               if (data.error.errors[0].validatorKey) {
                 this.toastr.error(
                   'Error!!!',
@@ -437,18 +449,14 @@ export class CalibrationmasterComponent implements OnInit {
         );
     }
   }
-  // onDateChange(newDate: Date) {
-  //   this.previousDate = new Date(newDate);
-  // }
+
   getUser(id: object) {
     this.registerDetails = { ...id };
-    // console.log(this.registerDetails.date);
     this.date = this.datePipe.transform(
       this.registerDetails.date,
       'dd-mm-yyyy'
     );
     this.registerDetails.date = this.date;
-    // console.log(this.registerDetails.date);
     this.user_name = this.user_name;
   }
   // public deleteUsers(id: Number): void {
@@ -462,7 +470,6 @@ export class CalibrationmasterComponent implements OnInit {
   // }
 
   public deleteUsers(id: string): void {
-    console.log(id);
     // debugger;
     this.dataservice.MasterTest_DeleteSingleUser(id, this.collection).subscribe(
       (data: any) => {
@@ -473,7 +480,7 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   public selectimage(event: any) {
-    debugger;
+    // debugger;
     if (event.target.files.length > 0) {
       const files = event.target.files[0];
       this.images = files;
@@ -812,13 +819,17 @@ export class CalibrationmasterComponent implements OnInit {
     const imagedata = new FormData();
     imagedata.append('image', this.images);
     this.dataservice.MasterImage_postUser(imagedata).subscribe((data) => {
+      console.log('data', data);
+
       console.log('working...');
     });
 
     this.dataservice.MasterTest_postUser(this.registerDetails).subscribe(
       (data) => {
+        console.log('post', data);
+
         this.dataservice.MasterTest_getViewtablerecord1().subscribe((data) => {
-          console.log('table', data);
+          console.log('view', data);
 
           this.collection = data.data;
           this.BackUpdata = data.data;
@@ -1077,6 +1088,8 @@ export class CalibrationmasterComponent implements OnInit {
     this.dataservice
       .MasterTest_postUser(this.registerDetails)
       .subscribe((data) => {
+        // console.log('postuser', this.collection);
+
         this.collection = data.data;
         this.BackUpdata = data.data;
         this.test = true;
@@ -1087,6 +1100,8 @@ export class CalibrationmasterComponent implements OnInit {
           this.dataservice
             .MasterTest_getViewtablerecord1()
             .subscribe((data) => {
+              console.log('view', this.collection);
+
               this.collection = data.data;
               this.BackUpdata = data.data;
             });
@@ -1115,6 +1130,13 @@ export class CalibrationmasterComponent implements OnInit {
       (this.registerDetails.Department = ''),
       (this.registerDetails.Location = '');
   }
+
+  // resetError() {
+  //   (this.registerDetails.Description = ''),
+  //     (this.registerDetails.Specification = ''),
+  //     (this.registerDetails.Observation = ''),
+  //     (this.registerDetails.Remark = ''),
+  // }
 
   public getCategory(): void {
     this.dataservice.MasterCategory_getView().subscribe((data) => {
@@ -1164,7 +1186,7 @@ export class CalibrationmasterComponent implements OnInit {
     // console.log('short', shortname);
 
     var instrument_code: any = this.InstrumentCodeof;
-    console.log(instrument_code);
+    // console.log(instrument_code);
     let code = instrument_code.split('||');
     let typesortname = this.valueof;
     let tsortname = typesortname.split('||');
@@ -1275,7 +1297,7 @@ export class CalibrationmasterComponent implements OnInit {
       //   this.isShown = false;
       // }
     }
-    console.log(defaultDay);
+    // console.log(defaultDay);
 
     if (this.changedNumber) {
       selected_value = this.changedNumber;
@@ -1340,16 +1362,16 @@ export class CalibrationmasterComponent implements OnInit {
     var reg = new RegExp('^[0-9]');
     this.changedNumber = selectedLaw;
 
+    if (selectedLaw === '') {
+      let send_date: any = new Date();
+      let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+      this.registerDetails.dueDate = setDate;
+    }
     if (!reg.test(selectedLaw) || selectedLaw.length > 3) {
       this.toastr.warning('Warning!!!', 'Enter proper value!', {
         timeOut: 1000,
       });
     } else {
-      if (selectedLaw === '') {
-        let send_date: any = new Date();
-        let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
-        this.registerDetails.dueDate = setDate;
-      }
       // this.registerDetails.MxLifeTimeNumber = ""
       if (this.maximumTime == 'Week') {
         let weekValue = parseInt(selectedLaw) * 7;
@@ -1416,6 +1438,8 @@ export class CalibrationmasterComponent implements OnInit {
   typemaster(event: any, data: any = '') {
     // alert(event.target.value);
     let selectedvalue: any = event != '' ? event.target.value : data;
+    console.log(typeof selectedvalue);
+
     var shortname = selectedvalue.split('||');
 
     this.valueof = selectedvalue;
@@ -1427,6 +1451,8 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   public Click_Head(index: number, heading: string): void {
+    console.log(this.collection);
+
     this.collection = [...this.BackUpdata];
     if (heading == 'Description') {
       this.SearchField = heading;
@@ -1442,6 +1468,8 @@ export class CalibrationmasterComponent implements OnInit {
     // this.searchvalue = this.searchvalue.toUpperCase();
     if (this.searchvalue) {
       if (this.SearchField == 'Description') {
+        console.log('collect', this.collection);
+
         this.collection = this.collection.filter(
           (f) => f.type == this.searchvalue
         );
@@ -1502,6 +1530,10 @@ export class CalibrationmasterComponent implements OnInit {
     this.toastr.success('New row added successfully', 'New Row');
     // console.log(this.dynamicArray);
     return true;
+  }
+
+  checkedAmc(event: any) {
+    this.AmcChecked = event.target.checked;
   }
 
   delete() {
@@ -1567,6 +1599,82 @@ export class CalibrationmasterComponent implements OnInit {
         };
         reader.readAsDataURL(file);
       }
+    }
+  }
+
+  public dropped(files: NgxFileDropEntry[]) {
+    this.files = files;
+    for (const droppedFile of files) {
+      // Is it a file?
+      if (droppedFile.fileEntry.isFile) {
+        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+        fileEntry.file((file: File) => {
+          // Here you can access the real file
+          console.log(droppedFile.relativePath, file);
+          this.viewDoc.push(file);
+          console.log(this.viewDoc);
+          this.fileUploadChangeEmitter.emit(file);
+          this.imagePreviewUrl = '';
+          this.file = file;
+        });
+      } else {
+        // It was a directory (empty directories are added, otherwise only files)
+        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        console.log(droppedFile.relativePath, fileEntry);
+      }
+    }
+  }
+
+  public removeUploadedFile(): void {
+    this.file = '';
+    this.fileUploadChangeEmitter.emit('');
+  }
+
+  public viewImage(content: any): void {
+    console.log('inside view image');
+
+    console.log('image', this.imagePreviewUrl);
+    if (this.imagePreviewUrl) {
+      // this.dataservice.setImageViewPopupTrigger(this.imagePreviewUrl);
+      this.modalService.open('view-image-modal');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreviewUrl = reader.result as string;
+      // this.dataservice.setImageViewPopupTrigger(this.imagePreviewUrl);
+      // this.modalService.open('view-image-modal');
+      this.modalService
+        .open(content, { ariaLabelledBy: 'modal-basic-title' })
+        .result.then(
+          (result: any) => {
+            this.closeResult = `Closed with: ${result}`;
+          },
+          (reason: any) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          }
+        );
+    };
+    console.log('file', this.file);
+
+    reader.readAsDataURL(this.file);
+  }
+
+  public fileOver(event: any) {
+    console.log(event);
+  }
+
+  public fileLeave(event: any) {
+    console.log(event);
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === 'Cross click') {
+      return 'Cross Click';
+    } else {
+      return `with: ${reason}`;
     }
   }
 }

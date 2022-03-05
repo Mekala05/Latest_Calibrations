@@ -293,6 +293,7 @@ export class CalibrationentryComponent implements OnInit {
       //   );
       // });
     }
+    this.store();
   }
 
   private tabledata(): void {

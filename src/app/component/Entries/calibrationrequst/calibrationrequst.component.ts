@@ -122,6 +122,7 @@ export class CalibrationrequstComponent implements OnInit {
     this.registerDetails.date = new Date();
     this.user_name = localStorage.getItem('Login_name');
     this.partyoffun();
+    // this.year();
     // this.getRequestTypeDetails('breakage');
 
     // console.log(this.registerDetails.date);
@@ -129,9 +130,13 @@ export class CalibrationrequstComponent implements OnInit {
     this.dataservice.MasterTest_getView().subscribe((data) => {
       // console.log(data.data[0].type);
       this.InstrumentNameof = data.data;
+      // console.log('name', data.data);
+
       // this.BackUpdata = data.data;
     });
     this.dataservice.MasterTest_getView().subscribe((data) => {
+      // console.log('code', data.data);
+
       // console.log(data.data[0].type);
       this.InstrumentCodeof = data.data;
       // this.BackUpdata = data.data;
@@ -143,7 +148,7 @@ export class CalibrationrequstComponent implements OnInit {
     // });
 
     this.dataservice.MasterCali_Request_getView().subscribe((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       this.CalibrationRequestof = data.data;
       // this.BackUpdata = data.data;
     });
@@ -158,7 +163,7 @@ export class CalibrationrequstComponent implements OnInit {
   public partyoffun(): void {
     this.dataservice.Request_getViewparty().subscribe((data) => {
       this.Party = data.data;
-      console.log('dep', data.data);
+      // console.log('dep', data.data);
     });
   }
 
@@ -174,6 +179,8 @@ export class CalibrationrequstComponent implements OnInit {
     if (year != undefined && month != undefined) {
       if (this.registerDetails.RequestType == 'Schedule') {
         this.dataservice.Calibration_request(year, month).subscribe((data) => {
+          console.log('data', data.data);
+
           if (data.data != '') {
             for (let i = 0; i < data.data.length; i++) {
               this.code = data.data[i].InstrumentCode;

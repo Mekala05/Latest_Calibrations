@@ -12,7 +12,7 @@
 
   <div class="new_bor pt-1 pb-3">
 
-    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+    <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
       <div class="row form-group align-items-center">
         <div class="col-4">
           <mat-label class="gene_name newname">SheduleNo</mat-label>
@@ -21,7 +21,7 @@
           <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.SheduleNo" />
         </div>
       </div>
-    </div>
+    </div> -->
 
 
 
@@ -157,9 +157,10 @@
               <td class="gene_name tablethtd">{{ data.SheduleNo}}</td>
               <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
               <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
-              <td class="gene_name tablethtd">{{ data.date | date: "dd-MMM-yyyy,  h:mm a" }}</td>
+              <td class="gene_name tablethtd">{{ data.dueDate | date: "dd-MMM-yyyy,  h:mm a" }}</td>
               <td class="gene_name tablethtd">{{ data.Description }}</td>
               <td class="gene_name tablethtd">{{ data.type }}</td>
+              <td><a href="">History</a></td>
               <!-- <td class="gene_name tablethtd">{{ data.updatedAt | date: 'dd-MMM-yyyy' }}</td>
               <td class="gene_name tablethtd">{{ data.updatedBy }}</td> -->
               <!-- <td class="gene_name tablethtd icons">
@@ -221,26 +222,26 @@
 <br />
 
 
-<div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
+<!-- <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
   <div >
     <div class="row form-group">
       <div class="col-4">
-        <!-- <span>
+        <span>
           <button mat-stroked-button class="submit-button" (click)="reset()">CLEAR</button>
-        </span> -->
+        </span>
       </div>
       <div class="col-3" >
         <span>
           <button mat-flat-button id="color_sv" class="submit-button"  (click)="store()">
             ADD
           </button>
-          <!-- <button mat-flat-button id="color_sv" class="submit-button" *ngIf="registerDetails.id"
-          (click)="update()">Update</button> -->
+          <button mat-flat-button id="color_sv" class="submit-button" *ngIf="registerDetails.id"
+          (click)="update()">Update</button>
         </span>
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- <div class="searchbox">
   <div class="has-search text-right">

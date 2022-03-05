@@ -191,3 +191,34 @@ tr {
   /* left: 66% !important; */
   margin-right: 47px;
 }
+
+ngx-file-drop {
+  ::ng-deep .ngx-file-drop__drop-zone {
+    border: none;
+    height: 0;
+    margin: 0;
+  }
+
+  ::ng-deep .ngx-file-drop__content {
+    display: flex;
+    align-items: none;
+    justify-content: left;
+    height: 0;
+    margin-top: 15px;
+  }
+  .font-size {
+    font-size: 12px;
+  }
+}
+
+::ng-deep .modal.show .modal-dialog {
+  margin-top: 15%;
+}
+
+::ng-deep ngb-modal-backdrop.modal-backdrop.fade.show {
+  z-index: 0 !important;
+}
+
+::ng-deep ngb-modal-window {
+  background: linear-gradient(45deg, grey, transparent);
+}
