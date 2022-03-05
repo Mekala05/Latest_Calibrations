@@ -70,6 +70,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CalibrationReportComponent } from './calibration-report/calibration-report.component';
 import { CalibrationMasterListReportComponent } from './calibration-master-list-report/calibration-master-list-report.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     NgxPaginationModule,
+    NgxFileDropModule,
     // TablePagination,
     MatTableModule,
     MultiSelectModule,

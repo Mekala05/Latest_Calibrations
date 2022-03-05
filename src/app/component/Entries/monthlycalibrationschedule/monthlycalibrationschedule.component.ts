@@ -3,6 +3,7 @@ import { DataService } from 'src/app/shared/service/data.service';
 import { monthly } from './model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-monthlycalibrationschedule',
@@ -22,6 +23,8 @@ export class MonthlycalibrationscheduleComponent implements OnInit {
   public Requesttypelist: any = [];
   filteredCountries: any[] = [];
   countries: any[] = [];
+  // defaultYear: any;
+  // defaultMonth: any;
   public TableHeading = [
     {
       name: 'SheduleNo',
@@ -41,15 +44,37 @@ export class MonthlycalibrationscheduleComponent implements OnInit {
     {
       name: 'Type',
     },
+    {
+      name: 'History',
+    },
   ];
   constructor(
     private dataservice: DataService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this.year();
+    let today = new Date();
+    let todayDate = this.datePipe.transform(today, 'MM,YYYY');
+    let splitted: any = todayDate?.split(',');
+    // console.log(splitted);
+    // console.log(splitted[0]);
+
+    this.registerDetails.Month = splitted[0];
+    this.registerDetails.Year = splitted[1];
+
+    this.tableData(this.registerDetails.Year, this.registerDetails.Month);
+
+    // this.dataservice.Monthly_report(year, month).subscribe((data) => {
+    //   if (data.data != '') {
+    //     this.collection = data.data;
+    //     this.BackUpdata = data.data;
+    //   }
+    // });
+
     // this.tabledata();
     // this.dataservice
     //   .getfromAssest(`assets/model/countries.json`)
@@ -125,34 +150,129 @@ export class MonthlycalibrationscheduleComponent implements OnInit {
   //     });
   // }
 
+  public tableData(year: any, month: any) {
+    this.dataservice.Monthly_report(year, month).subscribe((data) => {
+      if (data.data != '') {
+        // console.log(data.data);
+        data.data.map((item: any) => {
+          if (item.MxLifeTime === 'Quarterly||3') {
+            var quarterly = item.MxLifeTime.split('||');
+            let weekValue = 3;
+            //  console.log(weekValue);
+            // console.log(item.date);
+
+            // let formatdate = this.datePipe.transform(item.date);
+            // console.log('format', formatdate);
+
+            let send_date: any = new Date(item.date);
+            // console.log('send', send_date);
+
+            send_date.setMonth(send_date.getMonth() + parseInt(quarterly[1]));
+            // console.log(send_date);
+            // debugger;
+            if (send_date != 'Invalid Date') {
+              let setDate: any = this.datePipe.transform(
+                send_date,
+                'dd-MMM-YYYY'
+              );
+              //  console.log(setDate);
+              item.dueDate = setDate;
+            }
+          }
+          if (item.MxLifeTime === 'Week') {
+            // console.log('week');
+            // console.log('maxlife', data);
+
+            let weekValue = parseInt(item.MxLifeTimeNumber) * 7;
+            //  console.log(weekValue);
+            let send_date: any = new Date(item.date);
+            send_date.setDate(send_date.getDate() + weekValue);
+            if (send_date != 'Invalid Date') {
+              let setDate: any = this.datePipe.transform(
+                send_date,
+                'dd-MMM-YYYY'
+              );
+              // console.log('set', setDate);
+              item.dueDate = setDate;
+              // console.log('item', item.dueDate);
+            }
+          }
+          if (item.MxLifeTime === 'Day') {
+            // console.log('day');
+
+            let weekValue = parseInt(item.MxLifeTimeNumber) * 1;
+            //  console.log(weekValue);
+            let send_date: any = new Date(item.date);
+            send_date.setDate(send_date.getDate() + weekValue);
+            if (send_date != 'Invalid Date') {
+              let setDate: any = this.datePipe.transform(
+                send_date,
+                'dd-MMM-YYYY'
+              );
+              //  console.log(setDate);
+              item.dueDate = setDate;
+            }
+          }
+
+          if (item.MxLifeTime === 'Month') {
+            // console.log('month');
+
+            let weekValue = parseInt(item.MxLifeTimeNumber) * 1;
+            //  console.log(weekValue);
+            let send_date: any = new Date(item.date);
+            send_date.setMonth(send_date.getMonth() + weekValue);
+            // console.log(send_date);
+            if (send_date != 'Invalid Date') {
+              let setDate: any = this.datePipe.transform(
+                send_date,
+                'dd-MMM-YYYY'
+              );
+              //  console.log(setDate);
+              item.dueDate = setDate;
+            }
+          }
+
+          if (item.MxLifeTime === 'Year') {
+            // console.log('year');
+
+            let weekValue = parseInt(item.MxLifeTimeNumber) * 1;
+            //  console.log(weekValue);
+            let send_date: any = new Date(item.date);
+            send_date.setFullYear(send_date.getFullYear() + weekValue);
+            // console.log(send_date);
+            if (send_date != 'Invalid Date') {
+              let setDate: any = this.datePipe.transform(
+                send_date,
+                'dd-MMM-YYYY'
+              );
+              //  console.log(setDate);
+              item.dueDate = setDate;
+            }
+          }
+        });
+        this.collection = data.data;
+        this.BackUpdata = data.data;
+      } else {
+        this.toastr.error('No Data!!!', 'Data Not Found!.', {
+          timeOut: 3000,
+        });
+        let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([currentUrl]);
+        // alert("No data avaliable");
+      }
+    });
+  }
+
   public year() {
     var year = this.registerDetails.Year;
     var month = this.registerDetails.Month;
     var SheduleNo = this.registerDetails.SheduleNo;
 
-    console.log(month);
-    console.log(year);
     if (year != undefined && month != undefined) {
-      this.dataservice.Monthly_report(year, month).subscribe((data) => {
-        if (data.data != '') {
-          this.collection = data.data;
-          this.BackUpdata = data.data;
-          console.log(data.data);
-        } else {
-          this.toastr.error('No Data!!!', 'Data Not Found!.', {
-            timeOut: 3000,
-          });
-          let currentUrl = this.router.url;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate([currentUrl]);
-          // alert("No data avaliable");
-        }
-      });
+      this.tableData(year, month);
     }
-
-    // year = ((year == '')) ? new Date().getFullYear() : year;
-    // month = ((month == '')) ? (new Date().getMonth() + 1) : month;
   }
 
   public Click_Head(index: number, heading: string): void {

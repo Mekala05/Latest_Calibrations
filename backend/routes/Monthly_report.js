@@ -65,7 +65,7 @@ router.get('/filter', (req, res) => {
         CalibrationMaster_1.findAll({
             where: {
                 Year: Sequelize.where(Sequelize.fn('YEAR', Sequelize.col('date')), year),
-                Month: Sequelize.where(Sequelize.fn('month', Sequelize.col('date')), month-1),
+                Month: Sequelize.where(Sequelize.fn('month', Sequelize.col('date')), month),
                 
             }
         }).then(function (result) {

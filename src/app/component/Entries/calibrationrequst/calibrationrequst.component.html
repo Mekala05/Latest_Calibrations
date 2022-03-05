@@ -93,7 +93,7 @@
 
               <option disabled selected value="undefined">--Select--</option>
               <option *ngFor="let data of InstrumentCodeof; let i = index" [value]="data.InstrumentCode+','+data.InstrumentName">
-                {{data.InstrumentCode}}
+                {{data.InstrumentCode}}-{{data.InstrumentName}}
               </option>
             </select>
           </div>
@@ -116,7 +116,7 @@
       </div> -->
 
 
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
             <mat-label class="gene_name newname">
@@ -126,7 +126,7 @@
             <input type=" search" class="form-control" [(ngModel)]="registerDetails.InstrumentName" />
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
