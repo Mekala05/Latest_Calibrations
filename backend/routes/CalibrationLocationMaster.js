@@ -93,8 +93,6 @@ router.put('/delete/:id', (req, res) => {
     })  
 })
 
-
-
 router.get('/viewData', (req, res) => {
     return new Promise((resolve, reject) => {
         odep.findAll({
@@ -105,13 +103,17 @@ router.get('/viewData', (req, res) => {
                 sendError(res, err);
             });
         })  
+
+
    
 })
 
 router.get('/viewDataname', (req, res) => {
-    return new Promise((resolve, reject) => {
-        odep.findAll({
-            attributes: ['Name'],
+    return new Promise((resolve, reject) => { //models.Olct 
+            odep.findAll({
+                include: [{
+                  model: Olct // will create a left join
+                }]
         }).then(function (result) {
                 sendSuccess(res, result);
             }).catch(function (err) {
@@ -120,6 +122,20 @@ router.get('/viewDataname', (req, res) => {
         })  
    
 })
+
+// _subscriptionModel.findAll({
+//     where: {
+//         start_date: {
+//             _lte: today // Get all subscriptions where start_date <= today
+//         }
+//     },
+//     limit,
+//     include: [
+//         {
+//             model: _planAllocationModel
+//         }
+//     ]
+// });
 
 
 

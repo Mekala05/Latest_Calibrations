@@ -19,7 +19,7 @@ import {
 } from 'ngx-file-drop';
 // import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { CommonModelService } from 'src/app/shared/service/common-model.service';
+// import { CommonModelService } from 'src/app/shared/service/common-model.service';
 //import { Console } from 'console';
 
 @Injectable({
