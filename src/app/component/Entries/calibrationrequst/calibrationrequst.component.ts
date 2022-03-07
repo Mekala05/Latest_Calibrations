@@ -396,12 +396,12 @@ export class CalibrationrequstComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    // if (RaiseDc == '' || RaiseDc == undefined) {
-    //   this.toastr.warning('Warning!!!', 'RaiseDc   is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (RaiseDc == '' || RaiseDc == undefined) {
+      this.toastr.warning('Warning!!!', 'RaiseDc   is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
     if (calibrationlocation == '' || calibrationlocation == undefined) {
       this.toastr.warning('Warning!!!', 'calibrationlocation  is required!', {
@@ -417,19 +417,19 @@ export class CalibrationrequstComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    // if (BreakageNo == '' || BreakageNo == undefined) {
-    //   this.toastr.warning('Warning!!!', 'BreakageNo   is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (BreakageNo == '' || BreakageNo == undefined) {
+      this.toastr.warning('Warning!!!', 'BreakageNo   is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
-    // if (Requesttypeselected == '' || Requesttypeselected == undefined) {
-    //   this.toastr.warning('Warning!!!', 'Requesttypeselected    is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (Requesttypeselected == '' || Requesttypeselected == undefined) {
+      this.toastr.warning('Warning!!!', 'Requesttypeselected    is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
     this.dataservice
       .Request_postUser(this.registerDetails)
