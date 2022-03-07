@@ -1,47 +1,107 @@
-<h1 mat-dialog-title>Frequency Schedule</h1>
-
+<h1 mat-dialog-title>Con-Accept</h1>
 
 <div mat-dialog-content>
-    
-    <!-- <mat-form-field appearance="fill">
-      <mat-label></mat-label>
-     
-        <mat-label>reason?</mat-label>
-        <input matInput >
-      
-    </mat-form-field> -->
-  </div>
   <div class="row">
-    <div class="col-lg-12">
-     
+    <div class="col-lg-offset-4">
       <div mat-dialog-actions>
-        <div class="col-lg-2">
+        <div class="col-lg-12">
+          <mat-label class="gene_name newname">Remarks</mat-label>
+          <textarea
+            type="text"
+            class="form-control input_text"
+            required
+          ></textarea>
         </div>
-      <div class="col-lg-3">
-        <button mat-button (click)="onNoClick()">year</button>
       </div>
-      <div class="col-lg-4">
-        <input type="text" class="form-control">
-      </div>
-    </div>
     </div>
   </div>
-  <div class="row mt-2">
-    <div class="col-lg-12">
+  <div class="row ml-20">
+    <div class="col-lg-offset-4">
       <div mat-dialog-actions>
-        <div class="col-lg-2">
-        </div>
-      <div class="col-lg-3">
-        <button mat-button (click)="onNoClick()">month</button>
+        <mat-label class="gene_name newname">Frequency Reduced</mat-label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="check1"
+          (change)="checkFrequency($event)"
+          name="frequencyReduced"
+          value="frequencyReduced"
+        />
       </div>
-      <div class="col-lg-4">
-        <input type="text" class="form-control">
-      </div>
-    </div>
     </div>
   </div>
- 
-  <div class="row mt-2">
+  <div class="row ml-20" *ngIf="frequencyDetail">
+    <div class="col-lg-offset-4">
+      <div mat-dialog-actions>
+        <!-- <div class="col-4"> -->
+        <select
+          (change)="lifeTime($event)"
+          name=""
+          id=""
+          [(ngModel)]="registerDetails.dueDate"
+          class="form-control input_text frequency"
+        >
+          <option disabledd selected value="undefined">--Select--</option>
+          <option value="Quarterly||3">Quarterly</option>
+          <option value="Week">Week</option>
+          <option value="Year">Year</option>
+          <option value="Month">Month</option>
+          <option value="Day">Day</option>
+        </select>
+        <div class="col-3">
+          <input
+            type="text"
+            (keyup)="onKeyDate($event)"
+            id="mxLifeTimeNumber"
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.MxLifeTimeNumber"
+            *ngIf="isShown"
+          />
+        </div>
+
+        <!-- </div> -->
+
+        <!-- <div class="col-3">
+          <input
+            type="text"
+            (keyup)="onKeyDate($event)"
+            id="mxLifeTimeNumber"
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.MxLifeTimeNumber"
+            *ngIf="isShown"
+          />
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="row ml-20">
+    <div class="col-lg-offset-4">
+      <div mat-dialog-actions>
+        <mat-label class="gene_name newname">Frequency Not Reduced</mat-label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="check2"
+          (change)="checkFrequency($event)"
+          name="frequencyNotreduced"
+          value="frequencyNotreduced"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row ml-60">
+    <div class="col-lg-offset-4">
+      <div mat-dialog-actions>
+        <!-- <div class="col-lg-3"> -->
+        <button mat-raised-button class="button" (click)="onNoClick()">
+          Accept
+        </button>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row mt-2">
     <div class="col-lg-12">
       <div mat-dialog-actions>
         <div class="col-lg-2">
@@ -54,8 +114,8 @@
       </div>
     </div>
     </div>
-  </div>
-  <div class="row mt-2">
+  </div> -->
+  <!-- <div class="row mt-2">
     <div class="col-lg-12">
       <div mat-dialog-actions>
         <div class="col-lg-2">
@@ -68,17 +128,5 @@
       </div>
     </div>
     </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-lg-12">
-      <div mat-dialog-actions>
-        <div class="col-lg-8">
-        </div>
-      <div class="col-lg-3">
-        <button mat-raised-button color="primary" (click)="onNoClick()">submit</button>
-      </div>
-   
-    </div>
-    </div>
-  </div>
-  
+  </div> -->
+</div>
