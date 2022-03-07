@@ -43,11 +43,15 @@ export class CalibrationrequstComponent implements OnInit {
 
   public Party: any = [];
   public Requesttypelist: any = [];
+  public RaiseDcItem: any = [];
 
   // public InstrumentCode: any;
   public instrucodetionselect: any;
 
   public TableHeading = [
+    {
+      name: '',
+    },
     {
       name: 'SI No',
     },
@@ -392,12 +396,12 @@ export class CalibrationrequstComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (RaiseDc == '' || RaiseDc == undefined) {
-      this.toastr.warning('Warning!!!', 'RaiseDc   is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (RaiseDc == '' || RaiseDc == undefined) {
+    //   this.toastr.warning('Warning!!!', 'RaiseDc   is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (calibrationlocation == '' || calibrationlocation == undefined) {
       this.toastr.warning('Warning!!!', 'calibrationlocation  is required!', {
@@ -413,19 +417,19 @@ export class CalibrationrequstComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (BreakageNo == '' || BreakageNo == undefined) {
-      this.toastr.warning('Warning!!!', 'BreakageNo   is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (BreakageNo == '' || BreakageNo == undefined) {
+    //   this.toastr.warning('Warning!!!', 'BreakageNo   is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
-    if (Requesttypeselected == '' || Requesttypeselected == undefined) {
-      this.toastr.warning('Warning!!!', 'Requesttypeselected    is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (Requesttypeselected == '' || Requesttypeselected == undefined) {
+    //   this.toastr.warning('Warning!!!', 'Requesttypeselected    is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     this.dataservice
       .Request_postUser(this.registerDetails)
@@ -509,12 +513,12 @@ export class CalibrationrequstComponent implements OnInit {
   }
 
   getRequestTypeDetails(type: any) {
-    debugger;
+    // debugger;
     // const requestType=event.value;
     alert(this.registerDetails.RequestType);
     switch (this.registerDetails.RequestType) {
       case 'breakage':
-        debugger;
+        // debugger;
         this.dataservice.BreakageRequestno_getView().subscribe((data) => {
           console.log(data.data[1]);
           //alert(data.data[0].BreakageNo);
@@ -670,6 +674,12 @@ export class CalibrationrequstComponent implements OnInit {
       (this.registerDetails.RaiseDc = '');
   }
   requesttypedetails(event: any) {
-    debugger;
+    // debugger;
+  }
+
+  checkedAmc(event: any, i: any, data: any) {
+    console.log('event', event.target.checked);
+    console.log('i', i + 1);
+    console.log('data', data);
   }
 }

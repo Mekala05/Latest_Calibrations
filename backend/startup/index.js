@@ -5,7 +5,7 @@ let configExport = {};
 
 
 configExport.dbConfig = {
-    'username': "calibration_test",
+    'username': "sa",
     'password': "p@ssw0rd",
     'database': "Test_16_Dec",
     host: 'localhost',

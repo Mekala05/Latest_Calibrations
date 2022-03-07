@@ -18,7 +18,7 @@
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
             <!-- <input type="date" class="form-control input_text" (change)="year()" [(ngModel)]="registerDetails.date" /> -->
-            <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MMM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" />
+            <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MMM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" [disabled]="test"/>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
             <mat-label class="gene_name newname"> Request Type</mat-label>
           </div>
           <div class="col-8">
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.RequestType"(change)="getRequestTypeDetails(this)">
+            <select name="" id="" class="form-control input_text" [disabled]="test" [(ngModel)]="registerDetails.RequestType"(change)="getRequestTypeDetails(this)">
               <option disabled selected value="undefined">--Select--</option>
               <option *ngFor="let data of  CalibrationRequestof; let i = index" [value]="data.CalibrationRequest">
                 {{data.CalibrationRequest}}
@@ -44,7 +44,7 @@
             <mat-label class="gene_name newname"> ScheduleNo</mat-label>
           </div>
           <div class="col-8">
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.ScheduleNo">
+            <select name="" id="" [disabled]="test" class="form-control input_text" [(ngModel)]="registerDetails.ScheduleNo">
               <option disabled selected value="undefined">--Select--</option>
               <option *ngFor="let data of  breakagerequestNo; let i = index" [value]="data.id">
                 {{data.BreakageNo}}
@@ -63,7 +63,7 @@
             <mat-label class="gene_name newname"> Instrument Code</mat-label>
           </div>
           <div class="col-8">
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentCode"(change)="instru($event)">
+            <select name="" [disabled]="test" id="" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentCode"(change)="instru($event)">
               <option disabled selected value="undefined">--Select--</option>
               <option *ngFor="let data of InstrumentCodeof; let i = index" [value]="data.InstrumentCode+','+data.InstrumentName">
                 {{data.InstrumentCode}}-{{data.type}}-{{data.category}}
@@ -94,7 +94,7 @@
             <mat-label class="gene_name newname"> Instrument Name</mat-label>
           </div>
           <div class="col-8">
-            <input type="text" class="form-control input_text"  [(ngModel)]="registerDetails.InstrumentName" />
+            <input type="text" [disabled]="test" class="form-control input_text"  [(ngModel)]="registerDetails.InstrumentName" />
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@
             <mat-label class="gene_name newname"> Party Selection</mat-label>
           </div>
           <div class="col-8">
-            <input type="text" class="form-control input_text"  [(ngModel)]="registerDetails.partySelection" />
+            <input type="text" [disabled]="test" class="form-control input_text"  [(ngModel)]="registerDetails.partySelection" />
           </div>
         </div>
       </div>
@@ -138,7 +138,7 @@
           </div>
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-            <input type="text" class="form-control input_text"  [(ngModel)]="registerDetails.DCDetails" />
+            <input type="text" [disabled]="test" class="form-control input_text"  [(ngModel)]="registerDetails.DCDetails" />
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@
           </div>
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-            <input type="number" class="form-control input_text" [(ngModel)]="registerDetails.collabrationCost"/>
+            <input type="number" [disabled]="test" class="form-control input_text" [(ngModel)]="registerDetails.collabrationCost"/>
           </div>
         </div>
       </div>
@@ -161,7 +161,7 @@
           </div>
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-            <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.ReportNo" />
+            <input type="text" [disabled]="test" class="form-control input_text" [(ngModel)]="registerDetails.ReportNo" />
           </div>
         </div>
       </div>
@@ -173,7 +173,7 @@
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
             <!-- <input type="date" class="form-control input_text" [(ngModel)]="registerDetails.ReportDate" /> -->
-            <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MMM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.ReportDate" />
+            <input type="text" [disabled]="test" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MMM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.ReportDate" />
 
           </div>
         </div>

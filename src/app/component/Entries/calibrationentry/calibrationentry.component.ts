@@ -50,6 +50,7 @@ export class CalibrationentryComponent implements OnInit {
   public RequestTypeof: any = [];
   public date: any;
   public breakagerequestNo: any = [];
+  test = false;
   public Redate: any;
   public TableHeading = [
     // {
@@ -541,12 +542,12 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (ScheduleNo == '' || ScheduleNo == undefined) {
-      this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (ScheduleNo == '' || ScheduleNo == undefined) {
+    //   this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (InstrumentCode == '' || InstrumentCode == undefined) {
       this.toastr.warning('Warning!!!', 'InstrumentCode is required!', {
@@ -676,6 +677,7 @@ export class CalibrationentryComponent implements OnInit {
 
     this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
       this.collection = data.data;
+      this.test = true;
 
       let currentUrl = this.router.url;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
