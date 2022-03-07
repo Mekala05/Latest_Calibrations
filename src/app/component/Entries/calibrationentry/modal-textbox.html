@@ -1,44 +1,71 @@
-<h1 mat-dialog-title>Reason</h1>
+<h1 mat-dialog-title>Reject</h1>
 
 <div mat-dialog-content>
-
-    <mat-form-field appearance="fill">
-      <mat-label></mat-label>
-     
-        <mat-label>reason</mat-label>
-        <input matInput >
-      
-    </mat-form-field>
+  <div class="row">
+    <div class="col-lg-offset-4">
+      <div mat-dialog-actions class="action">
+        <div class="col-lg-12">
+          <mat-label class="gene_name newname">Remarks</mat-label>
+          <textarea
+            type="text"
+            class="form-control input_text"
+            required
+          ></textarea>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Scrap</button>
+  <div class="row mt-10 ml-0">
+    <div class="col-lg-offset-4">
+      <div mat-dialog-actions class="action">
+        <mat-label class="gene_name newname">Frequency Reduced</mat-label>
+        <select name="" id="" class="form-control input_text select">
+          <option disabledd selected value="undefined">--Select--</option>
+          <option value="Re-Calibration">Re-Calibration</option>
+          <option value="ReService">ReService</option>
+          <option value="Scrap">Scrap</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row ml-60 mt-10">
+    <div class="col-lg-offset-4">
+      <div mat-dialog-actions>
+        <!-- <div class="col-lg-3"> -->
+        <button mat-raised-button class="button" (click)="onNoClick()">
+          Accept
+        </button>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row mt-2">
+    <div class="col-lg-12">
+      <div mat-dialog-actions>
+        <div class="col-lg-2">
+        </div>
+      <div class="col-lg-3">
+        <button mat-button (click)="onNoClick()">week</button>
+      </div>
+      <div class="col-lg-4">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    </div>
   </div> -->
-
-
-  <div mat-dialog-actions>
-      <button routerLink="header/ScrapApproval" mat-button (click)="onNoClick()">  
-      Scrap</button>
-  </div>
-
-  <div mat-dialog-actions>
-      <button routerLink="header/calibrationrequest" mat-button (click)="onNoClick()">  
-      Service</button>
-  </div>
-
-
-  <div mat-dialog-actions>
-    <button routerLink="header/calibrationrequest"   mat-button (click)="onNoClick()">  
-    Reservice</button>
+  <!-- <div class="row mt-2">
+    <div class="col-lg-12">
+      <div mat-dialog-actions>
+        <div class="col-lg-2">
+        </div>
+      <div class="col-lg-3">
+        <button mat-button (click)="onNoClick()">day</button>
+      </div>
+      <div class="col-lg-4">
+        <input type="text" class="form-control">
+      </div>
+    </div>
+    </div>
+  </div> -->
 </div>
-
-<div mat-dialog-actions>
-  <button routerLink="/header/Calibration"  mat-button (click)="onNoClick()">  
-  Recalibration</button>
-</div>
-
-
-
-  <div mat-dialog-actions>
-    <button mat-raised-button color="primary"  style="margin-left: 150px"(click)="onNoClick()">submit</button>
-  </div>
-

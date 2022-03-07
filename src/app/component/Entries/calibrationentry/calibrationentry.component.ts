@@ -276,7 +276,7 @@ export class CalibrationentryComponent implements OnInit {
       alert('Enter the Details');
     } else {
       const dialogRef = this.dialog.open(DialogContent);
-
+      this.store();
       // dialogRef.afterClosed().subscribe((result) => {
       //   console.log(`Dialog result: ${result}`);
 
@@ -676,14 +676,28 @@ export class CalibrationentryComponent implements OnInit {
     // }
 
     this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
-      this.collection = data.data;
-      this.test = true;
-
       let currentUrl = this.router.url;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigate([currentUrl]);
       this.tabledata();
+    });
+  }
+
+  error() {
+    this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
+      (this.registerDetails.Description = ''),
+        (this.registerDetails.Specification = ''),
+        (this.registerDetails.Observation = ''),
+        (this.registerDetails.Remark = ''),
+        (this.collection = data.data);
+      this.test = true;
+
+      // let currentUrl = this.router.url;
+      // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      // this.router.onSameUrlNavigation = 'reload';
+      // this.router.navigate([currentUrl]);
+      // this.tabledata();
     });
   }
 
@@ -757,12 +771,12 @@ export class CalibrationentryComponent implements OnInit {
   }
 
   getRequestTypeDetails(type: any) {
-    debugger;
+    // debugger;
     // const requestType=event.value;
     alert(this.registerDetails.RequestType);
     switch (this.registerDetails.RequestType) {
       case 'breakage':
-        debugger;
+        // debugger;
         this.dataservice.BreakageRequestno_getView().subscribe((data) => {
           console.log(data.data[1]);
           //alert(data.data[0].BreakageNo);
@@ -1013,6 +1027,7 @@ export class DialogContent {
 @Component({
   selector: 'modal-textbox',
   templateUrl: 'modal-textbox.html',
+  styleUrls: ['./calibrationEntry.component.scss'],
 })
 export class rejectionmodalbox {
   public registerDetails: modaltextbox = {};
@@ -1043,17 +1058,196 @@ export class rejectionmodalbox {
 @Component({
   selector: 'con-rejection',
   templateUrl: 'con-rejection.html',
+  styleUrls: ['./calibrationEntry.component.scss'],
 })
 export class conditionalRejection {
   public registerDetails: conrejection = {};
+  frequencyDetail = false;
+  isShown = true;
+  public maximumTime: any;
+  changedNumber: any;
 
   constructor(
     public dialogRef: MatDialogRef<conditionalRejection>,
     private dataservice: DataService,
+    private datePipe: DatePipe,
     private toastr: ToastrService
   ) {}
 
+  checkFrequency(event: any) {
+    if (event.target.value === 'frequencyReduced' && event.target.checked) {
+      this.frequencyDetail = true;
+    } else {
+      this.frequencyDetail = false;
+    }
+  }
+
+  lifeTime(event: any) {
+    let selectedLaw: any = event.target.value;
+    this.maximumTime = selectedLaw;
+    let defaultDay = '1';
+    let selected_value;
+    console.log('select', selectedLaw);
+    console.log('inside data');
+
+    if (selectedLaw == 'Quarterly||3') {
+      this.isShown = false;
+      // let weekValue = parseInt(selectedLaw) * 3;
+      // //  console.log(weekValue);
+      // let send_date: any = new Date();
+      // send_date.setMonth(send_date.getMonth() + weekValue);
+    } else {
+      this.isShown = true;
+    }
+    if (this.maximumTime == 'Quarterly||3') {
+      var quarterly = this.maximumTime.split('||');
+      let weekValue = 3;
+      //  console.log(weekValue);
+      let send_date: any = new Date();
+      send_date.setMonth(send_date.getMonth() + parseInt(quarterly[1]));
+      // console.log(send_date);
+      // debugger;
+      if (send_date != 'Invalid Date') {
+        let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+        //  console.log(setDate);
+        this.registerDetails.dueDate = setDate;
+      }
+
+      // let valCheck = checkbox == "" ? true : false;
+      // this.MxLifeTime = event != "" ? event.target.checked : valCheck;
+      // console.log(this.MxLifeTimeNumber);
+
+      // if (this.MxLifeTimeNumber) {
+      //   this.isShown = !this.isShown;
+      // } else {
+      //   this.isShown = false;
+      // }
+    }
+    // console.log(defaultDay);
+
+    if (this.changedNumber) {
+      selected_value = this.changedNumber;
+    } else {
+      selected_value = defaultDay;
+    }
+
+    if (this.maximumTime == 'Week') {
+      let weekValue = parseInt(selected_value) * 7;
+      //  console.log(weekValue);
+      let send_date: any = new Date();
+      send_date.setDate(send_date.getDate() + weekValue);
+      if (send_date != 'Invalid Date') {
+        let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+        //  console.log(setDate);
+        this.registerDetails.dueDate = setDate;
+      }
+    }
+    if (this.maximumTime == 'Day') {
+      let weekValue = parseInt(selected_value) * 1;
+      //  console.log(weekValue);
+      let send_date: any = new Date();
+      send_date.setDate(send_date.getDate() + weekValue);
+      if (send_date != 'Invalid Date') {
+        let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+        //  console.log(setDate);
+        this.registerDetails.dueDate = setDate;
+      }
+    }
+
+    if (this.maximumTime == 'Month') {
+      console.log('selects', selectedLaw);
+
+      let weekValue = parseInt(selected_value) * 1;
+      //  console.log(weekValue);
+      let send_date: any = new Date();
+      send_date.setMonth(send_date.getMonth() + weekValue);
+      // console.log(send_date);
+      if (send_date != 'Invalid Date') {
+        let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+        //  console.log(setDate);
+        this.registerDetails.dueDate = setDate;
+      }
+    }
+
+    if (this.maximumTime == 'Year') {
+      let weekValue = parseInt(selected_value) * 1;
+      //  console.log(weekValue);
+      let send_date: any = new Date();
+      send_date.setFullYear(send_date.getFullYear() + weekValue);
+      // console.log(send_date);
+      if (send_date != 'Invalid Date') {
+        let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+        //  console.log(setDate);
+        this.registerDetails.dueDate = setDate;
+      }
+    }
+  }
+
+  onKeyDate(event: any) {
+    let selectedLaw: any = event.target.value;
+    var reg = new RegExp('^[0-9]');
+    this.changedNumber = selectedLaw;
+
+    if (selectedLaw === '') {
+      let send_date: any = new Date();
+      let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+      this.registerDetails.dueDate = setDate;
+    }
+    if (!reg.test(selectedLaw) || selectedLaw.length > 3) {
+      this.toastr.warning('Warning!!!', 'Enter proper value!', {
+        timeOut: 1000,
+      });
+    } else {
+      // this.registerDetails.MxLifeTimeNumber = ""
+      if (this.maximumTime == 'Week') {
+        let weekValue = parseInt(selectedLaw) * 7;
+        let send_date: any = new Date();
+        send_date.setDate(send_date.getDate() + weekValue);
+        if (send_date != 'Invalid Date') {
+          let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+          this.registerDetails.dueDate = setDate;
+        }
+      }
+      if (this.maximumTime == 'Day') {
+        let weekValue = parseInt(selectedLaw) * 1;
+        let send_date: any = new Date();
+        send_date.setDate(send_date.getDate() + weekValue);
+        if (send_date != 'Invalid Date') {
+          let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+          this.registerDetails.dueDate = setDate;
+        }
+      }
+
+      if (this.maximumTime == 'Month') {
+        console.log('selects', selectedLaw);
+
+        let weekValue = parseInt(selectedLaw) * 1;
+        let send_date: any = new Date();
+        send_date.setMonth(send_date.getMonth() + weekValue);
+        if (send_date != 'Invalid Date') {
+          let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+          this.registerDetails.dueDate = setDate;
+        }
+      }
+
+      if (this.maximumTime == 'Year') {
+        let weekValue = parseInt(selectedLaw) * 1;
+        //  console.log(weekValue);
+        let send_date: any = new Date();
+        send_date.setFullYear(send_date.getFullYear() + weekValue);
+        // console.log(send_date);
+        if (send_date != 'Invalid Date') {
+          let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+          //  console.log(setDate);
+          this.registerDetails.dueDate = setDate;
+        }
+      }
+    }
+  }
+
   onNoClick(): void {
+    console.log('inside click');
+
     this.dialogRef.close();
 
     // if (
