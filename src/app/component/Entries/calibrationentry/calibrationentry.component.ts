@@ -542,12 +542,12 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    // if (ScheduleNo == '' || ScheduleNo == undefined) {
-    //   this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (ScheduleNo == '' || ScheduleNo == undefined) {
+      this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
     if (InstrumentCode == '' || InstrumentCode == undefined) {
       this.toastr.warning('Warning!!!', 'InstrumentCode is required!', {
@@ -619,12 +619,12 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    // if (RequestType == undefined || RequestType == undefined) {
-    //   this.toastr.warning('Warning!!!', 'RequestType is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (RequestType == undefined || RequestType == undefined) {
+      this.toastr.warning('Warning!!!', 'RequestType is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
     if (Description == '' || Description == undefined) {
       this.toastr.warning('Warning!!!', 'Description      is required!', {
