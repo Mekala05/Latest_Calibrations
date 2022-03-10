@@ -18,5 +18,8 @@ export interface conrejection {
   Remark?: string;
   dueDate?: string;
   MxLifeTimeNumber?: string;
+  MxLifeTime?: string;
   fileErrorDiscription?: File;
+  status?: string;
+  option?: string;
 }

@@ -21,6 +21,8 @@ const httpOptions = {
 export class DataService {
   // private setImageViewPopup: any;
   // public setImageViewPopupObserve: Observable<string>;
+  adminSubject$ = new BehaviorSubject<any>(null);
+  admin = this.adminSubject$.asObservable();
 
   constructor(private http: HttpClient) {
     // this.setImageViewPopup = new BehaviorSubject('');
@@ -34,6 +36,19 @@ export class DataService {
 
   getView_loginPost() {
     return this.http.get<any>(`${environment.url}/viewemail`);
+  }
+
+  // updateParticular(id: any, data: any) {
+  //   console.log(id, data);
+
+  //   return this.http.put<any>(
+  //     `${environment.Calibration_Master}/update1/${id}`,
+  //     data
+  //   );
+  // }
+
+  setAdmin(data: any) {
+    this.adminSubject$.next(data);
   }
 
   // Categroy Master Api
@@ -256,6 +271,8 @@ export class DataService {
   }
 
   MasterTest_updateSingleUser(id: any, data: any) {
+    console.log(id, data);
+
     return this.http.put<any>(
       `${environment.Calibration_Master}/update/${id}`,
       data

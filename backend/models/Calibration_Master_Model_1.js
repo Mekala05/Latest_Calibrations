@@ -89,6 +89,13 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             field: 'amccheckbox'
         },
+
+         
+        dueDate:{
+            type: DataTypes.DATE,
+            field: 'dueDate'
+        }, 
+
         Description: {
             type: DataTypes.STRING(250),
             field: 'Description',

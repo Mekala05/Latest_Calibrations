@@ -85,6 +85,14 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(250),
             field: 'Remark'
         },
+        status:{
+            type: DataTypes.STRING(250),
+            field: 'Status'
+        },
+        option:{
+            type: DataTypes.STRING(250),
+            field: 'Option'
+        },
    
         createdBy: {
             type: DataTypes.STRING(50),
