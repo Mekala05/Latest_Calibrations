@@ -60,6 +60,12 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(250),
             field: 'date'
         },
+        dueDate:{
+            type: DataTypes.DATE,
+            field: 'dueDate'
+        },
+        
+        
         MxLifeTime:{
             type: DataTypes.STRING(250),
             field: 'MxLifeTime'

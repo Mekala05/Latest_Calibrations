@@ -215,7 +215,7 @@ router.get('/view/:id', (req, res) => {
 
 router.put('/update/:id', (req, res) => { 
     return new Promise((resolve, reject) => {
-        //console.log(req.body);
+         console.log(req.body);
         CalibrationMaster_1.update(req.body, { where: { id: req.params.id  } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
@@ -223,6 +223,18 @@ router.put('/update/:id', (req, res) => {
         });
     })  
 })
+
+// router.put('/update1/:id', (req, res) => { 
+//     return new Promise((resolve, reject) => {
+//         console.log(req.body);
+//         console.log(req.param.id);
+//         CalibrationMaster_1.update(req.body, { where: { id: req.params.id  } }).then(function (result) {
+//             sendSuccess(res, result);
+//         }).catch(function (err) {
+//             sendError(res, err);
+//         });
+//     })  
+// })
 
 router.put('/delete/:id', (req, res) => { 
     return new Promise((resolve, reject) => {

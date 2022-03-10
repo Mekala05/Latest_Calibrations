@@ -3,7 +3,7 @@ import { DataService } from 'src/app/shared/service/data.service';
 import { calibrationEntry } from './model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { DatePipe } from '@angular/common';
+import { DatePipe, getLocaleFirstDayOfWeek } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogContent1 } from './contentdialogmodel';
@@ -29,6 +29,7 @@ export class CalibrationentryComponent implements OnInit {
   public instrmentCode: any[] = [];
   public instrmentName: any[] = [];
   public ScheduleNo: any[] = [];
+  // public masterDetails: any = {};
   public ScheNo: any;
   public RequestType: any[] = [];
   public CalibrationRequestof: any = [];
@@ -52,46 +53,12 @@ export class CalibrationentryComponent implements OnInit {
   public breakagerequestNo: any = [];
   test = false;
   public Redate: any;
+  public MxLifeTimeNumber: any;
+  public MxLifeTime: any;
+  public inputvalue: any;
+  public TotalDays: any;
+  public dueDate: string = '';
   public TableHeading = [
-    // {
-    //   name: "SI No",
-    // },
-    // {
-    //   name: "Date",
-    // },
-    // {
-    //   name: "Schedule No",
-    // },
-    // {
-    //   name: "Instrument Code",
-    // },
-    // {
-    //   name: "Instrument Name",
-    // },
-    // {
-    //   name: "Last Party Identification",
-    // },
-    // {
-    //   name: "Party Selection",
-    // },
-    // {
-    //   name: "Quantity",
-    // },
-    // {
-    //   name: "Collabration Cost",
-    // },
-    // {
-    //   name: "DC Details",
-    // },
-    // {
-    //   name: "Report No",
-    // },
-    // {
-    //   name: "Report Date",
-    // },
-    // {
-    //   name: "RequestType",
-    // },
     {
       name: 'Description',
     },
@@ -141,107 +108,78 @@ export class CalibrationentryComponent implements OnInit {
   }
 
   conrejection() {
-    if (
-      this.registerDetails.date === undefined ||
-      this.registerDetails.ScheduleNo === undefined ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity === undefined ||
-      this.registerDetails.collabrationCost === undefined ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate === undefined ||
-      this.registerDetails.date.toString() === '' ||
-      this.registerDetails.ScheduleNo === '' ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity.toString() === '' ||
-      this.registerDetails.collabrationCost.toString() === '' ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate.toString() === '' ||
-      this.registerDetails.Observation === '' ||
-      this.registerDetails.Description === '' ||
-      this.registerDetails.Remark === '' ||
-      this.registerDetails.Specification === ''
-    ) {
-      alert('Enter the Details');
-    } else {
-      const dialogRef = this.dialog.open(conditionalRejection);
+    // if (
+    //   this.registerDetails.date === undefined ||
+    //   this.registerDetails.ScheduleNo === undefined ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity === undefined ||
+    //   this.registerDetails.collabrationCost === undefined ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate === undefined ||
+    //   this.registerDetails.date.toString() === '' ||
+    //   this.registerDetails.ScheduleNo === '' ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity.toString() === '' ||
+    //   this.registerDetails.collabrationCost.toString() === '' ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate.toString() === '' ||
+    //   this.registerDetails.Observation === '' ||
+    //   this.registerDetails.Description === '' ||
+    //   this.registerDetails.Remark === '' ||
+    //   this.registerDetails.Specification === ''
+    // ) {
+    //   alert('Enter the Details');
+    // } else {
+    // console.log('data');
+    // console.log(this.registerDetails);
 
-      // dialogRef.afterClosed().subscribe((result) => {
-      //   console.log(`Dialog result: ${result}`);
+    this.dataservice.setAdmin(this.registerDetails);
+    const dialogRef = this.dialog.open(conditionalRejection);
 
-      //   this.dataservice.Entry_postUser(this.registerDetails).subscribe(
-      //     (data) => {
-      //       console.log(data.data);
-
-      //       if (data.data) {
-      //         this.toastr.success('Created!!!', ' Successfully.', {
-      //           timeOut: 3000,
-      //         });
-      //       }
-      //     },
-      //     (err) => console.log('its error')
-      //   );
-      // });
-    }
+    // }
   }
 
   Dialogbox() {
-    if (
-      this.registerDetails.date === undefined ||
-      this.registerDetails.ScheduleNo === undefined ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity === undefined ||
-      this.registerDetails.collabrationCost === undefined ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate === undefined ||
-      this.registerDetails.date.toString() === '' ||
-      this.registerDetails.ScheduleNo === '' ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity.toString() === '' ||
-      this.registerDetails.collabrationCost.toString() === '' ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate.toString() === '' ||
-      this.registerDetails.Observation === '' ||
-      this.registerDetails.Description === '' ||
-      this.registerDetails.Remark === '' ||
-      this.registerDetails.Specification === ''
-    ) {
-      alert('Enter the Details');
-    } else {
-      const dialogRef = this.dialog.open(rejectionmodalbox);
-
-      // dialogRef.afterClosed().subscribe((result) => {
-      //   console.log(`Dialog result: ${result}`);
-
-      //   this.dataservice.Entry_postUser(this.registerDetails).subscribe(
-      //     (data) => {
-      //       console.log(data.data);
-
-      //       if (data.data) {
-      //         this.toastr.success('Created!!!', ' Successfully.', {
-      //           timeOut: 3000,
-      //         });
-      //       }
-      //     },
-      //     (err) => console.log('its error')
-      //   );
-      // });
-    }
+    // if (
+    //   this.registerDetails.date === undefined ||
+    //   this.registerDetails.ScheduleNo === undefined ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity === undefined ||
+    //   this.registerDetails.collabrationCost === undefined ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate === undefined ||
+    //   this.registerDetails.date.toString() === '' ||
+    //   this.registerDetails.ScheduleNo === '' ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity.toString() === '' ||
+    //   this.registerDetails.collabrationCost.toString() === '' ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate.toString() === '' ||
+    //   this.registerDetails.Observation === '' ||
+    //   this.registerDetails.Description === '' ||
+    //   this.registerDetails.Remark === '' ||
+    //   this.registerDetails.Specification === ''
+    // ) {
+    //   alert('Enter the Details');
+    // } else {
+    const dialogRef = this.dialog.open(rejectionmodalbox);
+    // }
   }
 
   openDialog() {
@@ -306,7 +244,7 @@ export class CalibrationentryComponent implements OnInit {
     });
 
     this.dataservice.MasterCali_Request_getView().subscribe((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       this.CalibrationRequestof = data.data;
       // this.BackUpdata = data.data;
     });
@@ -393,7 +331,7 @@ export class CalibrationentryComponent implements OnInit {
     });
 
     this.dataservice.MasterCali_Request_getView().subscribe((data) => {
-      console.log(data.data);
+      // console.log(data.data);
       this.CalibrationRequestof = data.data;
       // this.BackUpdata = data.data;
     });
@@ -401,6 +339,8 @@ export class CalibrationentryComponent implements OnInit {
     this.dataservice.MasterTest_getView().subscribe((data) => {
       // console.log(data.data[0].type);
       this.InstrumentCodeof = data.data;
+      // console.log('code', this.InstrumentCodeof);
+
       // this.BackUpdata = data.data;
     });
 
@@ -437,6 +377,192 @@ export class CalibrationentryComponent implements OnInit {
     );
   }
   public store(): void {
+    // let dueDate, maxLifeTime, days;
+    this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
+      // console.log('data', data);
+      data.data.map((item: any) => {
+        let splittedCode = this.registerDetails.InstrumentCode.split(',');
+        let code = splittedCode[0];
+        let name = splittedCode[1];
+
+        if (item.InstrumentCode === code && item.InstrumentName === name) {
+          // console.log('item', item.InstrumentCode);
+          // console.log('code', code);
+          this.modifyDate(item.date, this.registerDetails.ReportDate, item);
+
+          // let date1 = this.datePipe.transform(
+          //   new Date(item.date),
+          //   'YYYY-MM-dd'
+          // );
+          // console.log('sample', date1);
+          // let date2 = this.datePipe.transform(
+          //   this.registerDetails.ReportDate,
+          //   'YYYY-MM-dd'
+          // );
+          // if (date1 && date2) {
+          //   if (date2 === date1) {
+          //     let dateValue = new Date(date2);
+          //     // if(dateValue !== null) {
+          //     this.dueDate = JSON.stringify(
+          //       this.datePipe.transform(dateValue, 'dd-MMM-YYYY')
+          //     );
+          //     // }
+          //   }
+
+          //   if (date1 < date2) {
+          //     this.TotalDays = 0;
+          //     let today = new Date();
+          //     let todayDate = this.datePipe.transform(today, 'MM/dd/YYYY');
+          //     let compareDate1 = new Date(`${todayDate}`);
+
+          //     let reversedDate1 = this.datePipe.transform(date1, 'MM/dd/YYYY');
+          //     let compareDate2 = new Date(`${reversedDate1}`);
+          //     let reversedDate2 = this.datePipe.transform(date2, 'MM/dd/YYYY');
+          //     let compareDate3 = new Date(`${reversedDate2}`);
+
+          //     var Time1 = compareDate1.getTime() - compareDate2.getTime();
+          //     var Time2 = compareDate3.getTime() - compareDate1.getTime();
+
+          //     var Days1 = Time1 / (1000 * 3600 * 24); //Difference in Days
+          //     var Days2 = Time2 / (1000 * 3600 * 24);
+          //     // console.log(Days1, Days2);
+
+          //     this.TotalDays = Days1 + Days2;
+          //     console.log('total', this.TotalDays);
+          //   }
+
+          //   if (item.MxLifeTime === 'Week') {
+          //     console.log('week');
+
+          //     let week = Math.round(this.TotalDays / 7);
+          //     let weekValue = week * 7;
+          //     //  console.log(weekValue);
+          //     let send_date: any = new Date();
+          //     send_date.setDate(send_date.getDate() + weekValue);
+          //     if (send_date != 'Invalid Date') {
+          //       let setDate: any = this.datePipe.transform(
+          //         send_date,
+          //         'dd-MMM-YYYY'
+          //       );
+          //       //  console.log(setDate);
+          //       this.dueDate = setDate;
+          //     }
+          //     this.MxLifeTime = 'Week';
+          //     this.MxLifeTimeNumber = week;
+          //   }
+
+          //   if (item.MxLifeTime === 'Days') {
+          //     console.log('days');
+
+          //     let days = this.TotalDays;
+          //     let weekValue = days * 1;
+          //     //  console.log(weekValue);
+          //     let send_date: any = new Date();
+          //     send_date.setDate(send_date.getDate() + weekValue);
+          //     if (send_date != 'Invalid Date') {
+          //       let setDate: any = this.datePipe.transform(
+          //         send_date,
+          //         'dd-MMM-YYYY'
+          //       );
+          //       //  console.log(setDate);
+          //       this.dueDate = setDate;
+          //     }
+          //     this.MxLifeTimeNumber = days;
+          //     this.MxLifeTime = 'Days';
+          //   }
+
+          //   if (
+          //     item.MxLifeTime === 'Month' ||
+          //     item.MxLifeTime === 'Quarterly||3'
+          //   ) {
+          //     console.log('inside month');
+
+          //     let days = parseInt(this.TotalDays) * 1;
+          //     let send_date: any = new Date(item.date);
+          //     send_date.setDate(send_date.getDate() + days);
+
+          //     if (send_date != 'Invalid Date') {
+          //       let setDate: any = send_date.setMonth(send_date.getMonth());
+          //       let setmonths = this.datePipe.transform(setDate, 'dd-MM-YYYY');
+          //       let setitem = this.datePipe.transform(item.date, 'dd-MM-YYYY');
+          //       // console.log(setmonths);
+          //       if (setmonths && setitem) {
+          //         let dateMonth1 = setmonths.split('-');
+          //         let dateMonth2 = setitem.split('-');
+          //         let mon1 = dateMonth1[1];
+          //         let mon2 = dateMonth2[1];
+          //         let total_month = parseInt(mon2) - parseInt(mon1);
+          //         if (total_month < 0) {
+          //           total_month = total_month * -1;
+          //         }
+          //         // console.log('setDate', setDate);
+
+          //         this.MxLifeTimeNumber = total_month;
+          //         if (total_month === 3) {
+          //           this.MxLifeTime = 'Quarterly||3';
+          //         } else {
+          //           this.MxLifeTime = 'Month';
+          //         }
+          //         this.dueDate = setmonths;
+          //       }
+
+          //       // let settedMonth = dateMonth[1]
+          //     }
+          //   }
+          //   if (item.MxLifeTime === 'Year') {
+          //     console.log('year');
+
+          //     let days = parseInt(this.TotalDays) * 1;
+          //     let send_date: any = new Date(item.date);
+          //     send_date.setDate(send_date.getDate() + days);
+          //     let year = send_date.setFullYear(send_date.getFullYear());
+          //     // console.log('year', year);
+          //     // console.log('item', item.year);
+
+          //     let setdate1 = this.datePipe.transform(year, 'dd-MM-YYYY');
+          //     let setdate2 = this.datePipe.transform(item.date, 'dd-MM-YYYY');
+
+          //     if (setdate1 && setdate2) {
+          //       let splityear1 = setdate1.split('-');
+          //       let splityear2 = setdate2.split('-');
+          //       let year1 = splityear1[2];
+          //       let year2 = splityear2[2];
+          //       let total = parseInt(year1) - parseInt(year2);
+          //       if (total < 0) {
+          //         total = total * -1;
+          //       }
+
+          //       this.dueDate = setdate1;
+          //       this.MxLifeTimeNumber = total;
+          //       this.MxLifeTime = 'Year';
+          //     }
+          //   }
+          // }
+          // let dateDetails = new Date(this.dueDate);
+          // console.log(dateDetails);
+
+          // this.dueDate = JSON.stringify(
+          //   this.datePipe.transform(dateDetails, 'dd-MMM-YYYY')
+          // );
+          // console.log(this.dueDate);
+
+          // this.masterDetails.push({
+          //   dueDate: this.dueDate,
+          //   MxLifeTime: this.MxLifeTime,
+          //   MxLifeTimeNumber: this.MxLifeTimeNumber,
+          // });
+
+          // console.log(this.masterDetails);
+
+          // this.dataservice
+          //   .MasterTest_updateSingleUser(item.id, this.masterDetails)
+          //   .subscribe((data) => {
+          //     console.log(data);
+          //   });
+        }
+      });
+    });
+
     // console.log(this.registerDetails.Description);
 
     // this.EntryScheNo = this.registerDetails.ScheduleNo?.toString();
@@ -515,6 +641,7 @@ export class CalibrationentryComponent implements OnInit {
     //     (err) => console.log('its error')
     //   );
     // }
+    // console.log(this.registerDetails.InstrumentCode.toString());
 
     var date = this.registerDetails.date;
     var ScheduleNo = this.registerDetails.ScheduleNo?.toString();
@@ -542,12 +669,12 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (ScheduleNo == '' || ScheduleNo == undefined) {
-      this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (ScheduleNo == '' || ScheduleNo == undefined) {
+    //   this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (InstrumentCode == '' || InstrumentCode == undefined) {
       this.toastr.warning('Warning!!!', 'InstrumentCode is required!', {
@@ -612,19 +739,19 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (RequestType == '' || RequestType == undefined) {
-      this.toastr.warning('Warning!!!', 'RequestType    is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (RequestType == '' || RequestType == undefined) {
+    //   this.toastr.warning('Warning!!!', 'RequestType    is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
-    if (RequestType == undefined || RequestType == undefined) {
-      this.toastr.warning('Warning!!!', 'RequestType is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (RequestType == undefined || RequestType == undefined) {
+    //   this.toastr.warning('Warning!!!', 'RequestType is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (Description == '' || Description == undefined) {
       this.toastr.warning('Warning!!!', 'Description      is required!', {
@@ -674,7 +801,8 @@ export class CalibrationentryComponent implements OnInit {
     //   });
     //   (<HTMLInputElement>document.getElementById('id')).focus();
     // }
-
+    this.registerDetails.status = 'Accept';
+    this.registerDetails.option = 'None';
     this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
       let currentUrl = this.router.url;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -682,6 +810,170 @@ export class CalibrationentryComponent implements OnInit {
       this.router.navigate([currentUrl]);
       this.tabledata();
     });
+  }
+
+  modifyDate(_modifydate1: any, _modifydate2: any, data: any) {
+    let date1 = this.datePipe.transform(new Date(_modifydate1), 'YYYY-MM-dd');
+    console.log('sample', date1);
+    let date2 = this.datePipe.transform(_modifydate2, 'YYYY-MM-dd');
+    if (date1 && date2) {
+      if (date2 === date1) {
+        let dateValue = new Date(date2);
+        // if(dateValue !== null) {
+        this.dueDate = JSON.stringify(
+          this.datePipe.transform(dateValue, 'dd-MMM-YYYY')
+        );
+        // }
+      }
+
+      if (date1 < date2) {
+        this.TotalDays = 0;
+        let today = new Date();
+        let todayDate = this.datePipe.transform(today, 'MM/dd/YYYY');
+        let compareDate1 = new Date(`${todayDate}`);
+
+        let reversedDate1 = this.datePipe.transform(date1, 'MM/dd/YYYY');
+        let compareDate2 = new Date(`${reversedDate1}`);
+        let reversedDate2 = this.datePipe.transform(date2, 'MM/dd/YYYY');
+        let compareDate3 = new Date(`${reversedDate2}`);
+
+        var Time1 = compareDate1.getTime() - compareDate2.getTime();
+        var Time2 = compareDate3.getTime() - compareDate1.getTime();
+
+        var Days1 = Time1 / (1000 * 3600 * 24); //Difference in Days
+        var Days2 = Time2 / (1000 * 3600 * 24);
+        // console.log(Days1, Days2);
+
+        this.TotalDays = Days1 + Days2;
+        console.log('total', this.TotalDays);
+      }
+
+      if (data.MxLifeTime === 'Week') {
+        console.log('week');
+
+        let week = Math.round(this.TotalDays / 7);
+        let weekValue = week * 7;
+        //  console.log(weekValue);
+        let send_date: any = new Date();
+        send_date.setDate(send_date.getDate() + weekValue);
+        if (send_date != 'Invalid Date') {
+          let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+          //  console.log(setDate);
+          this.dueDate = setDate;
+        }
+        this.MxLifeTime = 'Week';
+        this.MxLifeTimeNumber = week;
+      }
+
+      if (data.MxLifeTime === 'Days') {
+        console.log('days');
+
+        let days = this.TotalDays;
+        let weekValue = days * 1;
+        //  console.log(weekValue);
+        let send_date: any = new Date();
+        send_date.setDate(send_date.getDate() + weekValue);
+        if (send_date != 'Invalid Date') {
+          let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+          //  console.log(setDate);
+          this.dueDate = setDate;
+        }
+        this.MxLifeTimeNumber = days;
+        this.MxLifeTime = 'Days';
+      }
+
+      if (data.MxLifeTime === 'Month' || data.MxLifeTime === 'Quarterly||3') {
+        console.log('inside month');
+
+        let days = parseInt(this.TotalDays) * 1;
+        let send_date: any = new Date(_modifydate1);
+        send_date.setDate(send_date.getDate() + days);
+
+        if (send_date != 'Invalid Date') {
+          let setDate: any = send_date.setMonth(send_date.getMonth());
+          let setmonths = this.datePipe.transform(setDate, 'dd-MM-YYYY');
+          let setitem = this.datePipe.transform(_modifydate1, 'dd-MM-YYYY');
+          // console.log(setmonths);
+          if (setmonths && setitem) {
+            let dateMonth1 = setmonths.split('-');
+            let dateMonth2 = setitem.split('-');
+            let mon1 = dateMonth1[1];
+            let mon2 = dateMonth2[1];
+            let total_month = parseInt(mon2) - parseInt(mon1);
+            if (total_month < 0) {
+              total_month = total_month * -1;
+            }
+            // console.log('setDate', setDate);
+
+            this.MxLifeTimeNumber = total_month;
+            if (total_month === 3) {
+              this.MxLifeTime = 'Quarterly||3';
+            } else {
+              this.MxLifeTime = 'Month';
+            }
+            this.dueDate = setmonths;
+          }
+
+          // let settedMonth = dateMonth[1]
+        }
+      }
+      if (data.MxLifeTime === 'Year') {
+        console.log('year');
+
+        let days = parseInt(this.TotalDays) * 1;
+        let send_date: any = new Date(_modifydate1);
+        send_date.setDate(send_date.getDate() + days);
+        let year = send_date.setFullYear(send_date.getFullYear());
+        // console.log('year', year);
+        // console.log('item', item.year);
+
+        let setdate1 = this.datePipe.transform(year, 'dd-MM-YYYY');
+        let setdate2 = this.datePipe.transform(_modifydate1, 'dd-MM-YYYY');
+
+        if (setdate1 && setdate2) {
+          let splityear1 = setdate1.split('-');
+          let splityear2 = setdate2.split('-');
+          let year1 = splityear1[2];
+          let year2 = splityear2[2];
+          let total = parseInt(year1) - parseInt(year2);
+          if (total < 0) {
+            total = total * -1;
+          }
+
+          this.dueDate = setdate1;
+          this.MxLifeTimeNumber = total;
+          this.MxLifeTime = 'Year';
+        }
+      }
+    }
+    let dateDetails = new Date(this.dueDate);
+    // console.log(dateDetails);
+
+    this.dueDate = dateDetails.toISOString();
+
+    // console.log(this.dueDate);
+
+    // this.masterDetails.push({
+    //   dueDate: this.dueDate,
+    //   MxLifeTime: this.MxLifeTime,
+    //   MxLifeTimeNumber: this.MxLifeTimeNumber,
+    // });
+    // this.masterDetails.dueDate = this.dueDate;
+    // this.masterDetails.MxLifeTime = this.MxLifeTime;
+    // this.masterDetails.MxLifeTimeNumber = this.MxLifeTimeNumber;
+
+    // console.log(this.masterDetails);
+    // console.log('due', this.dueDate);
+    // console.log('type', typeof this.dueDate);
+    console.log(this.dueDate);
+
+    data.MxLifeTime = this.MxLifeTime;
+    data.MxLifeTimeNumber = this.MxLifeTimeNumber;
+    data.dueDate = this.dueDate;
+
+    this.dataservice
+      .MasterTest_updateSingleUser(data.id, data)
+      .subscribe((data: any) => {});
   }
 
   error() {
@@ -1066,13 +1358,24 @@ export class conditionalRejection {
   isShown = true;
   public maximumTime: any;
   changedNumber: any;
+  reportDate: any;
+  masterDetails: any;
+  code: any;
 
   constructor(
     public dialogRef: MatDialogRef<conditionalRejection>,
     private dataservice: DataService,
     private datePipe: DatePipe,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
+
+  ngOnInit() {
+    this.dataservice.adminSubject$.subscribe((data: any) => {
+      this.reportDate = data.ReportDate;
+      this.code = data.InstrumentCode;
+    });
+  }
 
   checkFrequency(event: any) {
     if (event.target.value === 'frequencyReduced' && event.target.checked) {
@@ -1083,13 +1386,17 @@ export class conditionalRejection {
   }
 
   lifeTime(event: any) {
+    // console.log(this.reportDate);
+    console.log('report date', this.reportDate);
+    console.log(event.target.value);
+
     let selectedLaw: any = event.target.value;
     this.maximumTime = selectedLaw;
     let defaultDay = '1';
     let selected_value;
-    console.log('select', selectedLaw);
-    console.log('inside data');
-
+    // console.log('select', selectedLaw);
+    // console.log('inside data');
+    this.registerDetails.MxLifeTime = this.maximumTime;
     if (selectedLaw == 'Quarterly||3') {
       this.isShown = false;
       // let weekValue = parseInt(selectedLaw) * 3;
@@ -1101,9 +1408,9 @@ export class conditionalRejection {
     }
     if (this.maximumTime == 'Quarterly||3') {
       var quarterly = this.maximumTime.split('||');
-      let weekValue = 3;
+      // let weekValue = 3;
       //  console.log(weekValue);
-      let send_date: any = new Date();
+      let send_date: any = this.reportDate;
       send_date.setMonth(send_date.getMonth() + parseInt(quarterly[1]));
       // console.log(send_date);
       // debugger;
@@ -1134,7 +1441,7 @@ export class conditionalRejection {
     if (this.maximumTime == 'Week') {
       let weekValue = parseInt(selected_value) * 7;
       //  console.log(weekValue);
-      let send_date: any = new Date();
+      let send_date: any = this.reportDate;
       send_date.setDate(send_date.getDate() + weekValue);
       if (send_date != 'Invalid Date') {
         let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
@@ -1143,28 +1450,37 @@ export class conditionalRejection {
       }
     }
     if (this.maximumTime == 'Day') {
+      console.log(selected_value);
+
       let weekValue = parseInt(selected_value) * 1;
-      //  console.log(weekValue);
-      let send_date: any = new Date();
+      console.log('weekvalue', weekValue);
+      let send_date: any = new Date(this.reportDate);
       send_date.setDate(send_date.getDate() + weekValue);
+      console.log('send', send_date);
+
       if (send_date != 'Invalid Date') {
         let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
-        //  console.log(setDate);
+        console.log('setDate', setDate);
         this.registerDetails.dueDate = setDate;
       }
     }
 
     if (this.maximumTime == 'Month') {
-      console.log('selects', selectedLaw);
+      // console.log('selects', selectedLaw);
 
       let weekValue = parseInt(selected_value) * 1;
       //  console.log(weekValue);
-      let send_date: any = new Date();
+      let send_date: any = this.reportDate;
+      // console.log('send_date', send_date);
+
       send_date.setMonth(send_date.getMonth() + weekValue);
-      // console.log(send_date);
+
+      // console.log('weekValue', weekValue);
+
+      // console.log('month', send_date.getMonth());
       if (send_date != 'Invalid Date') {
         let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
-        //  console.log(setDate);
+        // console.log('setDate', setDate);
         this.registerDetails.dueDate = setDate;
       }
     }
@@ -1172,7 +1488,7 @@ export class conditionalRejection {
     if (this.maximumTime == 'Year') {
       let weekValue = parseInt(selected_value) * 1;
       //  console.log(weekValue);
-      let send_date: any = new Date();
+      let send_date: any = this.reportDate;
       send_date.setFullYear(send_date.getFullYear() + weekValue);
       // console.log(send_date);
       if (send_date != 'Invalid Date') {
@@ -1181,15 +1497,22 @@ export class conditionalRejection {
         this.registerDetails.dueDate = setDate;
       }
     }
+    // this.ngOnInit();
+    // console.log('date', this.registerDetails.dueDate);
   }
 
   onKeyDate(event: any) {
     let selectedLaw: any = event.target.value;
     var reg = new RegExp('^[0-9]');
     this.changedNumber = selectedLaw;
+    console.log('max', this.maximumTime);
+    console.log('report', this.reportDate);
+    console.log('val', event.target.value);
+
+    this.registerDetails.MxLifeTimeNumber = selectedLaw;
 
     if (selectedLaw === '') {
-      let send_date: any = new Date();
+      let send_date: any = this.reportDate;
       let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
       this.registerDetails.dueDate = setDate;
     }
@@ -1201,7 +1524,7 @@ export class conditionalRejection {
       // this.registerDetails.MxLifeTimeNumber = ""
       if (this.maximumTime == 'Week') {
         let weekValue = parseInt(selectedLaw) * 7;
-        let send_date: any = new Date();
+        let send_date: any = this.reportDate;
         send_date.setDate(send_date.getDate() + weekValue);
         if (send_date != 'Invalid Date') {
           let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
@@ -1210,19 +1533,25 @@ export class conditionalRejection {
       }
       if (this.maximumTime == 'Day') {
         let weekValue = parseInt(selectedLaw) * 1;
-        let send_date: any = new Date();
+        console.log('week', weekValue);
+
+        let send_date: any = this.reportDate;
         send_date.setDate(send_date.getDate() + weekValue);
+        console.log('send', send_date);
+
         if (send_date != 'Invalid Date') {
           let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
+          console.log('set', setDate);
+
           this.registerDetails.dueDate = setDate;
         }
       }
 
       if (this.maximumTime == 'Month') {
-        console.log('selects', selectedLaw);
+        // console.log('selects', selectedLaw);
 
         let weekValue = parseInt(selectedLaw) * 1;
-        let send_date: any = new Date();
+        let send_date: any = this.reportDate;
         send_date.setMonth(send_date.getMonth() + weekValue);
         if (send_date != 'Invalid Date') {
           let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
@@ -1233,7 +1562,7 @@ export class conditionalRejection {
       if (this.maximumTime == 'Year') {
         let weekValue = parseInt(selectedLaw) * 1;
         //  console.log(weekValue);
-        let send_date: any = new Date();
+        let send_date: any = this.reportDate;
         send_date.setFullYear(send_date.getFullYear() + weekValue);
         // console.log(send_date);
         if (send_date != 'Invalid Date') {
@@ -1243,11 +1572,38 @@ export class conditionalRejection {
         }
       }
     }
+    // this.ngOnInit();
   }
 
   onNoClick(): void {
     console.log('inside click');
+    this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
+      // console.log('data', data);
+      data.data.map((item: any) => {
+        let splittedCode = this.code.split(',');
+        let code = splittedCode[0];
+        let name = splittedCode[1];
 
+        if (item.InstrumentCode === code && item.InstrumentName === name) {
+          console.log(this.registerDetails.dueDate);
+
+          item.dueDate = this.registerDetails.dueDate;
+          item.MxLifeTime = this.registerDetails.MxLifeTime;
+          item.MxLifeTimeNumber = this.registerDetails.MxLifeTimeNumber;
+          // this.dataservice
+          //   .MasterTest_updateSingleUser(item.id, item)
+          //   .subscribe((data: any) => {});
+        }
+      });
+    });
+
+    // this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
+    //   let currentUrl = this.router.url;
+    //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    //   this.router.onSameUrlNavigation = 'reload';
+    //   this.router.navigate([currentUrl]);
+    //   // this.tabledata();
+    // });
     this.dialogRef.close();
 
     // if (

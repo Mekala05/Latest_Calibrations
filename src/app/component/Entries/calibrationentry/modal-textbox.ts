@@ -16,5 +16,9 @@ export interface modaltextbox {
   Specification?: string;
   Observation?: string;
   Remark?: string;
+  MxLifeTimeNumber?: string;
+  MxLifeTime?: string;
   fileErrorDiscription?: File;
+  status?: string;
+  option?: string;
 }

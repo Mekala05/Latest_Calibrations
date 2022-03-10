@@ -15,7 +15,11 @@ export interface calibrationEntry {
   Description?: string;
   Specification?: string;
   Observation?: string;
+  MxLifeTimeNumber?: string;
+  MxLifeTime?: string;
   Remark?: string;
   fileErrorDiscription?: File;
   Requesttypeselected?: any;
+  status?: string;
+  option?: string;
 }
