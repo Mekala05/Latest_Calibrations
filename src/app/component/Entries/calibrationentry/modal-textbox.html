@@ -18,8 +18,15 @@
   <div class="row mt-10 ml-0">
     <div class="col-lg-offset-4">
       <div mat-dialog-actions class="action">
-        <mat-label class="gene_name newname">Frequency Reduced</mat-label>
-        <select name="" id="" class="form-control input_text select">
+        <mat-label class="gene_name newname"
+          >Calibration Request Type</mat-label
+        >
+        <select
+          name=""
+          id=""
+          class="form-control input_text select"
+          (change)="changeType($event)"
+        >
           <option disabledd selected value="undefined">--Select--</option>
           <option value="Re-Calibration">Re-Calibration</option>
           <option value="ReService">ReService</option>

@@ -23,6 +23,8 @@ export class DataService {
   // public setImageViewPopupObserve: Observable<string>;
   adminSubject$ = new BehaviorSubject<any>(null);
   admin = this.adminSubject$.asObservable();
+  scrapDetails$ = new BehaviorSubject<any>(null);
+  scrap = this.scrapDetails$.asObservable();
 
   constructor(private http: HttpClient) {
     // this.setImageViewPopup = new BehaviorSubject('');
@@ -49,6 +51,10 @@ export class DataService {
 
   setAdmin(data: any) {
     this.adminSubject$.next(data);
+  }
+
+  setScrapDetails(data: any) {
+    this.scrapDetails$.next(data);
   }
 
   // Categroy Master Api
@@ -384,6 +390,8 @@ export class DataService {
     return this.http.get<any>(`${environment.Calibration_Entry}/view`);
   }
   Entry_postUser(data: any) {
+    console.log(data);
+
     return this.http.post<any>(`${environment.Calibration_Entry}/insert`, data);
   }
   Entry_DeleteSingleUser(id: any, data: any) {

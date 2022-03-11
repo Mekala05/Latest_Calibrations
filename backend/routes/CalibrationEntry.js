@@ -22,6 +22,7 @@ function sendSuccess(res, result) {
 }
 
 router.post('/insert', (req, res) => {
+    console.log(req.body);
     return new Promise((resolve, reject) => {
         CalibrationEntry.create(req.body).then(function (result) {
             //console.log(req.body);
@@ -35,7 +36,8 @@ router.post('/insert', (req, res) => {
 router.get('/view', (req, res) => {
     return new Promise((resolve, reject) => {
         CalibrationEntry.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
+            console.log(res)    
+            sendSuccess(res, result);
             }).catch(function (err) {
                 sendError(res, err);
             });

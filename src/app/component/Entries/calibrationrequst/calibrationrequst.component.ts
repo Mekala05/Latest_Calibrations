@@ -142,6 +142,8 @@ export class CalibrationrequstComponent implements OnInit {
       // console.log('code', data.data);
 
       // console.log(data.data[0].type);
+      console.log('data', data.data);
+
       this.InstrumentCodeof = data.data;
       // this.BackUpdata = data.data;
     });
@@ -153,6 +155,8 @@ export class CalibrationrequstComponent implements OnInit {
 
     this.dataservice.MasterCali_Request_getView().subscribe((data) => {
       // console.log(data.data);
+      console.log(data.data);
+
       this.CalibrationRequestof = data.data;
       // this.BackUpdata = data.data;
     });

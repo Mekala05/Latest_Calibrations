@@ -143,43 +143,43 @@ export class CalibrationentryComponent implements OnInit {
 
     this.dataservice.setAdmin(this.registerDetails);
     const dialogRef = this.dialog.open(conditionalRejection);
-
     // }
   }
 
   Dialogbox() {
-    // if (
-    //   this.registerDetails.date === undefined ||
-    //   this.registerDetails.ScheduleNo === undefined ||
-    //   this.registerDetails.InstrumentCode === '' ||
-    //   this.registerDetails.InstrumentName === '' ||
-    //   this.registerDetails.LPIdentification === '' ||
-    //   this.registerDetails.partySelection === '' ||
-    //   this.registerDetails.Quantity === undefined ||
-    //   this.registerDetails.collabrationCost === undefined ||
-    //   this.registerDetails.DCDetails === '' ||
-    //   this.registerDetails.ReportNo === '' ||
-    //   this.registerDetails.ReportDate === undefined ||
-    //   this.registerDetails.date.toString() === '' ||
-    //   this.registerDetails.ScheduleNo === '' ||
-    //   this.registerDetails.InstrumentCode === '' ||
-    //   this.registerDetails.InstrumentName === '' ||
-    //   this.registerDetails.LPIdentification === '' ||
-    //   this.registerDetails.partySelection === '' ||
-    //   this.registerDetails.Quantity.toString() === '' ||
-    //   this.registerDetails.collabrationCost.toString() === '' ||
-    //   this.registerDetails.DCDetails === '' ||
-    //   this.registerDetails.ReportNo === '' ||
-    //   this.registerDetails.ReportDate.toString() === '' ||
-    //   this.registerDetails.Observation === '' ||
-    //   this.registerDetails.Description === '' ||
-    //   this.registerDetails.Remark === '' ||
-    //   this.registerDetails.Specification === ''
-    // ) {
-    //   alert('Enter the Details');
-    // } else {
-    const dialogRef = this.dialog.open(rejectionmodalbox);
-    // }
+    if (
+      this.registerDetails.date === undefined ||
+      this.registerDetails.ScheduleNo === undefined ||
+      this.registerDetails.InstrumentCode === '' ||
+      this.registerDetails.InstrumentName === '' ||
+      this.registerDetails.LPIdentification === '' ||
+      this.registerDetails.partySelection === '' ||
+      this.registerDetails.Quantity === undefined ||
+      this.registerDetails.collabrationCost === undefined ||
+      this.registerDetails.DCDetails === '' ||
+      this.registerDetails.ReportNo === '' ||
+      this.registerDetails.ReportDate === undefined ||
+      this.registerDetails.date.toString() === '' ||
+      this.registerDetails.ScheduleNo === '' ||
+      this.registerDetails.InstrumentCode === '' ||
+      this.registerDetails.InstrumentName === '' ||
+      this.registerDetails.LPIdentification === '' ||
+      this.registerDetails.partySelection === '' ||
+      this.registerDetails.Quantity.toString() === '' ||
+      this.registerDetails.collabrationCost.toString() === '' ||
+      this.registerDetails.DCDetails === '' ||
+      this.registerDetails.ReportNo === '' ||
+      this.registerDetails.ReportDate.toString() === '' ||
+      this.registerDetails.Observation === '' ||
+      this.registerDetails.Description === '' ||
+      this.registerDetails.Remark === '' ||
+      this.registerDetails.Specification === ''
+    ) {
+      alert('Enter the Details');
+    } else {
+      this.dataservice.setAdmin(this.registerDetails);
+      const dialogRef = this.dialog.open(rejectionmodalbox);
+    }
   }
 
   openDialog() {
@@ -803,13 +803,17 @@ export class CalibrationentryComponent implements OnInit {
     // }
     this.registerDetails.status = 'Accept';
     this.registerDetails.option = 'None';
-    this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
-      let currentUrl = this.router.url;
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.router.onSameUrlNavigation = 'reload';
-      this.router.navigate([currentUrl]);
-      this.tabledata();
-    });
+    if (this.registerDetails) {
+      this.dataservice
+        .Entry_postUser(this.registerDetails)
+        .subscribe((data) => {
+          let currentUrl = this.router.url;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate([currentUrl]);
+          this.tabledata();
+        });
+    }
   }
 
   modifyDate(_modifydate1: any, _modifydate2: any, data: any) {
@@ -1323,7 +1327,9 @@ export class DialogContent {
 })
 export class rejectionmodalbox {
   public registerDetails: modaltextbox = {};
-
+  type: any;
+  refno: string = '';
+  Data: any;
   constructor(
     public dialogRef: MatDialogRef<rejectionmodalbox>,
     private dataservice: DataService,
@@ -1331,7 +1337,132 @@ export class rejectionmodalbox {
     private router: Router
   ) {}
 
+  ngOnInit() {
+    this.dataservice.adminSubject$.subscribe((data: any) => {
+      this.Data = data;
+    });
+  }
+
+  changeType(event: any) {
+    this.type = event.target.value;
+    this.dataservice.Entry_getView().subscribe((data: any) => {
+      this.refno = '';
+      // console.log('data', data);
+
+      if (data.data.length) {
+        // console.log('inside data length');
+        data.data.map((data: any) => {
+          if (data.status === 'Reject') {
+            // console.log('type', this.type);
+            // console.log('option', data.option);
+            // if(this.type === 'Re-Calibration')
+            if (this.type === data.option) {
+              if (this.type === 'Re-Calibration') {
+                // console.log('inside');
+
+                // let code = 'RECL' + '-' + 1000;
+                // console.log('entry', data);
+                // console.log(typeof data);
+
+                // let admin = data.filter((item: any) => item.option === this.type);
+                // if (data.option === this.type) {
+                // console.log('inside data');
+
+                let code = data.ReferenceCode;
+                if (code) {
+                  let splitted = code.split('-');
+                  let ref = parseInt(splitted[1]) + 1;
+                  this.refno = 'RECL' + '-' + ref;
+                  // console.log(this.refno);
+                }
+                // }
+              } else if (this.type === 'ReService') {
+                // console.log('isnide reser');
+
+                let code = data.ReferenceCode;
+                if (code) {
+                  let splitted = code.split('-');
+                  let ref = parseInt(splitted[1]) + 1;
+                  this.refno = 'RESV' + '-' + ref;
+                }
+                // console.log(this.refno);
+                // }
+                // admin.map((data: any) => {
+
+                // });
+                // console.log('refno', this.refno);
+              } else if ((this.type = 'Scrap')) {
+                // console.log('inside scrap');
+
+                let code = data.ReferenceCode;
+                if (code) {
+                  let splitted = code.split('-');
+                  let ref = parseInt(splitted[1]) + 1;
+                  this.refno = 'SCRAP' + '-' + ref;
+                }
+              } else {
+                // console.log('type', this.type);
+                // console.log('inside else');
+
+                if (this.type === 'Re-Calibration') {
+                  this.refno = 'RECL' + '-' + '1000';
+                  // console.log('reno', this.refno);
+                } else if (this.type === 'ReService') {
+                  this.refno = 'RESV' + '-' + '1000';
+                } else {
+                  if (this.type === 'Scrap')
+                    this.refno = 'SCRAP' + '-' + '1000';
+                }
+              }
+            }
+            // console.log('ref', this.refno);
+          }
+        });
+      }
+      // else {
+      //   console.log('type', this.type);
+
+      //   if (this.type === 'Re-Calibration') {
+      //     this.refno = 'RECL' + '-' + '1000';
+      //     console.log('reno', this.refno);
+      //   } else if (this.type === 'ReService') {
+      //     this.refno = 'RESV' + '-' + '1000';
+      //   } else {
+      //     if (this.type === 'Scrap') this.refno = 'SCRAP' + '-' + '1000';
+      //   }
+
+      //   console.log('ref', this.refno);
+      // }
+    });
+  }
+
   onNoClick(): void {
+    // console.log(this.Data);
+
+    this.Data.status = 'Reject';
+    this.Data.option = this.type;
+    this.Data.ReferenceCode = this.refno;
+    // console.log(this.refno);
+
+    // console.log('reference', this.refno?.toString());
+
+    console.log(this.Data);
+    if (this.Data) {
+      this.dataservice.Entry_postUser(this.Data).subscribe((data) => {
+        if (this.type === 'Scrap') {
+          this.dataservice.setScrapDetails(this.Data);
+          this.router.navigate(['/header/ScrapApproval']);
+        } else {
+          let currentUrl = this.router.url;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate([currentUrl]);
+        }
+
+        // this.tabledata();
+      });
+    }
+
     this.dialogRef.close();
   }
 
@@ -1361,6 +1492,8 @@ export class conditionalRejection {
   reportDate: any;
   masterDetails: any;
   code: any;
+  Data: any;
+  selected: any;
 
   constructor(
     public dialogRef: MatDialogRef<conditionalRejection>,
@@ -1374,11 +1507,13 @@ export class conditionalRejection {
     this.dataservice.adminSubject$.subscribe((data: any) => {
       this.reportDate = data.ReportDate;
       this.code = data.InstrumentCode;
+      this.Data = data;
     });
   }
 
   checkFrequency(event: any) {
-    if (event.target.value === 'frequencyReduced' && event.target.checked) {
+    this.selected = event.target.value;
+    if (this.selected === 'frequencyReduced' && this.selected) {
       this.frequencyDetail = true;
     } else {
       this.frequencyDetail = false;
@@ -1387,8 +1522,9 @@ export class conditionalRejection {
 
   lifeTime(event: any) {
     // console.log(this.reportDate);
-    console.log('report date', this.reportDate);
-    console.log(event.target.value);
+    this.registerDetails.dueDate = '';
+    // console.log('report date', this.reportDate);
+    // console.log(event.target.value);
 
     let selectedLaw: any = event.target.value;
     this.maximumTime = selectedLaw;
@@ -1410,7 +1546,7 @@ export class conditionalRejection {
       var quarterly = this.maximumTime.split('||');
       // let weekValue = 3;
       //  console.log(weekValue);
-      let send_date: any = this.reportDate;
+      let send_date: any = new Date(this.reportDate);
       send_date.setMonth(send_date.getMonth() + parseInt(quarterly[1]));
       // console.log(send_date);
       // debugger;
@@ -1441,7 +1577,7 @@ export class conditionalRejection {
     if (this.maximumTime == 'Week') {
       let weekValue = parseInt(selected_value) * 7;
       //  console.log(weekValue);
-      let send_date: any = this.reportDate;
+      let send_date: any = new Date(this.reportDate);
       send_date.setDate(send_date.getDate() + weekValue);
       if (send_date != 'Invalid Date') {
         let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
@@ -1450,17 +1586,17 @@ export class conditionalRejection {
       }
     }
     if (this.maximumTime == 'Day') {
-      console.log(selected_value);
+      // console.log(selected_value);
 
       let weekValue = parseInt(selected_value) * 1;
-      console.log('weekvalue', weekValue);
+      // console.log('weekvalue', weekValue);
       let send_date: any = new Date(this.reportDate);
       send_date.setDate(send_date.getDate() + weekValue);
-      console.log('send', send_date);
+      // console.log('send', send_date);
 
       if (send_date != 'Invalid Date') {
         let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
-        console.log('setDate', setDate);
+        // console.log('setDate', setDate);
         this.registerDetails.dueDate = setDate;
       }
     }
@@ -1470,7 +1606,7 @@ export class conditionalRejection {
 
       let weekValue = parseInt(selected_value) * 1;
       //  console.log(weekValue);
-      let send_date: any = this.reportDate;
+      let send_date: any = new Date(this.reportDate);
       // console.log('send_date', send_date);
 
       send_date.setMonth(send_date.getMonth() + weekValue);
@@ -1488,7 +1624,7 @@ export class conditionalRejection {
     if (this.maximumTime == 'Year') {
       let weekValue = parseInt(selected_value) * 1;
       //  console.log(weekValue);
-      let send_date: any = this.reportDate;
+      let send_date: any = new Date(this.reportDate);
       send_date.setFullYear(send_date.getFullYear() + weekValue);
       // console.log(send_date);
       if (send_date != 'Invalid Date') {
@@ -1498,7 +1634,7 @@ export class conditionalRejection {
       }
     }
     // this.ngOnInit();
-    // console.log('date', this.registerDetails.dueDate);
+    console.log('date', this.registerDetails.dueDate);
   }
 
   onKeyDate(event: any) {
@@ -1508,11 +1644,12 @@ export class conditionalRejection {
     console.log('max', this.maximumTime);
     console.log('report', this.reportDate);
     console.log('val', event.target.value);
+    this.registerDetails.dueDate = '';
 
     this.registerDetails.MxLifeTimeNumber = selectedLaw;
 
     if (selectedLaw === '') {
-      let send_date: any = this.reportDate;
+      let send_date: any = new Date(this.reportDate);
       let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
       this.registerDetails.dueDate = setDate;
     }
@@ -1524,7 +1661,7 @@ export class conditionalRejection {
       // this.registerDetails.MxLifeTimeNumber = ""
       if (this.maximumTime == 'Week') {
         let weekValue = parseInt(selectedLaw) * 7;
-        let send_date: any = this.reportDate;
+        let send_date: any = new Date(this.reportDate);
         send_date.setDate(send_date.getDate() + weekValue);
         if (send_date != 'Invalid Date') {
           let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
@@ -1535,7 +1672,7 @@ export class conditionalRejection {
         let weekValue = parseInt(selectedLaw) * 1;
         console.log('week', weekValue);
 
-        let send_date: any = this.reportDate;
+        let send_date: any = new Date(this.reportDate);
         send_date.setDate(send_date.getDate() + weekValue);
         console.log('send', send_date);
 
@@ -1551,7 +1688,7 @@ export class conditionalRejection {
         // console.log('selects', selectedLaw);
 
         let weekValue = parseInt(selectedLaw) * 1;
-        let send_date: any = this.reportDate;
+        let send_date: any = new Date(this.reportDate);
         send_date.setMonth(send_date.getMonth() + weekValue);
         if (send_date != 'Invalid Date') {
           let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
@@ -1562,7 +1699,7 @@ export class conditionalRejection {
       if (this.maximumTime == 'Year') {
         let weekValue = parseInt(selectedLaw) * 1;
         //  console.log(weekValue);
-        let send_date: any = this.reportDate;
+        let send_date: any = new Date(this.reportDate);
         send_date.setFullYear(send_date.getFullYear() + weekValue);
         // console.log(send_date);
         if (send_date != 'Invalid Date') {
@@ -1572,6 +1709,8 @@ export class conditionalRejection {
         }
       }
     }
+    console.log(this.registerDetails.dueDate);
+
     // this.ngOnInit();
   }
 
@@ -1590,20 +1729,24 @@ export class conditionalRejection {
           item.dueDate = this.registerDetails.dueDate;
           item.MxLifeTime = this.registerDetails.MxLifeTime;
           item.MxLifeTimeNumber = this.registerDetails.MxLifeTimeNumber;
-          // this.dataservice
-          //   .MasterTest_updateSingleUser(item.id, item)
-          //   .subscribe((data: any) => {});
+          this.dataservice
+            .MasterTest_updateSingleUser(item.id, item)
+            .subscribe((data: any) => {});
         }
       });
     });
+    this.Data.option = this.selected;
+    this.Data.status = 'Con-Accept';
+    // if (this.Data) {
+    //   this.dataservice.Entry_postUser(this.Data).subscribe((data) => {
+    //     let currentUrl = this.router.url;
+    //     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    //     this.router.onSameUrlNavigation = 'reload';
+    //     this.router.navigate([currentUrl]);
+    //     // this.tabledata();
+    //   });
+    // }
 
-    // this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
-    //   let currentUrl = this.router.url;
-    //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    //   this.router.onSameUrlNavigation = 'reload';
-    //   this.router.navigate([currentUrl]);
-    //   // this.tabledata();
-    // });
     this.dialogRef.close();
 
     // if (
