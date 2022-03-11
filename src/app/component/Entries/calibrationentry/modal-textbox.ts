@@ -19,6 +19,7 @@ export interface modaltextbox {
   MxLifeTimeNumber?: string;
   MxLifeTime?: string;
   fileErrorDiscription?: File;
+  ReferenceCode?: string;
   status?: string;
   option?: string;
 }
