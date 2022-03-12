@@ -108,42 +108,42 @@ export class CalibrationentryComponent implements OnInit {
   }
 
   conrejection() {
-    // if (
-    //   this.registerDetails.date === undefined ||
-    //   this.registerDetails.ScheduleNo === undefined ||
-    //   this.registerDetails.InstrumentCode === '' ||
-    //   this.registerDetails.InstrumentName === '' ||
-    //   this.registerDetails.LPIdentification === '' ||
-    //   this.registerDetails.partySelection === '' ||
-    //   this.registerDetails.Quantity === undefined ||
-    //   this.registerDetails.collabrationCost === undefined ||
-    //   this.registerDetails.DCDetails === '' ||
-    //   this.registerDetails.ReportNo === '' ||
-    //   this.registerDetails.ReportDate === undefined ||
-    //   this.registerDetails.date.toString() === '' ||
-    //   this.registerDetails.ScheduleNo === '' ||
-    //   this.registerDetails.InstrumentCode === '' ||
-    //   this.registerDetails.InstrumentName === '' ||
-    //   this.registerDetails.LPIdentification === '' ||
-    //   this.registerDetails.partySelection === '' ||
-    //   this.registerDetails.Quantity.toString() === '' ||
-    //   this.registerDetails.collabrationCost.toString() === '' ||
-    //   this.registerDetails.DCDetails === '' ||
-    //   this.registerDetails.ReportNo === '' ||
-    //   this.registerDetails.ReportDate.toString() === '' ||
-    //   this.registerDetails.Observation === '' ||
-    //   this.registerDetails.Description === '' ||
-    //   this.registerDetails.Remark === '' ||
-    //   this.registerDetails.Specification === ''
-    // ) {
-    //   alert('Enter the Details');
-    // } else {
-    // console.log('data');
-    // console.log(this.registerDetails);
+    if (
+      this.registerDetails.date === undefined ||
+      this.registerDetails.ScheduleNo === undefined ||
+      this.registerDetails.InstrumentCode === '' ||
+      this.registerDetails.InstrumentName === '' ||
+      this.registerDetails.LPIdentification === '' ||
+      this.registerDetails.partySelection === '' ||
+      this.registerDetails.Quantity === undefined ||
+      this.registerDetails.collabrationCost === undefined ||
+      this.registerDetails.DCDetails === '' ||
+      this.registerDetails.ReportNo === '' ||
+      this.registerDetails.ReportDate === undefined ||
+      this.registerDetails.date.toString() === '' ||
+      this.registerDetails.ScheduleNo === '' ||
+      this.registerDetails.InstrumentCode === '' ||
+      this.registerDetails.InstrumentName === '' ||
+      this.registerDetails.LPIdentification === '' ||
+      this.registerDetails.partySelection === '' ||
+      this.registerDetails.Quantity.toString() === '' ||
+      this.registerDetails.collabrationCost.toString() === '' ||
+      this.registerDetails.DCDetails === '' ||
+      this.registerDetails.ReportNo === '' ||
+      this.registerDetails.ReportDate.toString() === '' ||
+      this.registerDetails.Observation === '' ||
+      this.registerDetails.Description === '' ||
+      this.registerDetails.Remark === '' ||
+      this.registerDetails.Specification === ''
+    ) {
+      alert('Enter the Details');
+    } else {
+      // console.log('data');
+      // console.log(this.registerDetails);
 
-    this.dataservice.setAdmin(this.registerDetails);
-    const dialogRef = this.dialog.open(conditionalRejection);
-    // }
+      this.dataservice.setAdmin(this.registerDetails);
+      const dialogRef = this.dialog.open(conditionalRejection);
+    }
   }
 
   Dialogbox() {
@@ -669,12 +669,12 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    // if (ScheduleNo == '' || ScheduleNo == undefined) {
-    //   this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (ScheduleNo == '' || ScheduleNo == undefined) {
+      this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
     if (InstrumentCode == '' || InstrumentCode == undefined) {
       this.toastr.warning('Warning!!!', 'InstrumentCode is required!', {
@@ -739,19 +739,19 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    // if (RequestType == '' || RequestType == undefined) {
-    //   this.toastr.warning('Warning!!!', 'RequestType    is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (RequestType == '' || RequestType == undefined) {
+      this.toastr.warning('Warning!!!', 'RequestType    is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
-    // if (RequestType == undefined || RequestType == undefined) {
-    //   this.toastr.warning('Warning!!!', 'RequestType is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    // }
+    if (RequestType == undefined || RequestType == undefined) {
+      this.toastr.warning('Warning!!!', 'RequestType is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+    }
 
     if (Description == '' || Description == undefined) {
       this.toastr.warning('Warning!!!', 'Description      is required!', {
@@ -969,7 +969,7 @@ export class CalibrationentryComponent implements OnInit {
     // console.log(this.masterDetails);
     // console.log('due', this.dueDate);
     // console.log('type', typeof this.dueDate);
-    console.log(this.dueDate);
+    // console.log(this.dueDate);
 
     data.MxLifeTime = this.MxLifeTime;
     data.MxLifeTimeNumber = this.MxLifeTimeNumber;
@@ -1074,7 +1074,7 @@ export class CalibrationentryComponent implements OnInit {
       case 'breakage':
         // debugger;
         this.dataservice.BreakageRequestno_getView().subscribe((data) => {
-          console.log(data.data[1]);
+          // console.log(data.data[1]);
           //alert(data.data[0].BreakageNo);
           this.breakagerequestNo = data.data;
           // this.BackUpdata = data.data;
@@ -1093,7 +1093,7 @@ export class CalibrationentryComponent implements OnInit {
 
       case 'Recalibration':
         this.dataservice.MasterTest_getViewrecalibration().subscribe((data) => {
-          console.log(data.data[1]);
+          // console.log(data.data[1]);
           //alert(data.data[0].BreakageNo);
           this.breakagerequestNo = data.data;
           // this.BackUpdata = data.data;
@@ -1103,7 +1103,7 @@ export class CalibrationentryComponent implements OnInit {
 
       case 'Reservice':
         this.dataservice.MasterTest_getViewreservice().subscribe((data) => {
-          console.log(data.data[1]);
+          // console.log(data.data[1]);
           //alert(data.data[0].BreakageNo);
           this.breakagerequestNo = data.data;
           // this.BackUpdata = data.data;
@@ -1634,7 +1634,7 @@ export class conditionalRejection {
       }
     }
     // this.ngOnInit();
-    console.log('date', this.registerDetails.dueDate);
+    // console.log('date', this.registerDetails.dueDate);
   }
 
   onKeyDate(event: any) {
@@ -1670,15 +1670,15 @@ export class conditionalRejection {
       }
       if (this.maximumTime == 'Day') {
         let weekValue = parseInt(selectedLaw) * 1;
-        console.log('week', weekValue);
+        // console.log('week', weekValue);
 
         let send_date: any = new Date(this.reportDate);
         send_date.setDate(send_date.getDate() + weekValue);
-        console.log('send', send_date);
+        // console.log('send', send_date);
 
         if (send_date != 'Invalid Date') {
           let setDate: any = this.datePipe.transform(send_date, 'dd-MMM-YYYY');
-          console.log('set', setDate);
+          // console.log('set', setDate);
 
           this.registerDetails.dueDate = setDate;
         }
@@ -1709,13 +1709,13 @@ export class conditionalRejection {
         }
       }
     }
-    console.log(this.registerDetails.dueDate);
+    // console.log(this.registerDetails.dueDate);
 
     // this.ngOnInit();
   }
 
   onNoClick(): void {
-    console.log('inside click');
+    // console.log('inside click');
     this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
       // console.log('data', data);
       data.data.map((item: any) => {
@@ -1724,7 +1724,7 @@ export class conditionalRejection {
         let name = splittedCode[1];
 
         if (item.InstrumentCode === code && item.InstrumentName === name) {
-          console.log(this.registerDetails.dueDate);
+          // console.log(this.registerDetails.dueDate);
 
           item.dueDate = this.registerDetails.dueDate;
           item.MxLifeTime = this.registerDetails.MxLifeTime;
@@ -1737,15 +1737,15 @@ export class conditionalRejection {
     });
     this.Data.option = this.selected;
     this.Data.status = 'Con-Accept';
-    // if (this.Data) {
-    //   this.dataservice.Entry_postUser(this.Data).subscribe((data) => {
-    //     let currentUrl = this.router.url;
-    //     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    //     this.router.onSameUrlNavigation = 'reload';
-    //     this.router.navigate([currentUrl]);
-    //     // this.tabledata();
-    //   });
-    // }
+    if (this.Data) {
+      this.dataservice.Entry_postUser(this.Data).subscribe((data) => {
+        let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate([currentUrl]);
+        // this.tabledata();
+      });
+    }
 
     this.dialogRef.close();
 
