@@ -25,5 +25,5 @@ export interface master {
   SAPRefferenceCode?: string;
   Department?: string;
   dueDate?: Date;
-  
+  headerImage?: any;
 }

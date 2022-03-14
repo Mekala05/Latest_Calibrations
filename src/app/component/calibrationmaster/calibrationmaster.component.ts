@@ -93,6 +93,8 @@ export class CalibrationmasterComponent implements OnInit {
   public isShown: boolean = true;
   public instrucodetionselect: any;
   public maximumTime: any;
+  imageSrc: string = '';
+  headerImage: any;
 
   public Heading = [
     {
@@ -215,6 +217,11 @@ export class CalibrationmasterComponent implements OnInit {
 
               this.registerDetails.active = instrument[0].active;
               this.registerDetails.amccheckbox = instrument[0].amccheckbox;
+              this.registerDetails.headerImage = instrument[0].headerImage;
+
+              console.log(instrument[0].headerImage);
+
+              this.imageSrc = instrument[0].headerImage;
             },
             () => console.log('its error')
           );
@@ -430,7 +437,7 @@ export class CalibrationmasterComponent implements OnInit {
               this.registerDetails.Specification = '';
               this.registerDetails.Observation = '';
               this.registerDetails.Remark = '';
-              console.log(this.registerDetails.Description);
+              // console.log(this.registerDetails.Description);
             } else {
               console.log('inside else');
 
@@ -824,12 +831,15 @@ export class CalibrationmasterComponent implements OnInit {
       console.log('working...');
     });
 
+    // console.log(this.registerDetails.headerImage);
+    console.log(this.registerDetails.headerImage.fileSource);
+
     this.dataservice.MasterTest_postUser(this.registerDetails).subscribe(
       (data) => {
-        console.log('post', data);
-
+        // console.log('post', data);
+        //                  fgdfgdfg
         this.dataservice.MasterTest_getViewtablerecord1().subscribe((data) => {
-          console.log('view', data);
+          // console.log('view', data);
 
           this.collection = data.data;
           this.BackUpdata = data.data;
@@ -1100,7 +1110,7 @@ export class CalibrationmasterComponent implements OnInit {
           this.dataservice
             .MasterTest_getViewtablerecord1()
             .subscribe((data) => {
-              console.log('view', this.collection);
+              // console.log('view', this.collection);
 
               this.collection = data.data;
               this.BackUpdata = data.data;
@@ -1675,6 +1685,26 @@ export class CalibrationmasterComponent implements OnInit {
       return 'Cross Click';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  onFileChange(event: any) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+        // console.log('headerImage', this.registerDetails.headerImage);
+        console.log('res', reader.result);
+        console.log(this.registerDetails.headerImage);
+
+        this.registerDetails.headerImage?.patchValue({
+          fileSource: reader.result,
+        });
+      };
     }
   }
 }
