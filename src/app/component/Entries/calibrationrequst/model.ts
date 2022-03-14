@@ -13,3 +13,20 @@ export interface CalibrationRequest {
   BreakageNo?: string;
   Requesttypeselected?: any;
 }
+
+export interface RaiseDC {
+  refno?: string;
+  id?: string;
+  date?: Date;
+  RequestType?: string;
+  InstrumentCode?: any;
+  InstrumentName?: any;
+  LPIdentification?: string;
+  Party?: any;
+  Quantity?: string;
+  RaiseDc?: string;
+  calibrationlocation?: string;
+  calibrationtype?: string;
+  BreakageNo?: string;
+  Requesttypeselected?: any;
+}

@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { RaiseDC } from 'src/app/component/Entries/calibrationrequst/model';
 
 const server = environment.url;
 const httpOptions = {
@@ -774,6 +775,15 @@ export class DataService {
       `${environment.CalibrationReport}/saprefcodeitems`
     );
   }
+
+  RaiseDC_postUser(data: RaiseDC) {
+    return this.http.post<RaiseDC>(`${environment.RaiseDC}/insert`, data);
+  }
+
+  RaiseDC_getView() {
+    return this.http.get<RaiseDC[]>(`${environment.RaiseDC}/view`);
+  }
+  // Calibration_Request
 
   // public setImageViewPopupTrigger(data: string): void {
   //   this.setImageViewPopup.next(data);

@@ -53,6 +53,7 @@ export const environment = {
   Monthly_report_schduleNumber: 'http://localhost:3000/api/monthlyReport',
   Card_Code: 'http://localhost:3000/api/monthlyReport/lastpart',
   Calibration_Request: 'http://localhost:3000/api/CalibrationRequest',
+  RaiseDC: 'http://localhost:3000/api/RaiseDC',
   Calibration_Entry: 'http://localhost:3000/api/CalibrationEntry',
   MasterCaliRequest: 'http://localhost:3000/api/CalibrationRequestType',
   CalibrationLocationmaster:

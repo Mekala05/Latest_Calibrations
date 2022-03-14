@@ -17,7 +17,13 @@
           </div>
           <div class="col-8">
             <!-- <input bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" type="text" [(bsValue)]="date" *ngIf="show"> -->
-            <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MMM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" />
+            <input
+              type="text"
+              bsDatepicker
+              [bsConfig]="{ dateInputFormat: 'DD/MMM/YYYY' }"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.date"
+            />
             <!-- <input type="date"  class="form-control " (change)="year()" [(ngModel)]="registerDetails.date" /> -->
           </div>
         </div>
@@ -28,10 +34,19 @@
             <mat-label class="gene_name newname"> Request Type</mat-label>
           </div>
           <div class="col-8">
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.RequestType"(change)="getRequestTypeDetails(this)">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.RequestType"
+              (change)="getRequestTypeDetails(this)"
+            >
               <option disabled selected value="undefined">--Select--</option>
-              <option *ngFor="let data of  CalibrationRequestof; let i = index" [value]="data.CalibrationRequest">
-                {{data.CalibrationRequest}}
+              <option
+                *ngFor="let data of CalibrationRequestof; let i = index"
+                [value]="data.CalibrationRequest"
+              >
+                {{ data.CalibrationRequest }}
               </option>
             </select>
           </div>
@@ -51,16 +66,24 @@
       </div>
        -->
 
-       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
             <mat-label class="gene_name newname">ShedulNo/BreakageNo</mat-label>
           </div>
           <div class="col-8">
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.BreakageNo">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.BreakageNo"
+            >
               <option disabled selected value="undefined">--Select--</option>
-              <option *ngFor="let data of  Requesttypelist; let i = index" [value]="data.id">
-                {{data.BreakageNo}}
+              <option
+                *ngFor="let data of Requesttypelist; let i = index"
+                [value]="data.id"
+              >
+                {{ data.BreakageNo }}
               </option>
             </select>
           </div>
@@ -86,14 +109,22 @@
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
-            <mat-label class="gene_name newname">  InstrumentCode</mat-label>
+            <mat-label class="gene_name newname"> InstrumentCode</mat-label>
           </div>
           <div class="col-8">
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentCode"(change)="instrumentcodeclick($event)">
-
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.InstrumentCode"
+              (change)="instrumentcodeclick($event)"
+            >
               <option disabled selected value="undefined">--Select--</option>
-              <option *ngFor="let data of InstrumentCodeof; let i = index" [value]="data.InstrumentCode+','+data.InstrumentName">
-                {{data.InstrumentCode}}-{{data.InstrumentName}}
+              <option
+                *ngFor="let data of InstrumentCodeof; let i = index"
+                [value]="data.InstrumentCode + ',' + data.InstrumentName"
+              >
+                {{ data.InstrumentCode }}-{{ data.InstrumentName }}
               </option>
             </select>
           </div>
@@ -115,7 +146,6 @@
         </div>
       </div> -->
 
-
       <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
@@ -128,35 +158,44 @@
         </div>
       </div> -->
 
-
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
-            <mat-label class="gene_name newname">  Calibration Type</mat-label>
+            <mat-label class="gene_name newname"> Calibration Type</mat-label>
           </div>
           <div class="col-8">
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.calibrationtype">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.calibrationtype"
+            >
               <option disabled selected value="undefined">--Select--</option>
-              <option *ngFor="let data of calibrationtypeof; let i = index" [value]="data.calibrationtype">
-                {{data.calibrationtype}}
+              <option
+                *ngFor="let data of calibrationtypeof; let i = index"
+                [value]="data.calibrationtype"
+              >
+                {{ data.calibrationtype }}
               </option>
             </select>
           </div>
         </div>
       </div>
 
-
-     
-
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
             <mat-label class="gene_name newname">
-              Last Party Identification</mat-label>
+              Last Party Identification</mat-label
+            >
           </div>
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-            <input type=" search" class="form-control" [(ngModel)]="registerDetails.LPIdentification" />
+            <input
+              type=" search"
+              class="form-control"
+              [(ngModel)]="registerDetails.LPIdentification"
+            />
           </div>
         </div>
       </div>
@@ -167,11 +206,19 @@
           </div>
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.Party">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Party"
+            >
               <option selected disabled value="undefined">Select</option>
-              <option *ngFor="let data of Party; let i = index" [value]="data.CardName">
-                {{data.CardName}}
-              </option> 
+              <option
+                *ngFor="let data of Party; let i = index"
+                [value]="data.CardName"
+              >
+                {{ data.CardName }}
+              </option>
             </select>
           </div>
         </div>
@@ -193,24 +240,28 @@
         </div>
       </div> -->
 
-
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
-            <mat-label class="gene_name newname"> Calibration Location</mat-label>
+            <mat-label class="gene_name newname">
+              Calibration Location</mat-label
+            >
           </div>
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-            <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.calibrationlocation">                 
-            <option value="">--select--</option>
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.calibrationlocation"
+            >
+              <option value="">--select--</option>
               <option value="Internal">Internal</option>
               <option value="External">External</option>
             </select>
           </div>
         </div>
       </div>
-
-
 
       <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
@@ -224,7 +275,6 @@
         </div>
       </div> -->
 
-      
       <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
@@ -235,55 +285,55 @@
           </div>
         </div>
       </div> -->
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-      </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-      </div>
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-      </div>
-    
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-    
-          <div class="row form-group" >
-            <div class="col-4" >
-              <span>
-                <button mat-stroked-button class="submit-button" (click)="reset()">CLEAR</button>
-              </span>
-            </div>
-            <div class="col-4" >
-              <span>
-                <button mat-flat-button id="color_sv" class="submit-button" *ngIf="!registerDetails.id" (click)="store()">
-                  ADD
-                </button>
-                <button
-                  mat-flat-button
-                  id="color_sv"
-                  class="submit-button"
-                  *ngIf="registerDetails.id"
-                  (click)="update()"
-                >
-                  Update
-                </button>
-              </span>
-            </div>
-          </div>
-     
-      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
 
-      
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group">
+          <div class="col-4">
+            <span>
+              <button
+                mat-stroked-button
+                class="submit-button"
+                (click)="reset()"
+              >
+                CLEAR
+              </button>
+            </span>
+          </div>
+          <div class="col-4">
+            <span>
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="!registerDetails.id"
+                (click)="store()"
+              >
+                ADD
+              </button>
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="registerDetails.id"
+                (click)="update()"
+              >
+                Update
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <br />
 
-
-
-
 <div class="searchbox">
-  <button class="btn btn-dark mr-2">
-    RaiseDc
-  </button>
+  <button class="btn btn-dark mr-2" (click)="RaiseDC()">RaiseDc</button>
   <div class="has-search text-right">
     <span class="fa fa-search form-control-feedback" slot="end"></span>
     <input
@@ -299,7 +349,7 @@
 </div>
 
 <div class="pt-3 mb-3">
-  <table class="table  table-borderless table-responsive table-hover">
+  <table class="table table-borderless table-responsive table-hover">
     <thead>
       <tr class="header_color text-nowrap">
         <td
@@ -314,17 +364,33 @@
       </tr>
     </thead>
     <tbody class="table table-sm text-nowrap">
-      <tr *ngFor="let data of collection  | searchfilter: searchvalue:['RequestType',]; let i = index">
-        <td class="gene_name tablethtd"><input class="form-check-input" type="checkbox" id="check1" (change)="checkedAmc($event,i,data)" name="option1" value="something" ></td>
+      <tr
+        *ngFor="
+          let data of collection | searchfilter: searchvalue:['RequestType'];
+          let i = index
+        "
+      >
+        <td class="gene_name tablethtd">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="check1"
+            (change)="checkedAmc($event, i, data)"
+            name="option1"
+            value="something"
+          />
+        </td>
         <td class="gene_name tablethtd">{{ i + 1 }}</td>
-        <td class="gene_name tablethtd">{{ data.date | date: 'dd-MMM-yyyy,  h:mm a' }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.date | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
         <td class="gene_name tablethtd">{{ data.RequestType }}</td>
         <td class="gene_name tablethtd">{{ data.BreakageNo }}</td>
 
         <!-- <td class="gene_name tablethtd">{{ data.calibrationtype }}</td> -->
         <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
         <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
-                <td class="gene_name tablethtd">{{ data.calibrationtype }}</td>
+        <td class="gene_name tablethtd">{{ data.calibrationtype }}</td>
 
         <td class="gene_name tablethtd">{{ data.LPIdentification }}</td>
         <td class="gene_name tablethtd">{{ data.Party }}</td>
@@ -334,14 +400,12 @@
         <td class="gene_name tablethtd">
           {{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}
         </td>
-        <td class="gene_name tablethtd">{{ data.createdBy }}{{user_name}} </td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
         <td class="gene_name tablethtd">
           {{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}
         </td>
-        <td class="gene_name tablethtd">{{ data.updatedBy }}{{user_name}}</td>
-      
+        <td class="gene_name tablethtd">{{ data.updatedBy }}{{ user_name }}</td>
 
-        <td><input type="checkbox"></td>
         <td class="gene_name tablethtd icons">
           <i
             class="fa fa-pencil-square-o"
@@ -350,7 +414,11 @@
           ></i>
         </td>
         <td class="gene_name tablethtd dicons">
-          <i class="fa fa-trash" aria-hidden="true" (click)="deleteUsers(data.id)"></i>
+          <i
+            class="fa fa-trash"
+            aria-hidden="true"
+            (click)="deleteUsers(data.id)"
+          ></i>
         </td>
       </tr>
     </tbody>

@@ -17,6 +17,7 @@ models.TypeMaster = require("./TypeMaster.js")(sequelize, Sequelize)
 models.CalibrationMaster_1 = require("./Calibration_Master_Model_1")(sequelize, Sequelize)
 models.CalibrationRequest = require("./CalibrationRequestType")(sequelize, Sequelize)
 models.CalibrationEntiresRequest = require("./CalibrationEntriesRequest")(sequelize, Sequelize)
+models.RaiseDC = require("./RaiseDC")(sequelize, Sequelize)
 models.CalibrationEntry = require("./CalibrationEntry")(sequelize, Sequelize)
 models.CalibrationRequestType = require("./CalibrationRequestType")(sequelize, Sequelize)
 models.CalibrationLocationMaster = require("./CalibrationLocationMaster")(sequelize, Sequelize)
@@ -78,6 +79,7 @@ models.CalibrationMasterList.sync();
 models.monthly_shedule.sync();
 models.CalibrationReport.sync();
 models.CalibrationMasterListReport.sync();
+models.RaiseDC.sync();
 
 
 

@@ -379,7 +379,7 @@ export class CalibrationentryComponent implements OnInit {
   public store(): void {
     // let dueDate, maxLifeTime, days;
     this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
-      // console.log('data', data);
+      console.log('data', data);
       data.data.map((item: any) => {
         let splittedCode = this.registerDetails.InstrumentCode.split(',');
         let code = splittedCode[0];

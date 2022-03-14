@@ -1,7 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-    let CalibrationRequest = sequelize.define('CalibrationRequest', {
-
-       id: {
+    let RaiseDC = sequelize.define('RaiseDC', {
+        id: {
             type: DataTypes.INTEGER(11).UNSIGNED,
             field: 'id',
             autoIncrement: true,
@@ -25,6 +24,10 @@ module.exports = function(sequelize, DataTypes) {
         BreakageNo:{
             type: DataTypes.STRING(250),
             field: 'BreakageNo'
+        },
+        refno: {
+            type: DataTypes.STRING(11),
+            field: 'refno',
         },
 
         InstrumentName:{
@@ -79,9 +82,8 @@ module.exports = function(sequelize, DataTypes) {
     },
         {
             timestamps:true,
-            tableName:'CalibrationRequestEntries'
+            tableName:'RaiseDC'
         })
         
-        return CalibrationRequest
-    }
-   
+        return RaiseDC
+    }    

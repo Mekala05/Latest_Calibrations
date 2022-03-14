@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CalibrationRequest } from './model';
+import { CalibrationRequest, RaiseDC } from './model';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -43,8 +43,7 @@ export class CalibrationrequstComponent implements OnInit {
 
   public Party: any = [];
   public Requesttypelist: any = [];
-  public RaiseDcItem: any = [];
-
+  public RaiseDcItem: RaiseDC[] = [];
   // public InstrumentCode: any;
   public instrucodetionselect: any;
 
@@ -682,8 +681,50 @@ export class CalibrationrequstComponent implements OnInit {
   }
 
   checkedAmc(event: any, i: any, data: any) {
-    console.log('event', event.target.checked);
-    console.log('i', i + 1);
-    console.log('data', data);
+    // console.log('event', event.target.checked);
+    // console.log('i', i + 1);
+    // console.log('data', data);
+    if (event.target.checked) {
+      // this.RaiseDcItem.push(data);
+      this.RaiseDcItem.push(data);
+    }
+
+    // console.log(this.RaiseDcItem);
+  }
+
+  RaiseDC() {
+    this.dataservice.RaiseDC_getView().subscribe((data: any) => {
+      console.log('data', data);
+      // console.log('length', data.data.length);
+
+      if (data.data.length !== 0) {
+        // console.log('inside if');
+
+        this.RaiseDcItem.map((item: any) => {
+          let lengths = data.data.length - 1;
+          let refno = data.data[lengths].refno?.split('-');
+          if (refno) {
+            let splitted = refno[1];
+            let num = parseInt(splitted) + 1;
+            item.refno = 'RAS' + '-' + num;
+          }
+          // this.dataservice.RaiseDC_postUser(item).subscribe((data) => {});
+          // console.log('refno', item.refno);
+        });
+      } else {
+        // console.log('inside else');
+
+        this.RaiseDcItem.map((item: any) => {
+          item.refno = 'RAS' + '-' + '1000';
+          this.dataservice.RaiseDC_postUser(item).subscribe((data) => {});
+        });
+      }
+      // console.log('inside loop and res');
+      // console.log(this.RaiseDcItem);
+      this.RaiseDcItem.map((data: RaiseDC) => {
+        this.dataservice.RaiseDC_postUser(data).subscribe((data) => {});
+        this.ngOnInit();
+      });
+    });
   }
 }

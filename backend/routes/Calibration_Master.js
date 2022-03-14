@@ -170,6 +170,7 @@ router.get('/department/:departmentdata', (req, res) => {
 
 router.post('/insert', (req, res) => {
     return new Promise((resolve, reject) => {
+        console.log(req.body);
         CalibrationMaster_1.create(req.body).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
