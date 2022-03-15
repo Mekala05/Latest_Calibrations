@@ -98,7 +98,7 @@ export class BreakageRequestComponent implements OnInit {
     this.dataservice.BreakageRequest_getViewParticular().subscribe((data) => {
       // console.log(data.data[0].id);
       let limitId = parseInt(data.data[0].id);
-      let BreakageNo = 'u4-Br-2022_' + (limitId + 1);
+      let BreakageNo = 'U4-BR-2022_' + (limitId + 1);
       this.registerDetails.BreakageNo = BreakageNo;
     });
   }
@@ -326,17 +326,24 @@ export class BreakageRequestComponent implements OnInit {
     //   (<HTMLInputElement>document.getElementById('id')).focus();
     // }
 
-    if (file == undefined || file == undefined) {
-      this.toastr.warning('Warning!!!', 'file         is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (file == undefined || file == undefined) {
+    //   this.toastr.warning('Warning!!!', 'file         is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
+    this.registerDetails.RefNo = this.registerDetails.BreakageNo;
+    console.log('register', this.registerDetails);
 
     this.dataservice
       .BreakageRequest_postUser(this.registerDetails)
       .subscribe((data) => {
         this.collection = data.data;
+        if (data.data) {
+          this.toastr.success('Created!!!', ' Successfully.', {
+            timeOut: 3000,
+          });
+        }
 
         let currentUrl = this.router.url;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -372,8 +379,8 @@ export class BreakageRequestComponent implements OnInit {
   }
   public getEmployee(): void {
     this.dataservice.GetEmplyee_user().subscribe((data) => {
-      console.log(data);
-      this.Employee = data.data;
+      console.log('name', data.data[0].name);
+      this.registerDetails.Employee = data.data[0].name;
       // console.log("usdhfshdgoifdhgi");
       // console.log(this.Employee);
       // this.BackUpdata = data.data;
@@ -397,6 +404,8 @@ export class BreakageRequestComponent implements OnInit {
 
     this.dataservice.MasterTest_getView().subscribe((data) => {
       // console.log(data.data[0].type);
+      // console.log('instrument data', data.data);
+
       this.InstrumentCodeof = data.data;
       // this.BackUpdata = data.data;
     });
@@ -442,9 +451,16 @@ export class BreakageRequestComponent implements OnInit {
 
   instru(event: any) {
     let selectedLaw: any = event.target.value;
+    console.log(event.target.value);
 
     let splitValue = selectedLaw.split(',');
     // console.log(splitValue);
     this.registerDetails.InstrumentName = splitValue[1];
+    // console.log(splitValue[0]);
+    this.InstrumentCodeof.map((item: any) => {
+      if (splitValue[0] === item.InstrumentCode) {
+        this.registerDetails.Location = item.Location;
+      }
+    });
   }
 }

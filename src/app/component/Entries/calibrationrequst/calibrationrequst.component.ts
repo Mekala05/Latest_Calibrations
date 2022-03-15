@@ -46,6 +46,7 @@ export class CalibrationrequstComponent implements OnInit {
   public RaiseDcItem: RaiseDC[] = [];
   // public InstrumentCode: any;
   public instrucodetionselect: any;
+  public buttonShow: boolean = false;
 
   public TableHeading = [
     {
@@ -121,6 +122,7 @@ export class CalibrationrequstComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.buttonShow = true;
     this.tabledata();
     this.registerDetails.date = new Date();
     this.user_name = localStorage.getItem('Login_name');
@@ -518,50 +520,70 @@ export class CalibrationrequstComponent implements OnInit {
   getRequestTypeDetails(type: any) {
     // debugger;
     // const requestType=event.value;
-    alert(this.registerDetails.RequestType);
-    switch (this.registerDetails.RequestType) {
-      case 'breakage':
-        // debugger;
-        this.dataservice.BreakageRequestno_getView().subscribe((data) => {
-          console.log(data.data[1]);
-          //alert(data.data[0].BreakageNo);
-          this.Requesttypelist = data.data;
-          // this.BackUpdata = data.data;
+    // console.log('type', type.target.value);
+    let target = type.target.value;
+    // console.log('target', typeof target.toLowerCase());
+    // console.log(typeof 'breakage');
+
+    // console.log(target.toLowerCase() === 'breakage');
+
+    if (target.toLowerCase().trim() === 'breakage'.trim()) {
+      this.dataservice.BreakageRequestno_getView().subscribe((data) => {
+        console.log(data.data);
+        data.data.map((item: any) => {
+          this.Requesttypelist.push(item.BreakageNo);
         });
-
-        break;
-      case 'shedule':
-        this.dataservice.MasterTest_getViewsheduleno().subscribe((data) => {
-          console.log(data.data[1]);
-          //alert(data.data[0].BreakageNo);
-          this.Requesttypelist = data.data;
-          // this.BackUpdata = data.data;
-        });
-
-        break;
-
-      case 'Recalibration':
-        this.dataservice.MasterTest_getViewrecalibration().subscribe((data) => {
-          console.log(data.data[1]);
-          //alert(data.data[0].BreakageNo);
-          this.Requesttypelist = data.data;
-          // this.BackUpdata = data.data;
-        });
-
-        break;
-
-      case 'Reservice':
-        this.dataservice.MasterTest_getViewreservice().subscribe((data) => {
-          console.log(data.data[1]);
-          //alert(data.data[0].BreakageNo);
-          this.Requesttypelist = data.data;
-          // this.BackUpdata = data.data;
-        });
-
-        break;
-      default:
-        break;
+        //alert(data.data[0].BreakageNo);
+        // this.Code =
+        // this.BackUpdata = data.data;
+      });
     }
+
+    // switch (type.target.value) {
+    //   case 'breakage':
+    //     // debugger;
+    //     console.log('breakafe');
+
+    //     this.dataservice.BreakageRequestno_getView().subscribe((data) => {
+    //       console.log(data.data);
+    //       //alert(data.data[0].BreakageNo);
+    //       this.Requesttypelist = data.data;
+    //       // this.BackUpdata = data.data;
+    //     });
+
+    //     break;
+    //   case 'shedule':
+    //     this.dataservice.MasterTest_getViewsheduleno().subscribe((data) => {
+    //       console.log(data.data[1]);
+    //       //alert(data.data[0].BreakageNo);
+    //       this.Requesttypelist = data.data;
+    //       // this.BackUpdata = data.data;
+    //     });
+
+    //     break;
+
+    //   case 'Recalibration':
+    //     this.dataservice.MasterTest_getViewrecalibration().subscribe((data) => {
+    //       console.log(data.data[1]);
+    //       //alert(data.data[0].BreakageNo);
+    //       this.Requesttypelist = data.data;
+    //       // this.BackUpdata = data.data;
+    //     });
+
+    //     break;
+
+    //   case 'Reservice':
+    //     this.dataservice.MasterTest_getViewreservice().subscribe((data) => {
+    //       console.log(data.data[1]);
+    //       //alert(data.data[0].BreakageNo);
+    //       this.Requesttypelist = data.data;
+    //       // this.BackUpdata = data.data;
+    //     });
+
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
   getUser(id: object) {
     this.registerDetails = { ...id };
@@ -686,10 +708,38 @@ export class CalibrationrequstComponent implements OnInit {
     // console.log('data', data);
     if (event.target.checked) {
       // this.RaiseDcItem.push(data);
-      this.RaiseDcItem.push(data);
+      console.log(data);
+      if (data.calibrationlocation === 'External') {
+        this.buttonShow = false;
+        this.RaiseDcItem.push(data);
+      } else {
+        this.buttonShow = true;
+        this.toastr.error(
+          'Internal location cannot raise DC!!!',
+          'Please select proper option.',
+          {
+            timeOut: 3000,
+          }
+        );
+      }
     }
-
     // console.log(this.RaiseDcItem);
+  }
+
+  getValue(eve: any) {
+    console.log(eve.target.value);
+    let value = eve.target.value;
+    // console.log(eve);
+    console.log(this.registerDetails.BreakageNo);
+
+    this.dataservice.BreakageRequestno_getView().subscribe((data) => {
+      console.log(data.data);
+      data.data.map((item: any) => {
+        if (value === item.BreakageNo) {
+          this.registerDetails.InstrumentCode = item.InstrumentCode;
+        }
+      });
+    });
   }
 
   RaiseDC() {

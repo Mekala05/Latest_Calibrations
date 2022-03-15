@@ -39,7 +39,7 @@
               id=""
               class="form-control input_text"
               [(ngModel)]="registerDetails.RequestType"
-              (change)="getRequestTypeDetails(this)"
+              (change)="getRequestTypeDetails($event)"
             >
               <option disabled selected value="undefined">--Select--</option>
               <option
@@ -77,13 +77,14 @@
               id=""
               class="form-control input_text"
               [(ngModel)]="registerDetails.BreakageNo"
+              (change)="getValue($event)"
             >
               <option disabled selected value="undefined">--Select--</option>
               <option
                 *ngFor="let data of Requesttypelist; let i = index"
-                [value]="data.id"
+                [value]="data"
               >
-                {{ data.BreakageNo }}
+                {{ data }}
               </option>
             </select>
           </div>
@@ -333,7 +334,9 @@
 <br />
 
 <div class="searchbox">
-  <button class="btn btn-dark mr-2" (click)="RaiseDC()">RaiseDc</button>
+  <button class="btn btn-dark mr-2" (click)="RaiseDC()" [disabled]="buttonShow">
+    RaiseDc
+  </button>
   <div class="has-search text-right">
     <span class="fa fa-search form-control-feedback" slot="end"></span>
     <input
@@ -376,8 +379,6 @@
             type="checkbox"
             id="check1"
             (change)="checkedAmc($event, i, data)"
-            name="option1"
-            value="something"
           />
         </td>
         <td class="gene_name tablethtd">{{ i + 1 }}</td>

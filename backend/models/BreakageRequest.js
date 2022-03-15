@@ -46,6 +46,11 @@ module.exports = function (sequelize, DataTypes) {
             field: "BreakageNo",
             
           },
+          RefNo: {
+            type: DataTypes.STRING(250),
+            field: "RefNo",
+            
+          },
         
           BreakageReason: {
             type: DataTypes.STRING(250),

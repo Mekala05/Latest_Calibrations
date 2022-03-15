@@ -1,32 +1,32 @@
 <div class="pt-2 mb-2">
-    <table class="table table-borderless table-hover " >
-      <thead>
-        <tr class="header_color">
-          <td
-            scope="col"
-            *ngFor="let head of TableHeading; let i = index"
-            class="gene_name tablethtd"
-            [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
-            (click)="Click_Head(i, head.name)"
-          >
-            {{ head.name }}
-          </td>
-        </tr>
-      </thead>
-      <tbody class="table table-sm text-nowrap">
-        <tr *ngFor="let data of collection; let i = index">
-          <!-- <td class="gene_name tablethtd">{{ i + 1 }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.id }}</td> -->
-          <td class="gene_name tablethtd">{{ data.DocumentNo }}{{ i + 100 }}</td>
-          <td class="gene_name tablethtd">{{ data.date | date: 'dd-MMM-yyyy,  h:mm a' }}</td>
-          <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
-          <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
-          <button class="btn btn-dark my-1" (click)="getUser(data.id)">
-            View
-          </button>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="header_color">
+        <td
+          scope="col"
+          *ngFor="let head of TableHeading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm text-nowrap">
+      <tr *ngFor="let data of collection; let i = index">
+        <!-- <td class="gene_name tablethtd">{{ i + 1 }}</td> -->
+        <!-- <td class="gene_name tablethtd">{{ data.id }}</td> -->
+        <td class="gene_name tablethtd">{{ data.BreakageNo }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.date | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
+        <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
+        <button class="btn btn-dark my-1" (click)="getUser(data.id)">
+          View
+        </button>
+      </tr>
+    </tbody>
+  </table>
+</div>

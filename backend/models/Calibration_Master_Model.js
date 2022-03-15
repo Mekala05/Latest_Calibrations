@@ -79,7 +79,7 @@ module.exports = function(sequelize, DataTypes) {
             field: 'file'
         },
         headerImage: {
-            type: DataTypes.STRING(250),
+            type: SqlDbType.TEXT,
             field: 'headerImage'
         },
         active:{
