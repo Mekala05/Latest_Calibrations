@@ -91,19 +91,55 @@ export class ScrapApprovalComponent implements OnInit {
     private router: Router,
     private routers: ActivatedRoute
   ) {
-    if (this.routers.snapshot.queryParams.id) {
-      this.dataservice
-        .Entry_getViewdata(this.routers.snapshot.queryParams.id)
-        .subscribe(
-          (data: any) => {
-            console.log(data);
-            this.registerDetails.InstrumentName = data.data[0].InstrumentName;
-            this.registerDetails.InstrumentCode = data.data[0].InstrumentCode;
-          },
-          (err) => console.log('its error')
-        );
+    console.log(this.routers.snapshot.queryParams);
 
-      // }
+    if (this.routers.snapshot.queryParams.id) {
+      this.dataservice.Entry_getView().subscribe((data: any) => {
+        data.data.map((item: any) => {
+          if (item.id === parseInt(this.routers.snapshot.queryParams.id)) {
+            console.log('inside if');
+
+            this.registerDetails.InstrumentName = item.InstrumentName;
+            this.registerDetails.InstrumentCode = item.InstrumentCode;
+          }
+        });
+      });
+      // this.dataservice.Request_getView().subscribe((data) => {
+      //   data.data.map((item: any) => {
+      //     console.log(
+      //       'register',
+      //       this.registerDetails.InstrumentCode,
+      //       'item',
+      //       item.InstrumentCode
+      //     );
+      //     if (this.registerDetails.InstrumentCode) {
+      //       let registerInstrument =
+      //         this.registerDetails.InstrumentCode.split(',');
+      //       let itemInstrument = item.InstrumentCode.split(',');
+
+      //       console.log(registerInstrument[0]);
+      //       console.log(itemInstrument[0]);
+
+      //       console.log(registerInstrument[0] === itemInstrument[0]);
+
+      //       if (registerInstrument[0] === itemInstrument[0]) {
+      //         this.registerDetails.Location = item.calibrationlocation;
+      //       }
+      //     }
+      //   });
+      // });
+      //   this.dataservice
+      //     .Entry_getViewdata(this.routers.snapshot.queryParams.id)
+      //     .subscribe(
+      //       (data: any) => {
+      //         console.log(data);
+      //         this.registerDetails.InstrumentName = data.data[0].InstrumentName;
+      //         this.registerDetails.InstrumentCode = data.data[0].InstrumentCode;
+      //       },
+      //       (err) => console.log('its error')
+      //     );
+
+      //   // }
     }
     // this.routers.queryParams.subscribe(test => {
     //   this.userId = test
@@ -152,9 +188,7 @@ export class ScrapApprovalComponent implements OnInit {
       this.registerDetails.Type === '' ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.MachineCode === '' ||
-      this.registerDetails.Location === '' ||
-      this.registerDetails.Employee === ''
+      this.registerDetails.Location === ''
     ) {
       alert('Enter the Details');
     } else {
@@ -214,9 +248,7 @@ export class ScrapApprovalComponent implements OnInit {
       this.registerDetails.Type === undefined ||
       this.registerDetails.InstrumentCode === undefined ||
       this.registerDetails.InstrumentName === undefined ||
-      this.registerDetails.MachineCode === undefined ||
-      this.registerDetails.Location === undefined ||
-      this.registerDetails.Employee === undefined
+      this.registerDetails.Location === undefined
     ) {
       alert('Enter the Details');
     } else {
@@ -322,10 +354,7 @@ export class ScrapApprovalComponent implements OnInit {
     (this.registerDetails.date = undefined),
       (this.registerDetails.InstrumentCode = undefined);
     this.registerDetails.InstrumentName = undefined;
-    this.registerDetails.MachineCode = undefined;
     this.registerDetails.Location = '';
-    this.registerDetails.Employee = '';
-    this.registerDetails.HistryDetails = '';
     this.registerDetails.BreakageReason = '';
     this.registerDetails.Type = undefined;
     this.registerDetails.FileUpload = undefined;

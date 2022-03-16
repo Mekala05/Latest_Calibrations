@@ -9,6 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { dialogmodel } from './dialogmodel';
 import { modaltextbox } from './modaltextbox';
 import { conreject1 } from './conreject-modal';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-breagedetails',
@@ -43,10 +44,11 @@ export class BreagedetailsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private routers: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public location: Location
   ) {
     if (this.routers.snapshot.queryParams.id) {
-      alert(this.routers.snapshot.queryParams.id);
+      // alert(this.routers.snapshot.queryParams.id);
 
       this.dataservice
         .BreakageRequest_getViewData(this.routers.snapshot.queryParams.id)
@@ -220,6 +222,10 @@ export class BreagedetailsComponent implements OnInit {
       this.collection = data.data;
       this.BackUpdata = data.data;
     });
+  }
+
+  back() {
+    this.location.back();
   }
   update() {
     if (
@@ -409,12 +415,12 @@ export class BreagedetailsComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (file == undefined || file == undefined) {
-      this.toastr.warning('Warning!!!', 'file  is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (file == undefined || file == undefined) {
+    //   this.toastr.warning('Warning!!!', 'file  is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     console.log('remark', this.registerDetails);
 

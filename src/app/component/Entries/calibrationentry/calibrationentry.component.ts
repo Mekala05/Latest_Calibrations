@@ -1069,7 +1069,7 @@ export class CalibrationentryComponent implements OnInit {
   getRequestTypeDetails(type: any) {
     // debugger;
     // const requestType=event.value;
-    alert(this.registerDetails.RequestType);
+    // alert(this.registerDetails.RequestType);
     switch (this.registerDetails.RequestType) {
       case 'breakage':
         // debugger;

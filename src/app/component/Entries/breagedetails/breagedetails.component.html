@@ -8,6 +8,9 @@
   <!-- Table End -->
 
   <!-- form start -->
+  <button class="btn btn-primary back-button mb-2" (click)="back()">
+    Back
+  </button>
   <div class="new_bor pt-1 pb-3">
     <div class="row px-4 pt-3 align-items-center">
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
@@ -243,7 +246,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
             <mat-label class="gene_name newname"> calibration Type</mat-label>
@@ -265,7 +268,7 @@
             </select>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
       
@@ -284,15 +287,15 @@
           </div>
         </div> -->
 
-      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
             <mat-label class="gene_name newname"
               >Calibration Location</mat-label
             >
-          </div>
-          <div class="col-8">
-            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+          </div> -->
+      <!-- <div class="col-8">
+            <textarea type="text" class="form-control input_text"></textarea>
             <select
               name=""
               id=""
@@ -305,8 +308,8 @@
             </select>
           </div>
         </div>
-      </div>
-      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div> -->
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
             <mat-label class="gene_name newname"> Remark</mat-label>
@@ -317,10 +320,10 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.Remark"
             ></textarea>
-            <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageReason" />              -->
+            <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageReason" />             
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
@@ -332,7 +335,7 @@
         </div>
       </div> -->
 
-      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-xl-3">
             <input type="file" [(ngModel)]="registerDetails.file" />
@@ -343,20 +346,20 @@
             </button>
           </div>
         </div>
-      </div>
-      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12"></div>
+      </div> -->
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12"></div>
 
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-        <div class="row form-group align-items-center">
-          <!-- <button  mat-raised-button class= "mx-2 approve" (click)="openDialogAccept()">Accept</button>
+        <div class="row form-group align-items-center"> -->
+      <!-- <button  mat-raised-button class= "mx-2 approve" (click)="openDialogAccept()">Accept</button>
           <button mat-raised-button  class= "mx-2 Reject" (click)="Dialog()">Reject</button>
           <button mat-raised-button  class= "mx-2 con" (click)="conditionalrejection2()">Con Accept</button> -->
 
-          <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
+      <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
            <button mat-button [mat-dialog-close]="cdkFocusInitial">Ok</button> -->
-        </div>
+      <!-- </div> -->
 
-        <!-- <div mat-dialog-content>
+      <!-- <div mat-dialog-content>
         <p>Reason</p>
         <mat-form-field appearance="fill">
           <mat-label></mat-label>
@@ -368,7 +371,7 @@
         <button mat-button [mat-dialog-close]="cdkFocusInitial">Ok</button>
       </div> -->
 
-        <!--
+      <!--
       <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
@@ -390,54 +393,54 @@
             </div>
           </div>
         </div> -->
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-        <div class="row form-group">
-          <div class="col-4">
-            <span>
-              <button
-                mat-stroked-button
-                class="submit-button"
-                (click)="reset()"
-              >
-                CLEAR
-              </button>
-            </span>
-          </div>
-          <div class="col-4">
-            <span>
-              <button
-                mat-flat-button
-                id="color_sv"
-                class="submit-button"
-                *ngIf="!registerDetails.id"
-                (click)="store()"
-              >
-                ADD
-              </button>
-              <button
-                mat-flat-button
-                id="color_sv"
-                class="submit-button"
-                *ngIf="registerDetails.id"
-                (click)="update()"
-              >
-                Update
-              </button>
-            </span>
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- <div class="row mt-2">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
+        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
+          <div class="row form-group">
+            <div class="col-4">
+              <span>
+                <button
+                  mat-stroked-button
+                  class="submit-button"
+                  (click)="reset()"
+                >
+                  CLEAR
+                </button>
+              </span>
+            </div>
+            <div class="col-4">
+              <span>
+                <button
+                  mat-flat-button
+                  id="color_sv"
+                  class="submit-button"
+                  *ngIf="!registerDetails.id"
+                  (click)="store()"
+                >
+                  ADD
+                </button>
+                <button
+                  mat-flat-button
+                  id="color_sv"
+                  class="submit-button"
+                  *ngIf="registerDetails.id"
+                  (click)="update()"
+                >
+                  Update
+                </button>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
-  </div>
 
-  <br />
+    <br />
 
-  <!-- <div class="searchbox">
+    <!-- <div class="searchbox">
   <div class="has-search text-right">
     <span class="fa fa-search form-control-feedback" slot="end"></span>
     <input
@@ -452,7 +455,7 @@
   </div>
 </div> -->
 
-  <!-- <div class="pt-3 mb-3">
+    <!-- <div class="pt-3 mb-3">
   <table class="table  table-borderless table-responsive table-hover">
     <thead>
       <tr class="header_color text-nowrap">
@@ -493,4 +496,5 @@
     </tbody>
   </table>
 </div> -->
+  </div>
 </div>

@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BreakageListDetails } from './model';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs/internal/Subject';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-breakage-list-details',
@@ -10,6 +13,55 @@ import { BreakageListDetails } from './model';
   styleUrls: ['./breakage-list-details.component.scss'],
 })
 export class BreakageListDetailsComponent implements OnInit {
+  @ViewChild(DataTableDirective, { static: true })
+  dtElement!: DataTableDirective;
+
+  dtOptions: any = {
+    searching: true,
+    paging: true,
+    info: true,
+    ordering: true,
+    responsive: true,
+    columns: [
+      {
+        title: 'DocumentNo',
+        data: 'BreakageNo',
+      },
+      // {
+      //   title: 'Date',
+      //   render: function (data: any, type: any, row: any, meta: any) {
+      //     return moment(new Date(row.Date)).format('DD/MM/YYYY');
+      //   },
+      // },
+      {
+        title: 'InstrumentCode',
+        defaultContent: ' - ',
+        data: 'InstrumentCode',
+      },
+      {
+        title: 'InstrumentName',
+        defaultContent: ' - ',
+        data: 'InstrumentName',
+      },
+      {
+        title: 'Action',
+        render: function (data: any, type: any, full: any) {
+          return '<button class="btn btn-dark my-1">View</button>';
+        },
+      },
+    ],
+    rowCallback: (row: Node, data: any[] | Object, index: number) => {
+      // Unbind first in order to avoid any duplicate handler
+      // (see https://github.com/l-lin/angular-datatables/issues/87)
+      $('td', row).off('click');
+      $('td', row).on('click', () => {
+        this.getUser(data);
+      });
+      return row;
+    },
+  };
+  dtTrigger: Subject<any> = new Subject<any>();
+  // collection = [];
   public collection: any[] = [];
   public searchvalue: any;
   public HighlightRow: any;
@@ -23,33 +75,30 @@ export class BreakageListDetailsComponent implements OnInit {
   public text: any = [];
   public BreakageDetails: any = [];
   public timeout: any = null;
-  public TableHeading = [
-    {
-      name: 'DocumentNo',
-    },
 
-    {
-      name: 'Date',
-    },
-
-    {
-      name: 'InstrumentCode',
-    },
-    {
-      name: 'InstrumentName',
-    },
-    {
-      name: 'Action',
-    },
-  ];
   constructor(
     private dataservice: DataService,
     private toastr: ToastrService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.tabledata();
+  async ngOnInit() {
+    // this.dtOptions = {
+    //   pagingType: 'full_numbers',
+    //   pageLength: 5,
+    //   searching: true,
+    //   processing: true,
+    // };
+
+    await this.rerender();
+
+    // this.dataservice.BreakageRequest_getView1().subscribe((data) => {
+    //   this.collection = data.data;
+    //   this.BackUpdata = data.data;
+    //   this.dtOptions.data = this.collection;
+    //   this.dtTrigger.next();
+    // });
+    // this.tabledata();
     this.registerDetails.Date = new Date();
     // this.registerDetails.Quantity='1';
     this.user_name = localStorage.getItem('Login_name');
@@ -73,6 +122,53 @@ export class BreakageListDetailsComponent implements OnInit {
     });
   }
 
+  rerender() {
+    console.log('inside rerender');
+    console.log('dt', this.dtElement);
+
+    if (this.dtElement) {
+      console.log('inside dtelement');
+      console.log(this.dtElement.dtInstance);
+
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy(); // Destroy the table first
+        console.log('rerender', this.collection);
+        this.dataservice.BreakageRequest_getView1().subscribe((data) => {
+          this.collection = data.data;
+          this.BackUpdata = data.data;
+          console.log(this.collection);
+
+          this.dtOptions.data = this.collection;
+        });
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   console.log('inside instance');
+
+        //   dtInstance.destroy(); // Destroy the table first
+        //   console.log('rerender', this.collection);
+        //   this.dataservice.BreakageRequest_getView1().subscribe((data) => {
+        //     this.collection = data.data;
+        //     this.BackUpdata = data.data;
+        //     console.log(this.collection);
+
+        //     this.dtOptions.data = this.collection;
+        //     // this.dtTrigger.next();
+        //   });
+
+        // this.dtOptions.data = this.collection;
+        // this.dtTrigger.next(); // Call the dtTrigger to rerender again
+      });
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next();
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
   onKeyIns(x: any) {
     this.dataservice
       .BreakageListDetails_postUser(
@@ -87,11 +183,13 @@ export class BreakageListDetailsComponent implements OnInit {
         this.registerDetails.InstrumentCode = data.data[0].InstrumentCode;
       });
   }
-  getUser(id: any) {
+  getUser(data: any) {
     // debugger;
-    alert(id);
-    this.router.navigate([`header/BreakageDetails2`], {
-      queryParams: { id: id },
+    // alert(id);
+    console.log(data);
+
+    this.router.navigate([`header/BreakageDetails`], {
+      queryParams: { id: data.id },
     });
   }
 
@@ -126,7 +224,7 @@ export class BreakageListDetailsComponent implements OnInit {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.onSameUrlNavigation = 'reload';
               this.router.navigate([currentUrl]);
-              this.tabledata();
+              this.ngOnInit();
             } else {
               if (data.error.errors[0].validatorKey) {
                 this.toastr.error('Error!!!', 'BreakageList Already Exists.', {
@@ -148,7 +246,7 @@ export class BreakageListDetailsComponent implements OnInit {
       .BreakageRequest_DeleteSingleUser(id, this.collection)
       .subscribe(
         (data: any) => {
-          this.tabledata();
+          this.ngOnInit();
         },
         (err) => console.log('its error')
       );
@@ -178,7 +276,7 @@ export class BreakageListDetailsComponent implements OnInit {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigate([currentUrl]);
-            this.tabledata();
+            this.ngOnInit();
           } else {
             if (data.error.errors[0].validatorKey) {
               this.toastr.error('Error!!!', 'BreakageRequest Already Exists.', {

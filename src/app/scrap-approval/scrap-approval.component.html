@@ -1,28 +1,35 @@
 <div>
-    <div class="pt-3">
-      <!-- <div>
+  <div class="pt-3">
+    <!-- <div>
         <mat-label class="heading">Breakage</mat-label>
       </div> -->
-    </div>
-  
-    <!-- Table End -->
-  
-    <!-- form start -->
-    <div class="new_bor pt-1 pb-3">
-      <div class="row px-4 pt-3 align-items-center">
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Date</mat-label>
-            </div>
-            <div class="col-8">
-              <!-- <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" />           
-            </div>
+  </div>
+
+  <!-- Table End -->
+
+  <!-- form start -->
+  <div class="new_bor pt-1 pb-3">
+    <div class="row px-4 pt-3 align-items-center">
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Date</mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <input
+              type="text"
+              bsDatepicker
+              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.date"
+              readonly
+            />
           </div>
         </div>
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname"> Instrument Code</mat-label>
@@ -38,19 +45,23 @@
           </div>
         </div> -->
 
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Instrument Code</mat-label>
-            </div>
-            <div class="col-8">
-              <input type="text" class="form-control input_text"  [(ngModel)]="registerDetails.InstrumentCode" />
-            </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Instrument Code</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.InstrumentCode"
+              readonly
+            />
           </div>
         </div>
+      </div>
 
-
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname"> Instrument Name</mat-label>
@@ -67,17 +78,22 @@
           </div>
         </div> -->
 
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Instrument Name</mat-label>
-            </div>
-            <div class="col-8">
-              <input type="text" class="form-control input_text"  [(ngModel)]="registerDetails.InstrumentName" />
-            </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Instrument Name</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.InstrumentName"
+              readonly
+            />
           </div>
         </div>
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname"> Machine Code </mat-label>
@@ -93,20 +109,22 @@
           </div>
         </div> -->
 
-
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> MachineCode</mat-label>
-            </div>
-            <div class="col-8">
-              <input type="text" class="form-control input_text"  [(ngModel)]="registerDetails.MachineCode" />
-            </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> MachineCode</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.MachineCode"
+            />
           </div>
         </div>
+      </div> -->
 
-
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               
@@ -123,40 +141,49 @@
           </div>
         </div> -->
 
-
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Location</mat-label>
-            </div>
-            <div class="col-8">
-              <input type="text" class="form-control input_text"  [(ngModel)]="registerDetails.Location" />
-            </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Location</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Location"
+            />
           </div>
         </div>
+      </div>
 
-
-
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Employee </mat-label>
-            </div>
-            <div class="col-8">
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.Employee">                 
-                <option value="">--select--</option> 
-                <!-- <option value="">Calibration</option>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Employee </mat-label>
+          </div>
+          <div class="col-8">
+            <textarea type="text" class="form-control input_text"></textarea>
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Employee"
+            >
+              <option value="">--select--</option>
+              <option value="">Calibration</option>
                 <option value="">Service</option>
-                <option value="">Scrap</option>  -->
-                <option *ngFor="let data of Employee; let i = index" [value]="data.id+','+data.name">
-                  {{data.id}} - {{data.name}}
-               
-              </select>
-            </div>
+                <option value="">Scrap</option> 
+              <option
+                *ngFor="let data of Employee; let i = index"
+                [value]="data.id + ',' + data.name"
+              >
+                {{ data.id }} - {{ data.name }}
+              </option>
+            </select>
           </div>
         </div>
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div> -->
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname">Employee code</mat-label>
@@ -167,47 +194,57 @@
             </div>
           </div>
         </div> -->
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname">History Details</mat-label>
-              
-            </div>
-            <div class="col-8">
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <!-- <input type="url" class="form-control input_text" [(ngModel)]="registerDetails.HistryDetails" />   -->
-              <a href="http://localhost:4200/header/BreakageDetails"> History Details</a>           
-            </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">History Details</mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <!-- <input type="url" class="form-control input_text" [(ngModel)]="registerDetails.HistryDetails" />   -->
+            <a href="http://localhost:4200/header/BreakageDetails">
+              History Details</a
+            >
           </div>
         </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Breakage Reason</mat-label>
-            </div>
-            <div class="col-8">
-              <textarea type="text" class="form-control input_text"[(ngModel)]="registerDetails.BreakageReason"></textarea>
-              <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageReason" />              -->
-            </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Scrap Reason</mat-label>
+          </div>
+          <div class="col-8">
+            <textarea
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.BreakageReason"
+            ></textarea>
+            <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageReason" />              -->
           </div>
         </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname">Type</mat-label>
-            </div>
-            <div class="col-8">
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.Type">                 
-                <option value="">--select--</option>
-                <option value="Calibration">Calibration</option>
-                <option value="Service">Service</option>
-                <option value="Scrap">Scrap</option>
-              </select>
-            </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Type</mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Type"
+            >
+              <option value="">--select--</option>
+              <option value="Calibration">Calibration</option>
+              <option value="Service">Service</option>
+              <option value="Scrap">Scrap</option>
+            </select>
           </div>
         </div>
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname">File Upload</mat-label>
@@ -217,8 +254,8 @@
             </div>
           </div>
         </div> -->
-  
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             
             <div class="col-xl-3">
@@ -230,33 +267,29 @@
                   
               </div>
           </div>
-        </div>
-  
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <!-- <div class="col-4"> -->
-              <!-- <button type="button" class="Viewbtn">VIEW</button> -->
-            <!-- </div> -->
-            <div class="col-2">
-              <mat-label class="gene_name newname">Approve</mat-label>
-            </div>
-            <div class="col-2">
-              <input type="checkbox"/>
-            </div>
-            <div class="col-2">
-              <mat-label class="gene_name newname">Reject</mat-label>
-            </div>
-            <div class="col-2">
-              <input type="checkbox" >
-            </div>
+        </div> -->
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <!-- <div class="col-4"> -->
+          <!-- <button type="button" class="Viewbtn">VIEW</button> -->
+          <!-- </div> -->
+          <div class="col-2">
+            <mat-label class="gene_name newname">Approve</mat-label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" />
+          </div>
+          <div class="col-2">
+            <mat-label class="gene_name newname">Reject</mat-label>
+          </div>
+          <div class="col-2">
+            <input type="checkbox" />
           </div>
         </div>
-  
-        
-  
-        
-        
-        <!--
+      </div>
+
+      <!--
         <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
@@ -278,40 +311,54 @@
               </div>
             </div>
           </div> -->
-          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-          </div>
-          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-          </div>
-          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-            <div style="margin: auto">
-              <div class="row form-group">
-                <div class="col-4" >
-                  <span>
-                    <button mat-stroked-button class="submit-button" (click)="reset()">CLEAR</button>
-                  </span>
-                </div>
-                <div class="col-4" >
-                  <span>
-                    <button mat-flat-button id="color_sv" class="submit-button" *ngIf="!registerDetails.id" (click)="store()">
-                      ADD
-                    </button>
-                    <button mat-flat-button id="color_sv" class="submit-button" *ngIf="registerDetails.id"
-                      (click)="update()">Update</button>
-                  </span>
-                </div>
-              </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
+        <div style="margin: auto">
+          <div class="row form-group">
+            <div class="col-4">
+              <span>
+                <button
+                  mat-stroked-button
+                  class="submit-button"
+                  (click)="reset()"
+                >
+                  CLEAR
+                </button>
+              </span>
+            </div>
+            <div class="col-4">
+              <span>
+                <button
+                  mat-flat-button
+                  id="color_sv"
+                  class="submit-button"
+                  *ngIf="!registerDetails.id"
+                  (click)="store()"
+                >
+                  ADD
+                </button>
+                <button
+                  mat-flat-button
+                  id="color_sv"
+                  class="submit-button"
+                  *ngIf="registerDetails.id"
+                  (click)="update()"
+                >
+                  Update
+                </button>
+              </span>
             </div>
           </div>
-          
-  
-       
+        </div>
       </div>
     </div>
   </div>
-  
-  <br />
-  
-  <!-- <div class="searchbox">
+</div>
+
+<br />
+
+<!-- <div class="searchbox">
     <div class="has-search text-right">
       <span class="fa fa-search form-control-feedback" slot="end"></span>
       <input
@@ -325,8 +372,8 @@
       />
     </div>
   </div> -->
-  
-  <!-- <div class="pt-3 mb-3">
+
+<!-- <div class="pt-3 mb-3">
     <table class="table  table-borderless table-responsive table-hover">
       <thead>
         <tr class="header_color text-nowrap">
@@ -367,4 +414,3 @@
       </tbody>
     </table>
   </div> -->
-  
