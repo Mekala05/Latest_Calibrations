@@ -9,6 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { dialogmodel } from './dialogmodel';
 import { modaltextbox } from './modaltextbox';
 import { conreject1 } from './conreject-modal';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-breagedetails',
@@ -43,10 +44,11 @@ export class BreagedetailsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private routers: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public location: Location
   ) {
     if (this.routers.snapshot.queryParams.id) {
-      alert(this.routers.snapshot.queryParams.id);
+      // alert(this.routers.snapshot.queryParams.id);
 
       this.dataservice
         .BreakageRequest_getViewData(this.routers.snapshot.queryParams.id)
@@ -58,6 +60,9 @@ export class BreagedetailsComponent implements OnInit {
             this.registerDetails.MachineCode = data.data[0].MachineCode;
             this.registerDetails.Location = data.data[0].Location;
             this.registerDetails.Employee = data.data[0].Employee;
+            this.registerDetails.Remark = data.data[0].Remark;
+            this.registerDetails.BreakageReason = data.data[0].BreakageReason;
+            this.registerDetails.BreakageNo = data.data[0].BreakageNo;
           },
           (err) => console.log('its error')
         );
@@ -91,7 +96,6 @@ export class BreagedetailsComponent implements OnInit {
       this.registerDetails.date === undefined ||
       this.registerDetails.BreakageReason === '' ||
       this.registerDetails.calibrationtype === undefined ||
-      this.registerDetails.Requesttype === undefined ||
       this.registerDetails.InstrumentCode === undefined ||
       this.registerDetails.InstrumentName === undefined ||
       this.registerDetails.MachineCode === undefined ||
@@ -131,7 +135,6 @@ export class BreagedetailsComponent implements OnInit {
       this.registerDetails.BreakageReason === '' ||
       this.registerDetails.BreakageReason === undefined ||
       this.registerDetails.calibrationtype === undefined ||
-      this.registerDetails.Requesttype === undefined ||
       this.registerDetails.InstrumentCode === undefined ||
       this.registerDetails.InstrumentName === undefined ||
       this.registerDetails.MachineCode === undefined ||
@@ -170,7 +173,6 @@ export class BreagedetailsComponent implements OnInit {
       this.registerDetails.BreakageReason === '' ||
       this.registerDetails.BreakageReason === undefined ||
       this.registerDetails.calibrationtype === undefined ||
-      this.registerDetails.Requesttype === undefined ||
       this.registerDetails.InstrumentCode === undefined ||
       this.registerDetails.InstrumentName === undefined ||
       this.registerDetails.MachineCode === undefined ||
@@ -221,12 +223,15 @@ export class BreagedetailsComponent implements OnInit {
       this.BackUpdata = data.data;
     });
   }
+
+  back() {
+    this.location.back();
+  }
   update() {
     if (
       this.registerDetails.date === undefined ||
       this.registerDetails.BreakageReason === undefined ||
       this.registerDetails.calibrationtype === '' ||
-      this.registerDetails.Requesttype === '' ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
       this.registerDetails.MachineCode === undefined ||
@@ -382,12 +387,12 @@ export class BreagedetailsComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (HistryDetails == '' || HistryDetails == undefined) {
-      this.toastr.warning('Warning!!!', 'HistryDetails is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (HistryDetails == '' || HistryDetails == undefined) {
+    //   this.toastr.warning('Warning!!!', 'HistoryDetails is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (BreakageReason == '' || BreakageReason == undefined) {
       this.toastr.warning('Warning!!!', 'BreakageReason  is required!', {
@@ -410,12 +415,14 @@ export class BreagedetailsComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (file == undefined || file == undefined) {
-      this.toastr.warning('Warning!!!', 'file  is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (file == undefined || file == undefined) {
+    //   this.toastr.warning('Warning!!!', 'file  is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
+
+    console.log('remark', this.registerDetails);
 
     this.dataservice
       .BreakageDetails_postUser(this.registerDetails)
@@ -492,16 +499,18 @@ export class BreagedetailsComponent implements OnInit {
     });
 
     this.dataservice.calibrationtype_getView().subscribe((data) => {
-      // console.log(data.data[0].type);
+      console.log(data.data);
       this.calibrationtypeof = data.data;
       // this.BackUpdata = data.data;
     });
 
-    this.dataservice.MasterCali_Request_getView().subscribe((data) => {
-      // console.log("dfgsdfgdfg",data.data);
-      this.calibrationtypeof = data.data;
-      // this.BackUpdata = data.data;
-    });
+    // this.dataservice.MasterCali_Request_getView().subscribe((data) => {
+    //   console.log('cal', data);
+
+    // console.log("dfgsdfgdfg",data.data);
+    // this.calibrationtypeof = data.data;
+    // this.BackUpdata = data.data;
+    // });
   }
   public SearchBy(): void {
     // this.searchvalue = this.searchvalue.toUpperCase();
@@ -536,7 +545,7 @@ export class BreagedetailsComponent implements OnInit {
     this.registerDetails.HistryDetails = undefined;
     this.registerDetails.BreakageReason = undefined;
     this.registerDetails.calibrationtype = undefined;
-    this.registerDetails.Requesttype = undefined;
+    this.registerDetails.Remark = undefined;
     this.registerDetails.Calibrationlocation = undefined;
     this.registerDetails.FileUpload = undefined;
   }

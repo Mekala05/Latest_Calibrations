@@ -90,10 +90,10 @@ const routes: Routes = [
         path: 'BreakageDetails',
         component: BreagedetailsComponent,
       },
-      {
-        path: 'BreakageDetails2',
-        component: BreagedetailsComponent,
-      },
+      // {
+      //   path: 'BreakageDetails2',
+      //   component: BreagedetailsComponent,
+      // },
       {
         path: 'update',
         component: CatogerymasterComponent,

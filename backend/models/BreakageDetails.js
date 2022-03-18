@@ -9,6 +9,10 @@ module.exports = function (sequelize, DataTypes) {
           primaryKey: true,
           allowNull: false,
         },
+        BreakageNo: {
+          type: DataTypes.STRING(250),
+          field: "BreakageNo",
+        },
         date: {
           type: DataTypes.STRING(250),
           field: "date",
@@ -34,19 +38,14 @@ module.exports = function (sequelize, DataTypes) {
             field: "Location",
             
           },
-          // EmployeeCode: {
-          //   type: DataTypes.STRING(250),
-          //   field: "EmployeeCode",
-            
-          // },
           Employee: {
             type: DataTypes.STRING(250),
             field: "Employee",
             
           },
-          HistryDetails: {
+          HistoryDetails: {
             type: DataTypes.STRING(250),
-            field: "HistryDetails",
+            field: "HistoryDetails",
             
           },
           BreakageReason: {
@@ -64,9 +63,9 @@ module.exports = function (sequelize, DataTypes) {
             field: "calibrationtype",
             
           },
-          Requesttype: {
+          Remark: {
             type: DataTypes.STRING(250),
-            field: "Requesttype",
+            field: "Remark",
             
           },
           Calibrationlocation: {

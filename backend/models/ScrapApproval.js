@@ -23,25 +23,9 @@ module.exports = function (sequelize, DataTypes) {
             field: "InstrumentName",
             
           },
-          MachineCode: {
-            type: DataTypes.STRING(250),
-            field: "MachineCode",
-            
-          },
           Location: {
             type: DataTypes.STRING(250),
             field: "Location",
-            
-          },
-          
-          Employee: {
-            type: DataTypes.STRING(250),
-            field: "Employee",
-            
-          },
-          HistryDetails: {
-            type: DataTypes.STRING(250),
-            field: "HistryDetails",
             
           },
           BreakageReason: {
@@ -52,6 +36,16 @@ module.exports = function (sequelize, DataTypes) {
           Type: {
             type: DataTypes.STRING(250),
             field: "Type",
+            
+          },
+          Approve: {
+            type: DataTypes.BOOLEAN(250),
+            field: "Approve",
+            
+          },
+          Reject: {
+            type: DataTypes.BOOLEAN(250),
+            field: "Reject",
             
           },
           // FileUpload: {

@@ -124,12 +124,6 @@
       "icon": "../../../assets/img/component/sidenav/Operation.svg",
       "name": "Breakage List Details",
       "url": "/header/BreakageListDetails"
-    },
-    {
-      "id": "7",
-      "icon": "../../../assets/img/component/sidenav/Operation.svg",
-      "name": "Breakage Details",
-      "url": "/header/BreakageDetails"
     }
   ]
 

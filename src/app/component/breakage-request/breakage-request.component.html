@@ -1,63 +1,80 @@
 <div>
-    <div class="pt-3">
-      <!-- <div>
+  <div class="pt-3">
+    <!-- <div>
         <mat-label class="heading">Breakage</mat-label>
       </div> -->
-    </div>
+  </div>
 
-    <!-- Table End -->
-  
-    <!-- form start -->
+  <!-- Table End -->
 
-    
+  <!-- form start -->
 
-    <div class="new_bor pt-1 pb-3">
-
-      <div class="row px-4 pt-3 align-items-center">
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Date</mat-label>
-            </div>
-            <div class="col-8">
-              <!-- <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" />           
-            </div>
+  <div class="new_bor pt-1 pb-3">
+    <div class="row px-4 pt-3 align-items-center">
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Date</mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <input
+              type="text"
+              bsDatepicker
+              [bsConfig]="{ dateInputFormat: 'DD-MMM-YYYY' }"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.date"
+            />
           </div>
         </div>
+      </div>
 
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname">BreakageNo</mat-label>
-            </div>
-            <div class="col-8">
-              <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageNo" />
-            </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">BreakageNo</mat-label>
+          </div>
+          <div class="col-8">
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.BreakageNo"
+              disabled
+            />
           </div>
         </div>
+      </div>
 
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Instrument Code</mat-label>
-            </div>
-            <div class="col-8">
-              <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentCode"(change)="instru($event)">
-                <option disabled selected value="undefined">--Select--</option>
-                <option *ngFor="let data of InstrumentCodeof; let i = index" [value]="data.InstrumentCode+','+data.InstrumentName">
-                  {{data.InstrumentCode}}
-                </option>
-              </select>
-            </div>
-            <!-- <div class="col-8">
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Instrument Code</mat-label>
+          </div>
+          <div class="col-8">
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.InstrumentCode"
+              (change)="instru($event)"
+            >
+              <option disabled selected value="undefined">--Select--</option>
+              <option
+                *ngFor="let data of InstrumentCodeof; let i = index"
+                [value]="data.InstrumentCode + ',' + data.InstrumentName"
+              >
+                {{ data.InstrumentCode }}-{{ data.InstrumentName }}
+              </option>
+            </select>
+          </div>
+          <!-- <div class="col-8">
               <textarea type="text" class="form-control input_text"></textarea>
               <input type="text" class="form-control" />
             </div> -->
-          </div>
         </div>
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname"> Instrument Name</mat-label>
@@ -73,7 +90,7 @@
           </div>
         </div> -->
 
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname">InstrumentName</mat-label>
@@ -82,61 +99,81 @@
               <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentName" />
             </div>
           </div>
-        </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Machine Code </mat-label>
-            </div>
-            <div class="col-8">
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.MachineCode">
-                <option selected disabled value="undefined">Select</option>
-                <option *ngFor="let data of MachineCode; let i = index" [value]="data.U_ToolNo">
-                  {{data.U_ToolNo}}
-                </option> 
-               
-              </select>
-            </div>
-            
+        </div> -->
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Machine Code </mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.MachineCode"
+            >
+              <option selected disabled value="undefined">Select</option>
+              <option
+                *ngFor="let data of MachineCode; let i = index"
+                [value]="data.U_ToolNo + ',' + data.U_ToolName"
+              >
+                {{ data.U_ToolName }}
+              </option>
+            </select>
           </div>
         </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              
-              <mat-label class="gene_name newname"> Location </mat-label>
-            </div>
-            <div class="col-8">
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.Location">                 
-                <option value="">--select--</option> 
-               <option *ngFor="let data of Location; let i = index" [value]="data.ShortName+','+data.BranchUnit">
-                 {{data.ShortName}} - {{data.BranchUnit}}
-             </select>
-            </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Location </mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Location"
+              disabled
+            />
           </div>
         </div>
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Employee </mat-label>
-            </div>
-            <div class="col-8">
-              <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-              <select name="" id="" class="form-control input_text" [(ngModel)]="registerDetails.Employee">                 
-                <option value="">--select--</option> 
-                <!-- <option value="">Calibration</option>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Employee </mat-label>
+          </div>
+          <div class="col-8">
+            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Employee"
+              disabled
+            />
+            <!-- <select
+              name=""
+              id=""
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.Employee"
+            >
+              <option value="">--select--</option>
+              <option value="">Calibration</option>
                 <option value="">Service</option>
-                <option value="">Scrap</option>  -->
-                <option *ngFor="let data of Employee; let i = index" [value]="data.id+','+data.name">
-                  {{data.id}} - {{data.name}}
-               
-              </select>
-            </div>
+                <option value="">Scrap</option> 
+              <option
+                *ngFor="let data of Employee; let i = index"
+                [value]="data.id + ',' + data.name"
+              >
+                {{ data.id }} - {{ data.name }}
+              </option>
+            </select> -->
           </div>
         </div>
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname">Employee code</mat-label>
@@ -147,7 +184,7 @@
             </div>
           </div>
         </div> -->
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname">History Details</mat-label>
@@ -159,18 +196,22 @@
             </div>
           </div>
         </div> -->
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            <div class="col-4">
-              <mat-label class="gene_name newname"> Breakage Reason</mat-label>
-            </div>
-            <div class="col-8">
-              <textarea type="text" class="form-control input_text"[(ngModel)]="registerDetails.BreakageReason"></textarea>
-              <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageReason" />              -->
-            </div>
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname"> Breakage Reason</mat-label>
+          </div>
+          <div class="col-8">
+            <textarea
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.BreakageReason"
+            ></textarea>
+            <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageReason" />              -->
           </div>
         </div>
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      </div>
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname">Type</mat-label>
@@ -185,7 +226,7 @@
             </div>
           </div>
         </div> -->
-        <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
               <mat-label class="gene_name newname">File Upload</mat-label>
@@ -195,24 +236,21 @@
             </div>
           </div>
         </div> -->
-  
-        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-          <div class="row form-group align-items-center">
-            
-            <div class="col-xl-3">
-              <input type="file" [(ngModel)]="registerDetails.file" />
-              
-            </div>
-            <div class="col-6">
-              <button type="button" class="Viewbtn" style="margin-left: 98px;">VIEW</button>
-                  
-              </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-xl-3">
+            <input type="file" [(ngModel)]="registerDetails.file" />
+          </div>
+          <div class="col-6">
+            <button type="button" class="Viewbtn" style="margin-left: 98px">
+              VIEW
+            </button>
           </div>
         </div>
-  
-        
-        
-        <!--
+      </div>
+
+      <!--
         <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
@@ -234,43 +272,53 @@
               </div>
             </div>
           </div> -->
-          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12"></div>
 
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group">
+          <div class="col-4">
+            <span>
+              <button
+                mat-stroked-button
+                class="submit-button"
+                (click)="reset()"
+              >
+                CLEAR
+              </button>
+            </span>
           </div>
-          <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12">
-
+          <div class="col-4">
+            <span>
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="!registerDetails.id"
+                (click)="store()"
+              >
+                ADD
+              </button>
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="registerDetails.id"
+                (click)="update()"
+              >
+                Update
+              </button>
+            </span>
           </div>
-          
-          <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-              
-      
-            <div class="row form-group">
-              <div class="col-4" >
-                <span>
-                  <button mat-stroked-button class="submit-button" (click)="reset()">CLEAR</button>
-                </span>
-              </div>
-              <div class="col-4" >
-                <span>
-                  <button mat-flat-button id="color_sv" class="submit-button" *ngIf="!registerDetails.id" (click)="store()">
-                    ADD
-                  </button>
-                  <button mat-flat-button id="color_sv" class="submit-button" *ngIf="registerDetails.id"
-                    (click)="update()">Update</button>
-                </span>
-              </div>
-            </div>
-          
-
-          </div>
-        
+        </div>
       </div>
     </div>
   </div>
-  
-  <br />
-  
-  <!-- <div class="searchbox">
+</div>
+
+<br />
+
+<!-- <div class="searchbox">
     <div class="has-search text-right">
       <span class="fa fa-search form-control-feedback" slot="end"></span>
       <input
@@ -285,47 +333,60 @@
     </div>
   </div>
    -->
-  <div class="pt-3 mb-3">
-    <table class="table  table-borderless table-responsive table-hover">
-      <thead>
-        <tr class="header_color text-nowrap">
-          <td
-            scope="col"
-            *ngFor="let head of TableHeading; let i = index"
-            class="gene_name tablethtd"
-            [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
-            (click)="Click_Head(i, head.name)"
-          >
-            {{ head.name }}
-          </td>
-        </tr>
-      </thead>
-      <tbody class="table table-sm text-nowrap">
-        <tr *ngFor="let data of collection; let i = index" >
-          <!-- <td class="gene_name tablethtd">{{ i + 1 }}</td> -->
-          <td class="gene_name tablethtd">{{ data.BreakageNo }}</td>
-          <td class="gene_name tablethtd">{{ data.date | date: 'dd-MMM-yyyy,  h:mm a' }}</td>
-          <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
-          <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
-          <td class="gene_name tablethtd">{{ data.MachineCode }}</td>
-          <td class="gene_name tablethtd">{{ data.Location }}</td>
-          <td class="gene_name tablethtd">{{ data.Employee }}</td>
-          <!-- <td class="gene_name tablethtd">{{ data.HistoryDetails }}</td> -->
-          <td class="gene_name tablethtd">{{ data.BreakageReason }}</td>
-          <!-- <td class="gene_name tablethtd">{{ data.Type }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.FileUpload }}</td> -->
-          <td class="gene_name tablethtd">{{ data.createdAt | date: 'dd-MMM-yyyy,  h:mm a'}}</td>
-          <td class="gene_name tablethtd">{{ data.createdBy }}{{user_name}} </td>
-          <td class="gene_name tablethtd">{{ data.updatedAt | date: 'dd-MMM-yyyy,  h:mm a'}}</td>
-          <td class="gene_name tablethtd">{{ data.UpdateBy }}{{user_name}}</td>
-          <td class="gene_name tablethtd icons">
-            <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="getUser1(data)"></i>
-          </td>
-          <td class="gene_name tablethtd dicons">
-            <i class="fa fa-trash" aria-hidden="true" (click)="deleteUsers(data.id)"></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<!-- <div class="pt-3 mb-3">
+  <table class="table table-borderless table-responsive table-hover">
+    <thead>
+      <tr class="header_color text-nowrap">
+        <td
+          scope="col"
+          *ngFor="let head of TableHeading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm text-nowrap">
+      <tr *ngFor="let data of collection; let i = index">
+        <td class="gene_name tablethtd">{{ i + 1 }}</td>
+        <td class="gene_name tablethtd">{{ data.BreakageNo }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.date | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
+        <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
+        <td class="gene_name tablethtd">{{ data.MachineCode }}</td>
+        <td class="gene_name tablethtd">{{ data.Location }}</td>
+        <td class="gene_name tablethtd">{{ data.Employee }}</td>
+        <td class="gene_name tablethtd">{{ data.HistoryDetails }}</td>
+        <td class="gene_name tablethtd">{{ data.BreakageReason }}</td>
+        <td class="gene_name tablethtd">{{ data.Type }}</td>
+        <td class="gene_name tablethtd">{{ data.FileUpload }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.UpdateBy }}{{ user_name }}</td>
+        <td class="gene_name tablethtd icons">
+          <i
+            class="fa fa-pencil-square-o"
+            aria-hidden="true"
+            (click)="getUser1(data)"
+          ></i>
+        </td>
+        <td class="gene_name tablethtd dicons">
+          <i
+            class="fa fa-trash"
+            aria-hidden="true"
+            (click)="deleteUsers(data.id)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->

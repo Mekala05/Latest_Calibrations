@@ -135,8 +135,9 @@ router.get('/viewData2', (req, res) => {
 
 router.get('/viewU_ToolNo', (req, res) => {
     return new Promise((resolve, reject) => {
+        console.log;
         OMAC.findAll({
-            attributes: ['U_ToolNo'],
+            attributes: ['U_ToolNo','U_ToolName'],
         }).then(function (result) {
                 sendSuccess(res, result);
             }).catch(function (err) {

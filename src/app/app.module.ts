@@ -71,6 +71,8 @@ import { CalibrationReportComponent } from './calibration-report/calibration-rep
 import { CalibrationMasterListReportComponent } from './calibration-master-list-report/calibration-master-list-report.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { DataTablesModule } from 'angular-datatables';
+// import { BreakageModule } from './breakage-list-details/breakage-list-details.module';
 
 @NgModule({
   declarations: [
@@ -123,7 +125,9 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     NgxFileDropModule,
     // TablePagination,
     MatTableModule,
+    DataTablesModule.forRoot(),
     MultiSelectModule,
+    // BreakageModule,
     NgMultiSelectDropDownModule.forRoot(),
     // DatePipe,
     BsDatepickerModule.forRoot(),

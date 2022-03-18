@@ -18,7 +18,7 @@ import {
   FileSystemDirectoryEntry,
 } from 'ngx-file-drop';
 // import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+
 // import { CommonModelService } from 'src/app/shared/service/common-model.service';
 //import { Console } from 'console';
 
@@ -826,13 +826,13 @@ export class CalibrationmasterComponent implements OnInit {
     const imagedata = new FormData();
     imagedata.append('image', this.images);
     this.dataservice.MasterImage_postUser(imagedata).subscribe((data) => {
-      console.log('data', data);
+      // console.log('data', data);
 
       console.log('working...');
     });
 
     // console.log(this.registerDetails.headerImage);
-    console.log(this.registerDetails.headerImage.fileSource);
+    // console.log('store header image', this.registerDetails.headerImage);
 
     this.dataservice.MasterTest_postUser(this.registerDetails).subscribe(
       (data) => {
@@ -865,6 +865,12 @@ export class CalibrationmasterComponent implements OnInit {
           this.router.navigate([currentUrl]);
           this.tabledata();
         } else {
+          // console.log('error');
+          // console.log('data.error', typeof data.error.errors);
+
+          // console.log(data.error?.errors);
+          // console.log(data.error?.errors[0].validatorKey);
+
           if (data.error.errors[0].validatorKey) {
             this.toastr.error(
               'Error!!!',
@@ -1665,7 +1671,7 @@ export class CalibrationmasterComponent implements OnInit {
           }
         );
     };
-    console.log('file', this.file);
+    // console.log('file', this.file);
 
     reader.readAsDataURL(this.file);
   }
@@ -1697,13 +1703,7 @@ export class CalibrationmasterComponent implements OnInit {
 
       reader.onload = () => {
         this.imageSrc = reader.result as string;
-        // console.log('headerImage', this.registerDetails.headerImage);
-        console.log('res', reader.result);
-        console.log(this.registerDetails.headerImage);
-
-        this.registerDetails.headerImage?.patchValue({
-          fileSource: reader.result,
-        });
+        this.registerDetails.headerImage = this.imageSrc;
       };
     }
   }
