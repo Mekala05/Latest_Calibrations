@@ -25,7 +25,7 @@ export class ScrapApprovalListComponent implements OnInit {
   public timeout: any = null;
   public TableHeading = [
     {
-      name: 'DocumentNo',
+      name: 'Scrap Code',
     },
 
     {
@@ -76,6 +76,7 @@ export class ScrapApprovalListComponent implements OnInit {
           console.log('status - ', item.status, 'option -', item.option);
           if (item.status === 'Reject' && item.option === 'Scrap') {
             this.collection.push(item);
+            console.log(item);
           }
         }
       });

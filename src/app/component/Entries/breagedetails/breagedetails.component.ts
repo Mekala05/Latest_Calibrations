@@ -49,12 +49,13 @@ export class BreagedetailsComponent implements OnInit {
   ) {
     if (this.routers.snapshot.queryParams.id) {
       // alert(this.routers.snapshot.queryParams.id);
+      // console.log(this.routers.snapshot.queryParams.id);
 
       this.dataservice
         .BreakageRequest_getViewData(this.routers.snapshot.queryParams.id)
         .subscribe(
           (data: any) => {
-            console.log(data);
+            console.log('ssss', data);
             this.registerDetails.InstrumentName = data.data[0].InstrumentName;
             this.registerDetails.InstrumentCode = data.data[0].InstrumentCode;
             this.registerDetails.MachineCode = data.data[0].MachineCode;

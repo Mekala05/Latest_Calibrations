@@ -22,4 +22,5 @@ export interface calibrationEntry {
   Requesttypeselected?: any;
   status?: string;
   option?: string;
+  conditionRemark?: string;
 }

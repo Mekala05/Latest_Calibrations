@@ -342,7 +342,7 @@ export class CalibrationrequstComponent implements OnInit {
     var date = this.registerDetails.date;
     var RequestType = this.registerDetails.RequestType;
     var InstrumentCode = this.registerDetails.InstrumentCode?.toString();
-    var InstrumentName = this.registerDetails.InstrumentName?.toString();
+    // var InstrumentName = this.registerDetails.InstrumentName?.toString();
     var LPIdentification = this.registerDetails.LPIdentification;
     var Party = this.registerDetails.Party?.toString();
     var Quantity = this.registerDetails.Quantity;
@@ -373,12 +373,12 @@ export class CalibrationrequstComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (InstrumentName == '' || InstrumentName == undefined) {
-      this.toastr.warning('Warning!!!', 'InstrumentName is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (InstrumentName == '' || InstrumentName == undefined) {
+    //   this.toastr.warning('Warning!!!', 'InstrumentName is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (LPIdentification == '' || LPIdentification == undefined) {
       this.toastr.warning('Warning!!!', 'LPIdentification is required!', {
@@ -401,12 +401,12 @@ export class CalibrationrequstComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (RaiseDc == '' || RaiseDc == undefined) {
-      this.toastr.warning('Warning!!!', 'RaiseDc   is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (RaiseDc == '' || RaiseDc == undefined) {
+    //   this.toastr.warning('Warning!!!', 'RaiseDc   is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (calibrationlocation == '' || calibrationlocation == undefined) {
       this.toastr.warning('Warning!!!', 'calibrationlocation  is required!', {
@@ -429,12 +429,12 @@ export class CalibrationrequstComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (Requesttypeselected == '' || Requesttypeselected == undefined) {
-      this.toastr.warning('Warning!!!', 'Requesttypeselected    is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (Requesttypeselected == '' || Requesttypeselected == undefined) {
+    //   this.toastr.warning('Warning!!!', 'Requesttypeselected    is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     this.dataservice
       .Request_postUser(this.registerDetails)

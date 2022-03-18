@@ -97,6 +97,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(250),
             field: 'ReferenceCode'
         },
+        conditionRemark:{
+            type: DataTypes.STRING(500),
+            field: 'conditionRemark'
+        },
    
         createdBy: {
             type: DataTypes.STRING(50),

@@ -222,3 +222,7 @@ ngx-file-drop {
 ::ng-deep ngb-modal-window {
   background: linear-gradient(45deg, grey, transparent);
 }
+
+input[type="checkbox"][readonly] {
+  pointer-events: none;
+}

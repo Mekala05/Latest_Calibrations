@@ -51,7 +51,10 @@ import { ReturnComponent } from './component/return/return.component';
 import { BreakageRequestComponent } from './component/breakage-request/breakage-request.component';
 import { ReturnListComponent } from './return-list/return-list.component';
 import { BreakageListDetailsComponent } from './breakage-list-details/breakage-list-details.component';
-import { ScrapApprovalComponent } from './scrap-approval/scrap-approval.component';
+import {
+  conditionalRejections,
+  ScrapApprovalComponent,
+} from './scrap-approval/scrap-approval.component';
 import { ScrapApprovalListComponent } from './scrap-approval-list/scrap-approval-list.component';
 import { CalibrationtypeComponent } from './calibrationtype/calibrationtype.component';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -105,6 +108,7 @@ import { DataTablesModule } from 'angular-datatables';
     rejectionmodalbox,
     conrejection2,
     conditionalRejection,
+    conditionalRejections,
     DialogContent,
     CalibrationmasterlistComponent,
     CalibrationReportComponent,

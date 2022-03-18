@@ -25,6 +25,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.date"
               readonly
+              disabled
             />
           </div>
         </div>
@@ -197,20 +198,6 @@
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
-            <mat-label class="gene_name newname">History Details</mat-label>
-          </div>
-          <div class="col-8">
-            <!-- <textarea type="text" class="form-control input_text"></textarea> -->
-            <!-- <input type="url" class="form-control input_text" [(ngModel)]="registerDetails.HistryDetails" />   -->
-            <a href="http://localhost:4200/header/BreakageDetails">
-              History Details</a
-            >
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-        <div class="row form-group align-items-center">
-          <div class="col-4">
             <mat-label class="gene_name newname"> Scrap Reason</mat-label>
           </div>
           <div class="col-8">
@@ -226,10 +213,25 @@
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
           <div class="col-4">
-            <mat-label class="gene_name newname">Type</mat-label>
+            <mat-label class="gene_name newname">History Details</mat-label>
           </div>
           <div class="col-8">
             <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+            <!-- <input type="url" class="form-control input_text" [(ngModel)]="registerDetails.HistryDetails" />   -->
+            <a href="http://localhost:4200/header/BreakageDetails">
+              History Details</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-4">
+            <mat-label class="gene_name newname">Type</mat-label>
+          </div>
+          <div class="col-8">
+            <textarea type="text" class="form-control input_text"></textarea>
             <select
               name=""
               id=""
@@ -243,7 +245,7 @@
             </select>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
           <div class="row form-group align-items-center">
             <div class="col-4">
@@ -284,7 +286,7 @@
             <mat-label class="gene_name newname">Reject</mat-label>
           </div>
           <div class="col-2">
-            <input type="checkbox" />
+            <input type="checkbox" (change)="getApprove($event)" />
           </div>
         </div>
       </div>
@@ -313,7 +315,21 @@
           </div> -->
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
       <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
+      <div
+        class="col-xl-3 col-lg-6 col-md-12 col-sm-12 button-section"
+        *ngIf="remove"
+      >
+        <div class="row form-group align-items-center">
+          <button mat-raised-button class="mx-2 approve1" (click)="accept()">
+            Accept
+          </button>
+
+          <button mat-raised-button class="mx-2 con" (click)="conaccept()">
+            Con Accept
+          </button>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12" *ngIf="!remove">
         <div style="margin: auto">
           <div class="row form-group">
             <div class="col-4">
