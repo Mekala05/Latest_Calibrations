@@ -1,6 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
-import { master } from './model';
+import { Image, master } from './model';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -31,6 +38,8 @@ import {
   styleUrls: ['./calibrationmaster.component.scss'],
 })
 export class CalibrationmasterComponent implements OnInit {
+  // @ViewChild('UploadFileInput', { static: false }) uploadFileInput: ElementRef;
+  fileInputLabel: string = '';
   src = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
   public files: NgxFileDropEntry[] = [];
   public previousDate!: Date;
@@ -95,6 +104,7 @@ export class CalibrationmasterComponent implements OnInit {
   public maximumTime: any;
   imageSrc: string = '';
   headerImage: any;
+  imageData: Image = {};
 
   public Heading = [
     {
@@ -1696,17 +1706,39 @@ export class CalibrationmasterComponent implements OnInit {
     }
   }
 
-  onFileChange(event: any) {
-    const reader = new FileReader();
+  // onFileChange(event: any) {
+  //   const reader = new FileReader();
 
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
+  //   if (event.target.files && event.target.files.length) {
+  //     const [file] = event.target.files;
+  //     reader.readAsDataURL(file);
 
-      reader.onload = () => {
-        this.imageSrc = reader.result as string;
-        this.registerDetails.headerImage = this.imageSrc;
-      };
+  //     reader.onload = () => {
+  //       this.imageSrc = reader.result as string;
+  //       this.registerDetails.headerImage = this.imageSrc;
+  //     };
+  //   }
+  // }
+  onFileSelect(event: any) {
+    const file = event.target.files[0];
+    this.fileInputLabel = file.name;
+    this.registerDetails.headerImage = file;
+    console.log('file', this.fileInputLabel);
+    console.log('header', this.registerDetails.headerImage);
+  }
+
+  submit() {
+    console.log('inside submit');
+    const formData = new FormData();
+    // console.log('header image1', this.imageData.headerImages);
+    if (this.imageData.headerImages) {
+      // console.log('header image2', this.imageData.headerImages);
+
+      formData.append('uploadedImage', this.imageData.headerImages);
     }
+
+    console.log('formData', formData);
+
+    formData.append('agentId', '007');
   }
 }

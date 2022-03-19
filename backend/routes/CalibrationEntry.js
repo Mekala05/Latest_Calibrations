@@ -114,4 +114,22 @@ router.delete('/delete/:id', (req, res) => {
     })  
 })
 
+router.get('/tabledata1', (req, res) => {
+    return new Promise((resolve, reject) => {
+        CalibrationEntry.findAll({
+            where: { deleteStatus: false }, order: [
+                ['id', 'DESC']
+
+            ],
+            limit: 1,
+           
+        }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
+})
+
 module.exports = router

@@ -354,6 +354,10 @@ export class DataService {
     return this.http.get<any>(`${environment.Calibration_Entry}/SheduleNo`);
   }
 
+  Tabledata1_getView() {
+    return this.http.get<any>(`${environment.Calibration_Entry}/tabledata1`);
+  }
+
   // Calibration request
   Calibration_request(year: any, month: any) {
     return this.http.get<any>(

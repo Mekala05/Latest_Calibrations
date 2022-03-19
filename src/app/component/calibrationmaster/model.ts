@@ -27,3 +27,8 @@ export interface master {
   dueDate?: Date;
   headerImage?: string;
 }
+
+export interface Image {
+  headerImages?: string | Blob;
+  errorDescription?: string | Blob;
+}
