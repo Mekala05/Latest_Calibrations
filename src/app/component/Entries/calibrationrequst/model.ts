@@ -12,6 +12,7 @@ export interface CalibrationRequest {
   calibrationtype?: string;
   BreakageNo?: string;
   Requesttypeselected?: any;
+  Active?: boolean;
 }
 
 export interface RaiseDC {
@@ -29,4 +30,5 @@ export interface RaiseDC {
   calibrationtype?: string;
   BreakageNo?: string;
   Requesttypeselected?: any;
+  Active?: boolean;
 }

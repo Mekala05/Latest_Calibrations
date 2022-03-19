@@ -22,4 +22,5 @@ export interface modaltextbox {
   ReferenceCode?: string;
   status?: string;
   option?: string;
+  conditionRemark?: string;
 }

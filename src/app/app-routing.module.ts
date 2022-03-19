@@ -130,6 +130,10 @@ const routes: Routes = [
         component: BreakageListDetailsComponent,
       },
       {
+        path: 'BreakageListDetails2',
+        component: BreakageListDetailsComponent,
+      },
+      {
         path: 'ScrapApproval',
         component: ScrapApprovalComponent,
       },

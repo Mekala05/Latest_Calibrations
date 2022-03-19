@@ -56,7 +56,7 @@ export class CalibrationentryComponent implements OnInit {
   public MxLifeTimeNumber: any;
   public MxLifeTime: any;
   public inputvalue: any;
-  public TotalDays: any;
+  public TotalDay: any;
   public dueDate: string = '';
   public TableHeading = [
     {
@@ -147,39 +147,39 @@ export class CalibrationentryComponent implements OnInit {
   }
 
   Dialogbox() {
-    if (
-      this.registerDetails.date === undefined ||
-      this.registerDetails.ScheduleNo === undefined ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity === undefined ||
-      this.registerDetails.collabrationCost === undefined ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate === undefined ||
-      this.registerDetails.date.toString() === '' ||
-      this.registerDetails.ScheduleNo === '' ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity.toString() === '' ||
-      this.registerDetails.collabrationCost.toString() === '' ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate.toString() === '' ||
-      this.registerDetails.Observation === '' ||
-      this.registerDetails.Description === '' ||
-      this.registerDetails.Remark === '' ||
-      this.registerDetails.Specification === ''
-    ) {
-      alert('Enter the Details');
-    } else {
-      this.dataservice.setAdmin(this.registerDetails);
-      const dialogRef = this.dialog.open(rejectionmodalbox);
-    }
+    // if (
+    //   this.registerDetails.date === undefined ||
+    //   this.registerDetails.ScheduleNo === undefined ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity === undefined ||
+    //   this.registerDetails.collabrationCost === undefined ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate === undefined ||
+    //   this.registerDetails.date.toString() === '' ||
+    //   this.registerDetails.ScheduleNo === '' ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity.toString() === '' ||
+    //   this.registerDetails.collabrationCost.toString() === '' ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate.toString() === '' ||
+    //   this.registerDetails.Observation === '' ||
+    //   this.registerDetails.Description === '' ||
+    //   this.registerDetails.Remark === '' ||
+    //   this.registerDetails.Specification === ''
+    // ) {
+    //   alert('Enter the Details');
+    // } else {
+    this.dataservice.setAdmin(this.registerDetails);
+    const dialogRef = this.dialog.open(rejectionmodalbox);
+    // }
   }
 
   openDialog() {
@@ -377,7 +377,7 @@ export class CalibrationentryComponent implements OnInit {
     );
   }
   public store(): void {
-    // let dueDate, maxLifeTime, days;
+    // let dueDate, maxLifeTime, Day;
     this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
       console.log('data', data);
       data.data.map((item: any) => {
@@ -410,7 +410,7 @@ export class CalibrationentryComponent implements OnInit {
           //   }
 
           //   if (date1 < date2) {
-          //     this.TotalDays = 0;
+          //     this.TotalDay = 0;
           //     let today = new Date();
           //     let todayDate = this.datePipe.transform(today, 'MM/dd/YYYY');
           //     let compareDate1 = new Date(`${todayDate}`);
@@ -423,18 +423,18 @@ export class CalibrationentryComponent implements OnInit {
           //     var Time1 = compareDate1.getTime() - compareDate2.getTime();
           //     var Time2 = compareDate3.getTime() - compareDate1.getTime();
 
-          //     var Days1 = Time1 / (1000 * 3600 * 24); //Difference in Days
-          //     var Days2 = Time2 / (1000 * 3600 * 24);
-          //     // console.log(Days1, Days2);
+          //     var Day1 = Time1 / (1000 * 3600 * 24); //Difference in Day
+          //     var Day2 = Time2 / (1000 * 3600 * 24);
+          //     // console.log(Day1, Day2);
 
-          //     this.TotalDays = Days1 + Days2;
-          //     console.log('total', this.TotalDays);
+          //     this.TotalDay = Day1 + Day2;
+          //     console.log('total', this.TotalDay);
           //   }
 
           //   if (item.MxLifeTime === 'Week') {
           //     console.log('week');
 
-          //     let week = Math.round(this.TotalDays / 7);
+          //     let week = Math.round(this.TotalDay / 7);
           //     let weekValue = week * 7;
           //     //  console.log(weekValue);
           //     let send_date: any = new Date();
@@ -451,11 +451,11 @@ export class CalibrationentryComponent implements OnInit {
           //     this.MxLifeTimeNumber = week;
           //   }
 
-          //   if (item.MxLifeTime === 'Days') {
-          //     console.log('days');
+          //   if (item.MxLifeTime === 'Day') {
+          //     console.log('Day');
 
-          //     let days = this.TotalDays;
-          //     let weekValue = days * 1;
+          //     let Day = this.TotalDay;
+          //     let weekValue = Day * 1;
           //     //  console.log(weekValue);
           //     let send_date: any = new Date();
           //     send_date.setDate(send_date.getDate() + weekValue);
@@ -467,8 +467,8 @@ export class CalibrationentryComponent implements OnInit {
           //       //  console.log(setDate);
           //       this.dueDate = setDate;
           //     }
-          //     this.MxLifeTimeNumber = days;
-          //     this.MxLifeTime = 'Days';
+          //     this.MxLifeTimeNumber = Day;
+          //     this.MxLifeTime = 'Day';
           //   }
 
           //   if (
@@ -477,9 +477,9 @@ export class CalibrationentryComponent implements OnInit {
           //   ) {
           //     console.log('inside month');
 
-          //     let days = parseInt(this.TotalDays) * 1;
+          //     let Day = parseInt(this.TotalDay) * 1;
           //     let send_date: any = new Date(item.date);
-          //     send_date.setDate(send_date.getDate() + days);
+          //     send_date.setDate(send_date.getDate() + Day);
 
           //     if (send_date != 'Invalid Date') {
           //       let setDate: any = send_date.setMonth(send_date.getMonth());
@@ -512,9 +512,9 @@ export class CalibrationentryComponent implements OnInit {
           //   if (item.MxLifeTime === 'Year') {
           //     console.log('year');
 
-          //     let days = parseInt(this.TotalDays) * 1;
+          //     let Day = parseInt(this.TotalDay) * 1;
           //     let send_date: any = new Date(item.date);
-          //     send_date.setDate(send_date.getDate() + days);
+          //     send_date.setDate(send_date.getDate() + Day);
           //     let year = send_date.setFullYear(send_date.getFullYear());
           //     // console.log('year', year);
           //     // console.log('item', item.year);
@@ -669,12 +669,12 @@ export class CalibrationentryComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (ScheduleNo == '' || ScheduleNo == undefined) {
-      this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (ScheduleNo == '' || ScheduleNo == undefined) {
+    //   this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     if (InstrumentCode == '' || InstrumentCode == undefined) {
       this.toastr.warning('Warning!!!', 'InstrumentCode is required!', {
@@ -741,13 +741,6 @@ export class CalibrationentryComponent implements OnInit {
 
     if (RequestType == '' || RequestType == undefined) {
       this.toastr.warning('Warning!!!', 'RequestType    is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
-
-    if (RequestType == undefined || RequestType == undefined) {
-      this.toastr.warning('Warning!!!', 'RequestType is required!', {
         timeOut: 3000,
       });
       (<HTMLInputElement>document.getElementById('id')).focus();
@@ -831,7 +824,7 @@ export class CalibrationentryComponent implements OnInit {
       }
 
       if (date1 < date2) {
-        this.TotalDays = 0;
+        this.TotalDay = 0;
         let today = new Date();
         let todayDate = this.datePipe.transform(today, 'MM/dd/YYYY');
         let compareDate1 = new Date(`${todayDate}`);
@@ -844,18 +837,18 @@ export class CalibrationentryComponent implements OnInit {
         var Time1 = compareDate1.getTime() - compareDate2.getTime();
         var Time2 = compareDate3.getTime() - compareDate1.getTime();
 
-        var Days1 = Time1 / (1000 * 3600 * 24); //Difference in Days
-        var Days2 = Time2 / (1000 * 3600 * 24);
-        // console.log(Days1, Days2);
+        var Day1 = Time1 / (1000 * 3600 * 24); //Difference in Day
+        var Day2 = Time2 / (1000 * 3600 * 24);
+        // console.log(Day1, Day2);
 
-        this.TotalDays = Days1 + Days2;
-        console.log('total', this.TotalDays);
+        this.TotalDay = Day1 + Day2;
+        console.log('total', this.TotalDay);
       }
 
       if (data.MxLifeTime === 'Week') {
         console.log('week');
 
-        let week = Math.round(this.TotalDays / 7);
+        let week = Math.round(this.TotalDay / 7);
         let weekValue = week * 7;
         //  console.log(weekValue);
         let send_date: any = new Date();
@@ -869,11 +862,11 @@ export class CalibrationentryComponent implements OnInit {
         this.MxLifeTimeNumber = week;
       }
 
-      if (data.MxLifeTime === 'Days') {
-        console.log('days');
+      if (data.MxLifeTime === 'Day') {
+        console.log('Day');
 
-        let days = this.TotalDays;
-        let weekValue = days * 1;
+        let Day = this.TotalDay;
+        let weekValue = Day * 1;
         //  console.log(weekValue);
         let send_date: any = new Date();
         send_date.setDate(send_date.getDate() + weekValue);
@@ -882,16 +875,16 @@ export class CalibrationentryComponent implements OnInit {
           //  console.log(setDate);
           this.dueDate = setDate;
         }
-        this.MxLifeTimeNumber = days;
-        this.MxLifeTime = 'Days';
+        this.MxLifeTimeNumber = Day;
+        this.MxLifeTime = 'Day';
       }
 
       if (data.MxLifeTime === 'Month' || data.MxLifeTime === 'Quarterly||3') {
         console.log('inside month');
 
-        let days = parseInt(this.TotalDays) * 1;
+        let Day = parseInt(this.TotalDay) * 1;
         let send_date: any = new Date(_modifydate1);
-        send_date.setDate(send_date.getDate() + days);
+        send_date.setDate(send_date.getDate() + Day);
 
         if (send_date != 'Invalid Date') {
           let setDate: any = send_date.setMonth(send_date.getMonth());
@@ -924,9 +917,9 @@ export class CalibrationentryComponent implements OnInit {
       if (data.MxLifeTime === 'Year') {
         console.log('year');
 
-        let days = parseInt(this.TotalDays) * 1;
+        let Day = parseInt(this.TotalDay) * 1;
         let send_date: any = new Date(_modifydate1);
-        send_date.setDate(send_date.getDate() + days);
+        send_date.setDate(send_date.getDate() + Day);
         let year = send_date.setFullYear(send_date.getFullYear());
         // console.log('year', year);
         // console.log('item', item.year);
@@ -1348,36 +1341,77 @@ export class rejectionmodalbox {
     this.dataservice.Entry_getView().subscribe((data: any) => {
       this.refno = '';
       // console.log('data', data);
+      // console.log('len', data.data.length);
 
-      if (data.data.length) {
-        // console.log('inside data length');
+      // if (data.data.length <= 0) {
+      // console.log('separate len');
+
+      if (data.data.length === 0) {
+        if (this.type === 'Re-Calibration') {
+          this.refno = 'RECL' + '-' + '1000';
+          // console.log('reno', this.refno);
+        } else if (this.type === 'ReService') {
+          this.refno = 'RESV' + '-' + '1000';
+        } else {
+          if (this.type === 'Scrap') this.refno = 'SCRAP' + '-' + '1000';
+        }
+        // console.log(this.refno);
+      }
+      if (data.data.length >= 1) {
+        // console.log('inside length');
+
         data.data.map((data: any) => {
-          if (data.status === 'Reject') {
-            // console.log('type', this.type);
-            // console.log('option', data.option);
-            // if(this.type === 'Re-Calibration')
-            if (this.type === data.option) {
-              if (this.type === 'Re-Calibration') {
-                // console.log('inside');
+          // console.log(data.ReferenceCode);
+          // console.log('inside data length');
+          // console.log(data.data.length);
 
-                // let code = 'RECL' + '-' + 1000;
-                // console.log('entry', data);
-                // console.log(typeof data);
+          // && data.ReferenceCode
+          if (data.ReferenceCode) {
+            // console.log('inside refcode');
 
-                // let admin = data.filter((item: any) => item.option === this.type);
-                // if (data.option === this.type) {
-                // console.log('inside data');
+            if (data.status === 'Reject') {
+              // console.log('ref', data.ReferenceCode);
 
+              // if (data.ReferenceCode !== '') {
+              // console.log('inside referenece');
+              // console.log('data option');
+
+              // if (this.type === data.option) {
+              // console.log(data.option);
+
+              // console.log(this.type === 'Re-Calibration');
+              // console.log(data.option === 'Re-Calibration');
+
+              // console.log(
+              //   'con',
+              //   this.type === 'Re-Calibration' &&
+              //     data.option === 'Re-Calibration'
+              // );
+              if (
+                this.type === 'Re-Calibration' &&
+                data.option === 'Re-Calibration'
+              ) {
                 let code = data.ReferenceCode;
                 if (code) {
                   let splitted = code.split('-');
                   let ref = parseInt(splitted[1]) + 1;
                   this.refno = 'RECL' + '-' + ref;
-                  // console.log(this.refno);
                 }
-                // }
-              } else if (this.type === 'ReService') {
-                // console.log('isnide reser');
+                console.log('type', this.type);
+                console.log('option', data.option);
+
+                // console.log(this.type === 'ReService');
+                // console.log(data.option === 'ReService');
+
+                // console.log(
+                //   'con',
+                //   this.type === 'ReService' && data.option === 'ReService'
+                // );
+              } else if (
+                this.type === 'ReService' &&
+                data.option === 'ReService'
+              ) {
+                // console.log('isnide reservice');
 
                 let code = data.ReferenceCode;
                 if (code) {
@@ -1385,53 +1419,42 @@ export class rejectionmodalbox {
                   let ref = parseInt(splitted[1]) + 1;
                   this.refno = 'RESV' + '-' + ref;
                 }
-                // console.log(this.refno);
-                // }
-                // admin.map((data: any) => {
-
-                // });
-                // console.log('refno', this.refno);
-              } else if ((this.type = 'Scrap')) {
+              } else if (this.type === 'Scrap' && data.option === 'Scrap') {
                 // console.log('inside scrap');
-
+                // if (this.type === 'Scrap' && data.option === 'ReService') {
                 let code = data.ReferenceCode;
                 if (code) {
                   let splitted = code.split('-');
                   let ref = parseInt(splitted[1]) + 1;
                   this.refno = 'SCRAP' + '-' + ref;
                 }
+                // }
               } else {
-                // console.log('type', this.type);
-                // console.log('inside else');
+                // console.log('reference code', !data.ReferenceCode);
 
-                if (this.type === 'Re-Calibration') {
+                // console.log('isnide else');
+
+                // console.log('type', this.type);
+
+                if (this.type === 'Re-Calibration' && !data.ReferenceCode) {
                   this.refno = 'RECL' + '-' + '1000';
-                  // console.log('reno', this.refno);
-                } else if (this.type === 'ReService') {
+                  console.log('reno', this.refno);
+                } else if (this.type === 'ReService' && !data.ReferenceCode) {
+                  console.log('inside reserveice');
+
                   this.refno = 'RESV' + '-' + '1000';
                 } else {
-                  if (this.type === 'Scrap')
+                  if (this.type === 'Scrap' && !data.ReferenceCode)
                     this.refno = 'SCRAP' + '-' + '1000';
                 }
               }
+              // }
+              // }
             }
-            // console.log('ref', this.refno);
+            console.log('ref', this.refno);
           }
         });
       }
-      // else {
-      //   console.log('type', this.type);
-
-      //   if (this.type === 'Re-Calibration') {
-      //     this.refno = 'RECL' + '-' + '1000';
-      //     console.log('reno', this.refno);
-      //   } else if (this.type === 'ReService') {
-      //     this.refno = 'RESV' + '-' + '1000';
-      //   } else {
-      //     if (this.type === 'Scrap') this.refno = 'SCRAP' + '-' + '1000';
-      //   }
-
-      //   console.log('ref', this.refno);
       // }
     });
   }
@@ -1458,7 +1481,6 @@ export class rejectionmodalbox {
           this.router.onSameUrlNavigation = 'reload';
           this.router.navigate([currentUrl]);
         }
-
         // this.tabledata();
       });
     }

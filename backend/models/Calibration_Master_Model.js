@@ -83,7 +83,7 @@ module.exports = function(sequelize, DataTypes) {
             field: 'headerImage'
         },
         active:{
-            type: DataTypes.STRING(250),
+            type: DataTypes.BOOLEAN,
             field: 'active'
         },
         amccheckbox:{

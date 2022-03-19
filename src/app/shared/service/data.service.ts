@@ -26,6 +26,8 @@ export class DataService {
   admin = this.adminSubject$.asObservable();
   scrapDetails$ = new BehaviorSubject<any>(null);
   scrap = this.scrapDetails$.asObservable();
+  url$ = new BehaviorSubject<any>(null);
+  url = this.url$.asObservable();
 
   constructor(private http: HttpClient) {
     // this.setImageViewPopup = new BehaviorSubject('');
@@ -56,6 +58,10 @@ export class DataService {
 
   setScrapDetails(data: any) {
     this.scrapDetails$.next(data);
+  }
+
+  setUrl(data: any) {
+    this.url$.next(data);
   }
 
   // Categroy Master Api
@@ -278,7 +284,10 @@ export class DataService {
   }
 
   MasterTest_updateSingleUser(id: any, data: any) {
-    console.log(id, data);
+    // console.log(
+    //   'updateinnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn'
+    // );
+    // console.log(id, data);
 
     return this.http.put<any>(
       `${environment.Calibration_Master}/update/${id}`,
