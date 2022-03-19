@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BreakageListDetails } from './model';
 // import { DataTableDirective } from 'angular-datatables';
@@ -75,6 +75,7 @@ export class BreakageListDetailsComponent implements OnInit {
   public text: any = [];
   public BreakageDetails: any = [];
   public timeout: any = null;
+  public url: string = '';
 
   constructor(
     private dataservice: DataService,
@@ -83,6 +84,19 @@ export class BreakageListDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // console.log('inside url');
+    // console.log('url', this.router.url);
+    this.dataservice.setUrl(this.router.url);
+    // console.log('event', this.router.events);
+
+    // this.router.events
+    //   .filter((event: any) => event instanceof NavigationEnd)
+    //   .subscribe((event: any) => {
+    //     this.url = event.url;
+    //     console.log(event);
+    //   });
+
+    // console.log('url', this.router.url);
     // this.dtOptions = {
     //   pagingType: 'full_numbers',
     //   pageLength: 5,

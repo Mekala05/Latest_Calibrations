@@ -147,39 +147,39 @@ export class CalibrationentryComponent implements OnInit {
   }
 
   Dialogbox() {
-    if (
-      this.registerDetails.date === undefined ||
-      this.registerDetails.ScheduleNo === undefined ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity === undefined ||
-      this.registerDetails.collabrationCost === undefined ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate === undefined ||
-      this.registerDetails.date.toString() === '' ||
-      this.registerDetails.ScheduleNo === '' ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity.toString() === '' ||
-      this.registerDetails.collabrationCost.toString() === '' ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate.toString() === '' ||
-      this.registerDetails.Observation === '' ||
-      this.registerDetails.Description === '' ||
-      this.registerDetails.Remark === '' ||
-      this.registerDetails.Specification === ''
-    ) {
-      alert('Enter the Details');
-    } else {
-      this.dataservice.setAdmin(this.registerDetails);
-      const dialogRef = this.dialog.open(rejectionmodalbox);
-    }
+    // if (
+    //   this.registerDetails.date === undefined ||
+    //   this.registerDetails.ScheduleNo === undefined ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity === undefined ||
+    //   this.registerDetails.collabrationCost === undefined ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate === undefined ||
+    //   this.registerDetails.date.toString() === '' ||
+    //   this.registerDetails.ScheduleNo === '' ||
+    //   this.registerDetails.InstrumentCode === '' ||
+    //   this.registerDetails.InstrumentName === '' ||
+    //   this.registerDetails.LPIdentification === '' ||
+    //   this.registerDetails.partySelection === '' ||
+    //   this.registerDetails.Quantity.toString() === '' ||
+    //   this.registerDetails.collabrationCost.toString() === '' ||
+    //   this.registerDetails.DCDetails === '' ||
+    //   this.registerDetails.ReportNo === '' ||
+    //   this.registerDetails.ReportDate.toString() === '' ||
+    //   this.registerDetails.Observation === '' ||
+    //   this.registerDetails.Description === '' ||
+    //   this.registerDetails.Remark === '' ||
+    //   this.registerDetails.Specification === ''
+    // ) {
+    //   alert('Enter the Details');
+    // } else {
+    this.dataservice.setAdmin(this.registerDetails);
+    const dialogRef = this.dialog.open(rejectionmodalbox);
+    // }
   }
 
   openDialog() {

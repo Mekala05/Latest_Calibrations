@@ -988,7 +988,6 @@
           *ngFor="let head of TableHeading; let i = index"
           class="gene_name tablethtd"
           [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
-          (click)="Click_Head(i, head.name)"
         >
           {{ head.name }}
         </td>

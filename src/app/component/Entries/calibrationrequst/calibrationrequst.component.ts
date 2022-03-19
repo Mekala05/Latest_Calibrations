@@ -271,8 +271,21 @@ export class CalibrationrequstComponent implements OnInit {
 
   public tabledata(): void {
     this.dataservice.Request_getView().subscribe((data) => {
-      this.collection = data.data;
-      this.BackUpdata = data.data;
+      let datas: any = [];
+      data.data.map((item: any) => {
+        // console.log(item);
+
+        if (item.Active) {
+          datas.push(item);
+          // console.log('datas', datas);
+        }
+        // console.log(datas);
+      });
+      this.collection = datas;
+      this.BackUpdata = datas;
+
+      // this.collection = data.data;
+      // this.BackUpdata = data.data;
     });
   }
 
@@ -435,6 +448,7 @@ export class CalibrationrequstComponent implements OnInit {
     //   });
     //   (<HTMLInputElement>document.getElementById('id')).focus();
     // }
+    this.registerDetails.Active = true;
 
     this.dataservice
       .Request_postUser(this.registerDetails)
@@ -703,26 +717,27 @@ export class CalibrationrequstComponent implements OnInit {
   }
 
   checkedAmc(event: any, i: any, data: any) {
-    // console.log('event', event.target.checked);
+    console.log('event', event.target.checked);
     // console.log('i', i + 1);
     // console.log('data', data);
-    if (event.target.checked) {
-      // this.RaiseDcItem.push(data);
-      console.log(data);
-      if (data.calibrationlocation === 'External') {
-        this.buttonShow = false;
-        this.RaiseDcItem.push(data);
-      } else {
-        this.buttonShow = true;
-        this.toastr.error(
-          'Internal location cannot raise DC!!!',
-          'Please select proper option.',
-          {
-            timeOut: 3000,
-          }
-        );
-      }
+    // if (event.target.checked) {
+    // this.RaiseDcItem.push(data);
+    console.log(data);
+    if (data.calibrationlocation === 'External') {
+      this.buttonShow = false;
+      this.RaiseDcItem.push(data);
+    } else {
+      this.buttonShow = true;
+      this.toastr.error(
+        'Internal location cannot raise DC!!!',
+        'Please select proper option.',
+        {
+          timeOut: 3000,
+        }
+      );
     }
+    // }
+    // this.buttonShow = false;
     // console.log(this.RaiseDcItem);
   }
 
@@ -775,6 +790,12 @@ export class CalibrationrequstComponent implements OnInit {
         this.dataservice.RaiseDC_postUser(data).subscribe((data) => {});
         this.ngOnInit();
       });
+    });
+    this.RaiseDcItem.map((item: any) => {
+      item.Active = false;
+      this.dataservice
+        .Request_updateSingleUser(item.id, item)
+        .subscribe((data) => {});
     });
   }
 }

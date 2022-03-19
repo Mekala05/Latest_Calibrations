@@ -152,6 +152,7 @@
               type="text"
               class="form-control input_text"
               [(ngModel)]="registerDetails.Location"
+              disabled
             />
           </div>
         </div>
@@ -205,6 +206,7 @@
               type="text"
               class="form-control input_text"
               [(ngModel)]="registerDetails.BreakageReason"
+              disabled
             ></textarea>
             <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.BreakageReason" />              -->
           </div>
@@ -280,7 +282,7 @@
             <mat-label class="gene_name newname">Approve</mat-label>
           </div>
           <div class="col-2">
-            <input type="checkbox" />
+            <input type="checkbox" [(ngModel)]="registerDetails.Approve" />
           </div>
           <div class="col-2">
             <mat-label class="gene_name newname">Reject</mat-label>

@@ -38,6 +38,8 @@ export class BreagedetailsComponent implements OnInit {
   public Requesttypeof: any = [];
   public calibrationtype: any = [];
   public Requesttype: any = [];
+  public url: string = '';
+  public show: boolean = false;
 
   constructor(
     private dataservice: DataService,
@@ -71,6 +73,13 @@ export class BreagedetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataservice.url$.subscribe((data: any) => {
+      this.url = data;
+      console.log(this.url);
+    });
+    if (this.url === '/header/BreakageListDetails2') {
+      this.show = true;
+    }
     this.tabledata();
     this.getEmployee();
     this.getLocation();
@@ -430,11 +439,11 @@ export class BreagedetailsComponent implements OnInit {
       .subscribe((data) => {
         this.collection = data.data;
 
-        let currentUrl = this.router.url;
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate([currentUrl]);
-        this.tabledata();
+        // let currentUrl = this.router.url;
+        // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        // this.router.onSameUrlNavigation = 'reload';
+        // this.router.navigate([currentUrl]);
+        // this.tabledata();
       });
   }
 

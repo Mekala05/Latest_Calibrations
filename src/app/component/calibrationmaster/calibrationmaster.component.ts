@@ -831,6 +831,8 @@ export class CalibrationmasterComponent implements OnInit {
       console.log('working...');
     });
 
+    this.registerDetails.active = true;
+
     // console.log(this.registerDetails.headerImage);
     // console.log('store header image', this.registerDetails.headerImage);
 

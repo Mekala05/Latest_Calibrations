@@ -25,7 +25,7 @@ router.post('/insert', (req, res) => {
         // console.log(req.body);
         RaiseDC.create(req.body).then(function (result) {
             sendSuccess(res, result);
-            CalibrationEntiresRequest.destroy( { where: { id: req.body.id  } })
+            // CalibrationEntiresRequest.destroy( { where: { id: req.body.id  } })
         }).catch(function (err) {
             sendError(res, err);
         });

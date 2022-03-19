@@ -57,6 +57,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(250),
             field: 'RaiseDc'
         },
+        Active:{
+            type: DataTypes.BOOLEAN,
+            field: 'Active'
+        },
         
         createdBy: {
             type: DataTypes.STRING(50),

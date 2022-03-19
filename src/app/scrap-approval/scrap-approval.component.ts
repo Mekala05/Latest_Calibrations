@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe, getLocaleFirstDayOfWeek } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { conrejection } from '../component/Entries/calibrationentry/con-rejection';
+import { isNgTemplate } from '@angular/compiler';
+import { master } from '../component/calibrationmaster/model';
 
 @Component({
   selector: 'app-scrap-approval',
@@ -41,6 +43,7 @@ export class ScrapApprovalComponent implements OnInit {
   public option: any;
   public Data: any;
   public entry: any;
+  public master: master = {};
   // public TableHeading = [
   //   {
   //     name: 'SI No',
@@ -115,11 +118,31 @@ export class ScrapApprovalComponent implements OnInit {
           if (item.id === parseInt(this.routers.snapshot.queryParams.id)) {
             this.entry = item;
             this.dataservice.setAdmin(item);
-            console.log(item);
+            // console.log(item);
 
             this.id = item.id;
             this.registerDetails.InstrumentName = item.InstrumentName;
-            this.registerDetails.InstrumentCode = item.InstrumentCode;
+            let instrument = item.InstrumentCode.split(',');
+            let code = instrument[0];
+            this.registerDetails.InstrumentCode = code;
+            this.registerDetails.BreakageReason = item.conditionRemark;
+            this.dataservice.MasterTest_getViewData().subscribe((pack: any) => {
+              this.Data = pack.data;
+              pack.data.map((element: any) => {
+                // console.log(element);
+
+                if (
+                  element.InstrumentCode === code &&
+                  item.InstrumentName === element.InstrumentName
+                ) {
+                  // console.log('loc', element.calibrationlocation);
+                  this.master = element;
+                  console.log('master element', element);
+
+                  this.registerDetails.Location = element.Location;
+                }
+              });
+            });
           }
         });
       });
@@ -166,6 +189,8 @@ export class ScrapApprovalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.registerDetails.Approve = false;
+    this.registerDetails.Reject = false;
     this.tabledata();
     // this.getEmployee();
     // this.getLocation();
@@ -204,31 +229,32 @@ export class ScrapApprovalComponent implements OnInit {
   getApprove(eve: any) {
     // console.log(eve.target.checked);
     this.remove = eve.target.checked;
+    this.registerDetails.Reject = this.remove;
   }
 
   accept() {
-    this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
-      console.log('data', data);
-      this.Data = data;
-      data.data.map((item: any) => {
-        if (this.registerDetails.InstrumentCode) {
-          let splittedCode = this.registerDetails.InstrumentCode.split(',');
-          let code = splittedCode[0];
-          let name = splittedCode[1];
+    // this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
+    // console.log('data', data);
+    // this.Data = data;
+    this.Data.map((item: any) => {
+      if (this.registerDetails.InstrumentCode) {
+        let splittedCode = this.registerDetails.InstrumentCode.split(',');
+        let code = splittedCode[0];
+        let name = splittedCode[1];
 
-          if (item.InstrumentCode === code && item.InstrumentName === name) {
-            // console.log('item', item.InstrumentCode);
-            // console.log('code', code);
-            this.entry.status = 'Accept';
-            this.entry.option = 'None';
-            let sample = new Date(item.date);
-            console.log('sample', sample);
-            console.log('register', this.registerDetails.date);
+        if (item.InstrumentCode === code && item.InstrumentName === name) {
+          // console.log('item', item.InstrumentCode);
+          // console.log('code', code);
+          this.entry.status = 'Accept';
+          this.entry.option = 'None';
+          let sample = new Date(item.date);
+          console.log('sample', sample);
+          console.log('register', this.registerDetails.date);
 
-            this.modifyDate(sample, this.registerDetails.date, item);
-          }
+          this.modifyDate(sample, this.registerDetails.date, item);
         }
-      });
+      }
+      // });
     });
 
     // console.log('Data', this.Data);
@@ -259,8 +285,8 @@ export class ScrapApprovalComponent implements OnInit {
         );
         // }
       }
-      console.log('date', date1 < date2);
-      console.log('data.max', data.MxLifeTime);
+      // console.log('date', date1 < date2);
+      // console.log('data.max', data.MxLifeTime);
 
       if (date1 < date2) {
         this.TotalDay = 0;
@@ -281,11 +307,11 @@ export class ScrapApprovalComponent implements OnInit {
         // console.log(Day1, Day2);
 
         this.TotalDay = Day1 + Day2;
-        console.log('total', this.TotalDay);
+        // console.log('total', this.TotalDay);
       }
 
       if (data.MxLifeTime === 'Week') {
-        console.log('week');
+        // console.log('week');
 
         let week = Math.round(this.TotalDay / 7);
         let weekValue = week * 7;
@@ -302,7 +328,7 @@ export class ScrapApprovalComponent implements OnInit {
       }
 
       if (data.MxLifeTime === 'Day') {
-        console.log('Day');
+        // console.log('Day');
 
         let Day = this.TotalDay;
         let weekValue = Day * 1;
@@ -319,7 +345,7 @@ export class ScrapApprovalComponent implements OnInit {
       }
 
       if (data.MxLifeTime === 'Month' || data.MxLifeTime === 'Quarterly||3') {
-        console.log('inside month');
+        // console.log('inside month');
 
         let Day = parseInt(this.TotalDay) * 1;
         let send_date: any = new Date(_modifydate1);
@@ -354,7 +380,7 @@ export class ScrapApprovalComponent implements OnInit {
         }
       }
       if (data.MxLifeTime === 'Year') {
-        console.log('year');
+        // console.log('year');
 
         let Day = parseInt(this.TotalDay) * 1;
         let send_date: any = new Date(_modifydate1);
@@ -411,12 +437,12 @@ export class ScrapApprovalComponent implements OnInit {
     data.MxLifeTime = this.MxLifeTime;
     data.MxLifeTimeNumber = this.MxLifeTimeNumber;
     data.dueDate = this.dueDate;
-    console.log('master accept', data.id, data);
+    // console.log('master accept', data.id, data);
 
     this.dataservice
       .MasterTest_updateSingleUser(data.id, data)
       .subscribe((data: any) => {});
-    console.log('accept', data.id, data);
+    // console.log('accept', data.id, data);
 
     this.dataservice
       .Entry_updateSingleUser(this.entry.id, this.entry)
@@ -505,10 +531,42 @@ export class ScrapApprovalComponent implements OnInit {
     ) {
       alert('Enter the Details');
     } else {
+      // let datas: any;
+      this.registerDetails.Approve = true;
+      // this.dataservice.calibrationmasterlist_getView().subscribe((data) => {
+      //   console.log('sdfasdf', data.data);
+      //   console.log('Code', this.registerDetails.InstrumentCode);
+      //   console.log('item', data.data);
+      //   data.data.map((item: any) => {
+      //     if (
+      //       this.registerDetails.InstrumentCode === item.InstrumentCode &&
+      //       this.registerDetails.InstrumentName === item.InstrumentName
+      //     ) {
+      //       datas = item;
+      //     }
+      //   });
+
+      // this.dataservice.Cali
+
+      // this.collection = data.data;
+      // this.BackUpdata = data.data;
+      // console.log(this.collection);
+      // this.dataSource = new MatTableDataSource<calibrationmasterlist>(
+      //   data.data
+      // );
+      // });
+      this.master.active = false;
+      // console.log('master id', this.master);
+
+      this.dataservice
+        .MasterTest_updateSingleUser(this.master.id, this.master)
+        .subscribe((item: any) => {});
+
       this.dataservice.BreakageDetails_postUser(this.registerDetails).subscribe(
         (data) => {
           // alert("Added");
           // console.log("Inserted"+data);
+
           if (data.data) {
             this.toastr.success(
               'Created!!!',
@@ -517,11 +575,11 @@ export class ScrapApprovalComponent implements OnInit {
                 timeOut: 3000,
               }
             );
-            let currentUrl = this.router.url;
-            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-            this.router.onSameUrlNavigation = 'reload';
-            this.router.navigate([currentUrl]);
-            this.tabledata();
+            // let currentUrl = this.router.url;
+            // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+            // this.router.onSameUrlNavigation = 'reload';
+            // this.router.navigate([currentUrl]);
+            // this.tabledata();
           } else {
             if (data.error.errors[0].validatorKey) {
               this.toastr.error('Error!!!', 'ScrapApproval Already Exists.', {
@@ -562,9 +620,6 @@ export class ScrapApprovalComponent implements OnInit {
     this.dataservice.GetEmplyee_user().subscribe((data) => {
       console.log(data);
       this.Employee = data.data;
-      // console.log("usdhfshdgoifdhgi");
-      // console.log(this.Employee);
-      // this.BackUpdata = data.data;
     });
   }
   // Calibrationlocationmaster_getView
@@ -865,7 +920,7 @@ export class conditionalRejections {
           item.dueDate = this.Data.dueDate;
           item.MxLifeTime = this.Data.MxLifeTime;
           item.MxLifeTimeNumber = this.Data.MxLifeTimeNumber;
-          console.log('update master', item);
+          // console.log('update master', item);
 
           this.dataservice
             .MasterTest_updateSingleUser(item.id, item)
@@ -876,7 +931,7 @@ export class conditionalRejections {
     this.Data.option = this.selected;
     this.Data.status = 'Con-Accept';
     if (this.Data) {
-      console.log('con accept', this.Data.id, this.Data);
+      // console.log('con accept', this.Data.id, this.Data);
 
       this.dataservice
         .Entry_updateSingleUser(this.Data.id, this.Data)
