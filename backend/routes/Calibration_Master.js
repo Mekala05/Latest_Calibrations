@@ -255,6 +255,7 @@ router.post('/update', (req, res) => {
         oitm.findAll({
             attributes: ['ItemCode','ItemName'],
         }).then(function (result) {
+            console.log("res update",res);
                 sendSuccess(res, result);
             }).catch(function (err) {0
                 sendError(res, err);
@@ -269,8 +270,6 @@ router.post('/update', (req, res) => {
 
 router.get('/view-sapref', (req, res) => {
     return new Promise((resolve, reject) => {
-
-        
         oitm.findAll({
            attributes: ['ItemCode','ItemName'],
         }).then(function (result) {

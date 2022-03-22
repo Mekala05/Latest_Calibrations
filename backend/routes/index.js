@@ -4,7 +4,9 @@ const router = express.Router()
 var upload = require("../file_Upload");
 // const { Op } = require("sequelize");
 
-router.use('/auth', require('./user'))
+// router.use('/auth', require('./user'))
+router.use('/auth', require('./ohem'))
+// router.use('/ohem', require('./user'))
 router.use('/category', require('./CategoryMaster'))
 router.use('/type', require('./TypeMaster'))
 router.use('/make', require('./MakeMaster'))

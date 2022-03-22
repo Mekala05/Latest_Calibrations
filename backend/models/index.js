@@ -6,7 +6,8 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
 
 let models = {};
 
-models.User = require("./user.js")(sequelize, Sequelize)
+// models.User = require("./user.js")(sequelize, Sequelize)
+models.User = require("./ohem.js")(sequelize, Sequelize)
 models.CategoryMaster = require("./CategoryMaster.js")(sequelize, Sequelize)
 models.TypeMaster = require("./TypeMaster.js")(sequelize, Sequelize)
 models.EquipmentMaster = require("./EquipmentMaster.js")(sequelize, Sequelize)
@@ -47,6 +48,7 @@ models.CalibrationMasterListReport = require("./CalibrationMasterListReport")(se
 
 
 models.User.sync();
+// models.User.sync();
 models.CategoryMaster.sync();
 models.TypeMaster.sync();
 models.EquipmentMaster.sync();

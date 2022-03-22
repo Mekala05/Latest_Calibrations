@@ -91,23 +91,28 @@ module.exports = function (sequelize, DataTypes) {
 
     User.checkLogin = function (email, password) {
         return new Promise((resolve, reject) => {
-            User.findOne({ where: { email: email } }).then(result => {
-                console.log("CHekkkkk"+result.password);
+            console.log("email", typeof email, "pass", typeof password);
+            OHEM.findOne({ where: { U_U_UserName: email, U_U_UserPWD: password } }).then(result => {
+                // console.log("Result Data", result.U_U_UserName);
+                // console.log("CHekkkkk",result);
                 if (!result) {
                     return reject('Email not registred!')
                 }
-                bcrypt.compare(password, result.password, (err, matches) => {
-                    // console.log("password"+"  "+password);
-                    // console.log("password"+"  "+result.password);
-                    if (err)
-                        return reject(err)
-                    if (matches === false)
-                        //  console.log(matches);
-                        return reject('Username or password incorrect!!')
-                    // if (!result.emailConfirmed)
-                    //     return reject('Email not verified. Please check your email.')
-                    resolve(result)
-                })
+                resolve(result)
+                // bcrypt.compare(password, result.password, (err, matches) => {
+                //     // console.log("password"+"  "+password);
+                //     // console.log("password"+"  "+result.password);
+                //     if (err)
+                //         return reject(err)
+                //     if (matches === false)
+                //         //  console.log(matches);
+                //         return reject('Username or password incorrect!!')
+                //     // if (!result.emailConfirmed)
+                //     //     return reject('Email not verified. Please check your email.')
+                //     resolve(result)
+                // })
+
+
             }).catch(reject)
         })
     }

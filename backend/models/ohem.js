@@ -1,44 +1,47 @@
 module.exports = function (sequelize, DataTypes) {
-    let ohem = sequelize.define(
-      "ohem",
-      {
-        id: {
-          type: DataTypes.INTEGER(11).UNSIGNED,
-          field: "id",
-          autoIncrement: true,
-          primaryKey: true,
-          allowNull: false,
-        },
-
-
-          created_By: {
-          type: DataTypes.STRING(50),
-          field: "created_By",
-        },
-        updatedBy: {
-          type: DataTypes.STRING(50),
-          field: "updated_by",
-        },
-        deletedBy: {
-          type: DataTypes.STRING(50),
-          field: "deleted_by",
-        },
-        deleteStatus: {
-          type: DataTypes.BOOLEAN,
-          field: "delete_status",
-          defaultValue: false,
-        },
-        
-        
+  let User = sequelize.define(
+    "OHEM",
+    {
+      empID: {
+        type: DataTypes.INTEGER(11).UNSIGNED,
+        field: 'empID',
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
       },
-      {
-        timestamps: true,
-        tableName: "OHEM",
+      U_U_UserName: {
+        type: DataTypes.STRING(50),
+        field: "U_U_UserName",
+      },
+      U_U_UserPWD: {
+        type: DataTypes.STRING(50),
+        field: "U_U_UserPWD",
       }
-    );
-  
-    
-  
-    return ohem;
-  };
-  
+    },
+    {
+      tableName: "OHEM",
+    }
+  );
+
+
+  User.checkLogin = function (email, password) {
+    console.log("email", typeof email, "pass", typeof password);
+
+    return new Promise((resolve, reject) => {
+      User.findOne({ where: { U_U_UserName: email, U_U_UserPWD: password } }).then(result => {
+        // console.log(result)
+
+        // console.log("CHekkkkk"+result.U_U_UserPWD);
+        if (!result) {
+          return reject('Email not registred!')
+        }
+        // console.log("REsult Data");
+        resolve(result)
+
+      }).catch(reject)
+    })
+  }
+  return User;
+};
+
+

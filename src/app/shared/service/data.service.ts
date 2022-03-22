@@ -277,6 +277,8 @@ export class DataService {
   }
 
   MasterImage_postUser(image: any) {
+    console.log('image', image);
+
     return this.http.post<any>(
       `${environment.Calibration_Master}/single`,
       image
@@ -801,4 +803,7 @@ export class DataService {
   // public setImageViewPopupTrigger(data: string): void {
   //   this.setImageViewPopup.next(data);
   // }
+  Data_getView() {
+    return this.http.get<RaiseDC[]>(`${environment.RaiseDC}/view`);
+  }
 }

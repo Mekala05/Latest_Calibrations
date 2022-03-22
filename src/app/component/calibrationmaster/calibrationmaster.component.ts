@@ -19,11 +19,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  NgxFileDropEntry,
-  FileSystemFileEntry,
-  FileSystemDirectoryEntry,
-} from 'ngx-file-drop';
+// import {
+//   NgxFileDropEntry,
+//   FileSystemFileEntry,
+//   FileSystemDirectoryEntry,
+// } from 'ngx-file-drop';
 // import { Router } from '@angular/router';
 
 // import { CommonModelService } from 'src/app/shared/service/common-model.service';
@@ -38,10 +38,12 @@ import {
   styleUrls: ['./calibrationmaster.component.scss'],
 })
 export class CalibrationmasterComponent implements OnInit {
-  // @ViewChild('UploadFileInput', { static: false }) uploadFileInput: ElementRef;
+  // @ViewChild('fileUpload') : ElementRef;
+  @ViewChild('fileUpload', { static: false })
+  fileUpload: ElementRef<HTMLInputElement> = {} as ElementRef;
   fileInputLabel: string = '';
   src = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
-  public files: NgxFileDropEntry[] = [];
+  // public files: NgxFileDropEntry[] = [];
   public previousDate!: Date;
   public registerDetails: master = {};
   public collection: any[] = [];
@@ -104,7 +106,8 @@ export class CalibrationmasterComponent implements OnInit {
   public maximumTime: any;
   imageSrc: string = '';
   headerImage: any;
-  imageData: Image = {};
+  myFiles: any[] = [];
+  sMsg: string = '';
 
   public Heading = [
     {
@@ -1630,28 +1633,28 @@ export class CalibrationmasterComponent implements OnInit {
     }
   }
 
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-          this.viewDoc.push(file);
-          console.log(this.viewDoc);
-          this.fileUploadChangeEmitter.emit(file);
-          this.imagePreviewUrl = '';
-          this.file = file;
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
-  }
+  // public dropped(files: NgxFileDropEntry[]) {
+  //   this.files = files;
+  //   for (const droppedFile of files) {
+  //     // Is it a file?
+  //     if (droppedFile.fileEntry.isFile) {
+  //       const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+  //       fileEntry.file((file: File) => {
+  //         // Here you can access the real file
+  //         console.log(droppedFile.relativePath, file);
+  //         this.viewDoc.push(file);
+  //         console.log(this.viewDoc);
+  //         this.fileUploadChangeEmitter.emit(file);
+  //         this.imagePreviewUrl = '';
+  //         this.file = file;
+  //       });
+  //     } else {
+  //       // It was a directory (empty directories are added, otherwise only files)
+  //       const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+  //       console.log(droppedFile.relativePath, fileEntry);
+  //     }
+  //   }
+  // }
 
   public removeUploadedFile(): void {
     this.file = '';
@@ -1719,26 +1722,26 @@ export class CalibrationmasterComponent implements OnInit {
   //     };
   //   }
   // }
-  onFileSelect(event: any) {
-    const file = event.target.files[0];
-    this.fileInputLabel = file.name;
-    this.registerDetails.headerImage = file;
-    console.log('file', this.fileInputLabel);
-    console.log('header', this.registerDetails.headerImage);
+  getFileDetails(e: any) {
+    //console.log (e.target.files);
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.myFiles.push(e.target.files[i]);
+    }
+    console.log('myfiles', this.myFiles);
   }
 
   submit() {
-    console.log('inside submit');
-    const formData = new FormData();
-    // console.log('header image1', this.imageData.headerImages);
-    if (this.imageData.headerImages) {
-      // console.log('header image2', this.imageData.headerImages);
+    const frmData = new FormData();
 
-      formData.append('uploadedImage', this.imageData.headerImages);
+    for (var i = 0; i < this.myFiles.length; i++) {
+      frmData.append('fileUpload', this.myFiles[i]);
+      // console.log('myfile', this.myFiles[i]);
     }
-
-    console.log('formData', formData);
-
-    formData.append('agentId', '007');
+    // console.log('form data', frmData.getAll('fileUpload'));
+    let imageData = frmData.getAll('fileUpload');
+    // console.log('image data', imageData);
+    imageData.map((item: any) => {
+      this.dataservice.MasterImage_postUser(item).subscribe((data: any) => {});
+    });
   }
 }
