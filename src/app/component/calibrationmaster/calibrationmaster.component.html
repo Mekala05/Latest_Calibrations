@@ -457,7 +457,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-12">
         <input
           id="file"
@@ -474,7 +474,7 @@
           style="height: 300px; width: 500px"
         />
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 <div class="pt-3">
@@ -685,7 +685,7 @@
           />
         </td>
         <td class="gene_name tablethtd icons">
-          <ngx-file-drop
+          <!-- <ngx-file-drop
             (onFileDrop)="dropped($event)"
             (onFileOver)="fileOver($event)"
             (onFileLeave)="fileLeave($event)"
@@ -700,8 +700,8 @@
               <span *ngIf="!files"> No file Chosen </span>
               <span *ngFor="let item of files; let i = index" class="font-size">
                 {{ item.relativePath }}
-              </span>
-              <!-- <ng-container *ngIf="files" >
+              </span> -->
+          <!-- <ng-container *ngIf="files" >
                     <div class="flex flex-row items-center justify-center">
                       . <img src=" assets/images/property-details/view-image.svg " class="w-1/12" alt="LegacyNow"/>
                      <div class="pl-4 overflow-hidden w-11/12">
@@ -711,8 +711,8 @@
                      </div>
                     </div>
                    </ng-container> -->
-            </ng-template>
-          </ngx-file-drop>
+          <!-- </ng-template>
+          </ngx-file-drop> -->
 
           <!-- <div id="myCarousel" class="carousel slide">
               <div class="carousel-inner">
@@ -775,7 +775,7 @@
             />
           </td>
           <td class="gene_name tablethtd icons">
-            <ngx-file-drop
+            <!-- <ngx-file-drop
               (onFileDrop)="dropped($event)"
               (onFileOver)="fileOver($event)"
               (onFileLeave)="fileLeave($event)"
@@ -789,7 +789,7 @@
                 </button>
                 No file Chosen
               </ng-template>
-            </ngx-file-drop>
+            </ngx-file-drop> -->
 
             <!-- <div id="myCarousel" class="carousel slide">
               <div class="carousel-inner">
@@ -849,7 +849,7 @@
           />
         </td>
         <td class="gene_name tablethtd icons">
-          <ngx-file-drop
+          <!-- <ngx-file-drop
             (onFileDrop)="dropped($event)"
             (onFileOver)="fileOver($event)"
             (onFileLeave)="fileLeave($event)"
@@ -863,7 +863,7 @@
               </button>
               No file Chosen
             </ng-template>
-          </ngx-file-drop>
+          </ngx-file-drop> -->
 
           <!-- <div id="myCarousel" class="carousel slide">
               <div class="carousel-inner">
@@ -1083,3 +1083,26 @@
   
   </table>
 </div> -->
+<!-- <form
+  action="/uploadProfilePicture"
+  enctype="multipart/form-data"
+  method="POST"
+> -->
+<div>
+  <ng-container>
+    <input
+      type="file"
+      id="file"
+      multiple
+      (change)="getFileDetails($event)"
+      #fileUpload
+    />
+
+    <button (click)="submit()">Upload</button>
+  </ng-container>
+</div>
+<pre>{{ myFiles | json }}</pre>
+<div *ngFor="let file of myFiles">
+  <div>Datas {{ file.name }} - {{ file.type }} - {{ file.size }}</div>
+</div>
+<!-- </form> -->

@@ -5,11 +5,12 @@ const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 var bcrypt = require('bcrypt')
 const { User } = require('./../models')
+// const { User } = require('./../models')
 const config = require('./../config')
 var nodemail = require('nodemailer')
 var smtpTransport = require('nodemailer-smtp-transport');
 const { Op } = require('sequelize')
-const ohem = require('../models')
+
 // const { InstrumentMaster ,CategoryMaster, TypeMaster} = require('../models');
 
 
@@ -78,10 +79,6 @@ router.put('/userUpdate/:revid/:usrid', (req, res) => {
 })
 
 router.post('/login', (req, res, next) => {
-    
-
-
-
     return passport.authenticate('local-login', (err, token, user) => {
         // console.log(token);
 
@@ -228,7 +225,7 @@ router.post('/signup', (req, res, next) => {
 })
 router.get('/userdetails', (req, res) => {
     return new Promise((resolve, reject) => {
-        User.findAll({ where: {deleteStatus: false }  }).then(function (result) {
+        User.findAll().then(function (result) {
                 sendSuccess(res, result);
             }).catch(function (err) {
                 sendError(res, err);

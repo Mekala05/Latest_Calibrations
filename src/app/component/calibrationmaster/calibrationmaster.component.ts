@@ -1,6 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
-import { master } from './model';
+import { Image, master } from './model';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -12,11 +19,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  NgxFileDropEntry,
-  FileSystemFileEntry,
-  FileSystemDirectoryEntry,
-} from 'ngx-file-drop';
+// import {
+//   NgxFileDropEntry,
+//   FileSystemFileEntry,
+//   FileSystemDirectoryEntry,
+// } from 'ngx-file-drop';
 // import { Router } from '@angular/router';
 
 // import { CommonModelService } from 'src/app/shared/service/common-model.service';
@@ -31,8 +38,12 @@ import {
   styleUrls: ['./calibrationmaster.component.scss'],
 })
 export class CalibrationmasterComponent implements OnInit {
+  // @ViewChild('fileUpload') : ElementRef;
+  @ViewChild('fileUpload', { static: false })
+  fileUpload: ElementRef<HTMLInputElement> = {} as ElementRef;
+  fileInputLabel: string = '';
   src = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
-  public files: NgxFileDropEntry[] = [];
+  // public files: NgxFileDropEntry[] = [];
   public previousDate!: Date;
   public registerDetails: master = {};
   public collection: any[] = [];
@@ -95,6 +106,8 @@ export class CalibrationmasterComponent implements OnInit {
   public maximumTime: any;
   imageSrc: string = '';
   headerImage: any;
+  myFiles: any[] = [];
+  sMsg: string = '';
 
   public Heading = [
     {
@@ -1620,28 +1633,28 @@ export class CalibrationmasterComponent implements OnInit {
     }
   }
 
-  public dropped(files: NgxFileDropEntry[]) {
-    this.files = files;
-    for (const droppedFile of files) {
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          // Here you can access the real file
-          console.log(droppedFile.relativePath, file);
-          this.viewDoc.push(file);
-          console.log(this.viewDoc);
-          this.fileUploadChangeEmitter.emit(file);
-          this.imagePreviewUrl = '';
-          this.file = file;
-        });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
-  }
+  // public dropped(files: NgxFileDropEntry[]) {
+  //   this.files = files;
+  //   for (const droppedFile of files) {
+  //     // Is it a file?
+  //     if (droppedFile.fileEntry.isFile) {
+  //       const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+  //       fileEntry.file((file: File) => {
+  //         // Here you can access the real file
+  //         console.log(droppedFile.relativePath, file);
+  //         this.viewDoc.push(file);
+  //         console.log(this.viewDoc);
+  //         this.fileUploadChangeEmitter.emit(file);
+  //         this.imagePreviewUrl = '';
+  //         this.file = file;
+  //       });
+  //     } else {
+  //       // It was a directory (empty directories are added, otherwise only files)
+  //       const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+  //       console.log(droppedFile.relativePath, fileEntry);
+  //     }
+  //   }
+  // }
 
   public removeUploadedFile(): void {
     this.file = '';
@@ -1696,17 +1709,39 @@ export class CalibrationmasterComponent implements OnInit {
     }
   }
 
-  onFileChange(event: any) {
-    const reader = new FileReader();
+  // onFileChange(event: any) {
+  //   const reader = new FileReader();
 
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
+  //   if (event.target.files && event.target.files.length) {
+  //     const [file] = event.target.files;
+  //     reader.readAsDataURL(file);
 
-      reader.onload = () => {
-        this.imageSrc = reader.result as string;
-        this.registerDetails.headerImage = this.imageSrc;
-      };
+  //     reader.onload = () => {
+  //       this.imageSrc = reader.result as string;
+  //       this.registerDetails.headerImage = this.imageSrc;
+  //     };
+  //   }
+  // }
+  getFileDetails(e: any) {
+    //console.log (e.target.files);
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.myFiles.push(e.target.files[i]);
     }
+    console.log('myfiles', this.myFiles);
+  }
+
+  submit() {
+    const frmData = new FormData();
+
+    for (var i = 0; i < this.myFiles.length; i++) {
+      frmData.append('fileUpload', this.myFiles[i]);
+      // console.log('myfile', this.myFiles[i]);
+    }
+    // console.log('form data', frmData.getAll('fileUpload'));
+    let imageData = frmData.getAll('fileUpload');
+    // console.log('image data', imageData);
+    imageData.map((item: any) => {
+      this.dataservice.MasterImage_postUser(item).subscribe((data: any) => {});
+    });
   }
 }
