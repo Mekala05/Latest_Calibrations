@@ -54,6 +54,9 @@ export class CatogerymasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.dataservice.getViewOhem().subscribe((item: any) => {
+      console.log('ohem', item);
+    });
     this.tabledata();
     this.user_name = localStorage.getItem('Login_name');
   }

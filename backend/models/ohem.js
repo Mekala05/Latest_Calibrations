@@ -5,10 +5,31 @@ module.exports = function (sequelize, DataTypes) {
       empID: {
         type: DataTypes.INTEGER(11).UNSIGNED,
         field: 'empID',
-        autoIncrement: true,
+        // autoIncrement: true,
         primaryKey: true,
         allowNull: false
       },
+      firstName: {
+        type: DataTypes.STRING(50),
+        field: "firstName",
+      },
+      lastName: {
+        type: DataTypes.STRING(50),
+        field: "lastName",
+      },
+      jobTitle: {
+        type: DataTypes.STRING(50),
+        field: "jobTitle",
+      },
+      dept: {
+        type: DataTypes.STRING(50),
+        field: "dept",
+      },
+      branch: {
+        type: DataTypes.STRING(50),
+        field: "branch",
+      },
+
       U_U_UserName: {
         type: DataTypes.STRING(50),
         field: "U_U_UserName",
@@ -16,6 +37,14 @@ module.exports = function (sequelize, DataTypes) {
       U_U_UserPWD: {
         type: DataTypes.STRING(50),
         field: "U_U_UserPWD",
+      },
+      U_userpassC: {
+        type: DataTypes.STRING(50),
+        field: "U_userpassC",
+      },
+      U_usernameC: {
+        type: DataTypes.STRING(50),
+        field: "U_usernameC",
       }
     },
     {
@@ -25,10 +54,10 @@ module.exports = function (sequelize, DataTypes) {
 
 
   User.checkLogin = function (email, password) {
-    console.log("email", typeof email, "pass", typeof password);
+    // console.log("email", typeof email, "pass", typeof password);
 
     return new Promise((resolve, reject) => {
-      User.findOne({ where: { U_U_UserName: email, U_U_UserPWD: password } }).then(result => {
+      User.findOne({ where: { U_usernameC: email, U_userpassC: password } }).then(result => {
         // console.log(result)
 
         // console.log("CHekkkkk"+result.U_U_UserPWD);

@@ -51,7 +51,7 @@ export class CalibrationmasterComponent implements OnInit {
   public Category: any[] = [];
   uploadService: any[] = [];
   public Type: any[] = [];
-  uploadedFiles: any[] = [];
+  uploadedFiles: any = [];
   attachmentdelete: any[] = [];
   images: any;
   event: any[] = [];
@@ -189,6 +189,7 @@ export class CalibrationmasterComponent implements OnInit {
                   instrument.push(item);
                 }
               });
+
               this.collection = instrument;
               this.BackUpdata = instrument;
               this.registerDetails.InstrumentName =
@@ -499,12 +500,43 @@ export class CalibrationmasterComponent implements OnInit {
     );
   }
 
-  public selectimage(event: any) {
-    // debugger;
-    if (event.target.files.length > 0) {
-      const files = event.target.files[0];
-      this.images = files;
+  fileChange(element: any) {
+    this.uploadedFiles = element.target.files;
+  }
+
+  public selectimage() {
+    console.log('inside image');
+
+    //   console.log(event.target.files);
+    //   this.images = event.target.files;
+    //   debugger;
+    //   this.dataservice.fileupload_Master(this.images).subscribe((data) => {
+    //     console.log('suc', data);
+    //   });
+    //   // debugger;
+    // if (event.target.files.length > 0) {
+    //   const files = event.target.files[0];
+    //   this.images = files;
+    // }
+
+    let formData = new FormData();
+    console.log(this.uploadedFiles.length);
+
+    for (var i = 0; i < this.uploadedFiles.length; i++) {
+      formData.append(
+        'uploads[]',
+        this.uploadedFiles[i],
+        this.uploadedFiles[i].name
+      );
     }
+    this.dataservice.fileupload_Master(formData).subscribe((data: any) => {
+      console.log(data);
+      this.registerDetails.headerImage = data.message;
+    });
+  }
+
+  fileChanges(element: any) {
+    this.uploadedFiles = element.target.files;
   }
 
   public store(): void {
@@ -714,13 +746,13 @@ export class CalibrationmasterComponent implements OnInit {
     //   // return false;
     // }
 
-    // if (MxLifeTimeNumber == '' || MxLifeTimeNumber == undefined) {
-    //   this.toastr.warning('Warning!!!', 'MxLifeTimeNumber is required!', {
-    //     timeOut: 3000,
-    //   });
-    //   (<HTMLInputElement>document.getElementById('id')).focus();
-    //   // return false;
-    // }
+    if (MxLifeTimeNumber == '' || MxLifeTimeNumber == undefined) {
+      this.toastr.warning('Warning!!!', 'MxLifeTimeNumber is required!', {
+        timeOut: 3000,
+      });
+      (<HTMLInputElement>document.getElementById('id')).focus();
+      // return false;
+    }
 
     if (Location == '' || Location == undefined) {
       this.toastr.warning('Warning!!!', 'Location is required!', {
@@ -827,27 +859,45 @@ export class CalibrationmasterComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
       // return false;
     }
-    // this.registerDetails.file = this.images;
+    this.registerDetails.file = this.images;
 
-    //console.log('vvvv      ', this.images);
+    console.log('vvvv      ', this.images);
 
     // this.dataservice.fileupload(this.registerDetails).subscribe((data) => {
     //   console.log(data);
     //   // this.Location = data.data;
     // });
 
-    const imagedata = new FormData();
-    imagedata.append('image', this.images);
-    this.dataservice.MasterImage_postUser(imagedata).subscribe((data) => {
-      // console.log('data', data);
+    // const imagedata = new FormData();
+    // imagedata.append('image', this.images);
+    // console.log('images', this.images[0], this.images[0].name);
 
-      console.log('working...');
-    });
+    // this.registerDetails.headerImage = this.images[0].name;
+    // console.log('imagedata', imagedata);
+
+    // this.dataservice.MasterImage_postUser(imagedata).subscribe((data) => {
+    //   console.log('data', data);
+    //   console.log('working...');
+    // });
 
     this.registerDetails.active = true;
 
     // console.log(this.registerDetails.headerImage);
     // console.log('store header image', this.registerDetails.headerImage);
+    // let formData = new FormData();
+    // // console.log(this.uploadedFiles.length);
+
+    // for (var i = 0; i < this.uploadedFiles.length; i++) {
+    //   formData.append(
+    //     'uploads[]',
+    //     this.uploadedFiles[i],
+    //     this.uploadedFiles[i].name
+    //   );
+    // }
+
+    // this.dataservice
+    //   .MasterImage_postUser(formData)
+    //   .subscribe((data: any) => {});
 
     this.dataservice.MasterTest_postUser(this.registerDetails).subscribe(
       (data) => {

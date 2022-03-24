@@ -466,7 +466,7 @@ export class DataService {
 
   Calibrationlocationmastervalue_getView() {
     return this.http.get<any>(
-      `${environment.CalibrationLocationmaster}/viewDataname`
+      `${environment.CalibrationLocationmaster}/viewData`
     );
   }
 
@@ -778,12 +778,12 @@ export class DataService {
 
   //file upload
 
-  fileupload(data: any) {
-    return this.http.post<any>(
-      `${environment.Calibration_Master}/upload-images`,
-      data
-    );
-  }
+  // fileupload(data: any) {
+  //   return this.http.post<any>(
+  //     `${environment.Calibration_Master}/upload-images`,
+  //     data
+  //   );
+  // }
 
   calibrationmaster_saprefcodeitems_get() {
     return this.http.get<any>(
@@ -805,5 +805,38 @@ export class DataService {
   // }
   Data_getView() {
     return this.http.get<RaiseDC[]>(`${environment.RaiseDC}/view`);
+  }
+
+  getViewOhem() {
+    return this.http.get<any>(`${environment.Ohem}/viewOhem`);
+  }
+
+  //useraccess
+
+  useracess_get() {
+    return this.http.get<any>(`${environment.Useraccess}/view`);
+  }
+
+  useracess_post(data: any) {
+    return this.http.post<any>(`${environment.Useraccess}/insert`, data);
+  }
+
+  useracess_update(id: any, data: any) {
+    return this.http.put<any>(`${environment.Useraccess}/update/${id}`, data);
+  }
+
+  //iddescription
+
+  iddescription_get() {
+    return this.http.get<any>(`${environment.Moduledescription}/view`);
+  }
+
+  iddescription_post(data: any) {
+    return this.http.post<any>(`${environment.Moduledescription}/insert`, data);
+  }
+
+  fileupload_Master(data: any) {
+    debugger;
+    return this.http.post<any>(`${environment.uploadurl}/upload`, data);
   }
 }

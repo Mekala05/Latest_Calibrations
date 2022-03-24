@@ -87,7 +87,14 @@ export class CalibrationmasterlistComponent implements OnInit, AfterViewInit {
 
   private tabledata(): void {
     this.dataservice.calibrationmasterlist_getView().subscribe((data) => {
-      console.log('sdfasdf', data.data);
+      // let item: any = [];
+      // data.data.map((items: any) => {
+      //   if (items.active === true) {
+      //     console.log(items);
+
+      //     item.push(items);
+      //   }
+      // });
 
       this.collection = data.data;
       this.BackUpdata = data.data;

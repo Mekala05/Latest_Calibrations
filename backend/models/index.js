@@ -31,16 +31,21 @@ models.ReturnList = require("./ReturnList")(sequelize, Sequelize)
 models.ScrapApproval = require("./ScrapApproval")(sequelize, Sequelize)
 models.ScrapApprovalList = require("./ScrapApprovalList")(sequelize, Sequelize)
 models.calibrationtype = require("./calibrationtype")(sequelize, Sequelize)
-models.Olct = require("./Olct")(sequelize,Sequelize)
-models.oitm = require("./oitm")(sequelize,Sequelize)
-models.odep = require("./odep")(sequelize,Sequelize)
-models.ohem = require("./ohem")(sequelize,Sequelize)
-models.OCRD = require("./OCRD")(sequelize,Sequelize)
-models.OMAC = require("./OMAC")(sequelize,Sequelize)
-models.CalibrationMasterList = require("./CalibrationMasterList")(sequelize,Sequelize)
-models.monthly_shedule= require("./monthly_shedule")(sequelize,Sequelize)
-models.CalibrationReport = require("./CalibrationReport")(sequelize,Sequelize)
-models.CalibrationMasterListReport = require("./CalibrationMasterListReport")(sequelize,Sequelize)
+models.Olct = require("./Olct")(sequelize, Sequelize)
+models.oitm = require("./oitm")(sequelize, Sequelize)
+models.odep = require("./odep")(sequelize, Sequelize)
+models.ohem = require("./ohem")(sequelize, Sequelize)
+models.OCRD = require("./OCRD")(sequelize, Sequelize)
+models.OMAC = require("./OMAC")(sequelize, Sequelize)
+models.CalibrationMasterList = require("./CalibrationMasterList")(sequelize, Sequelize)
+models.monthly_shedule = require("./monthly_shedule")(sequelize, Sequelize)
+models.CalibrationReport = require("./CalibrationReport")(sequelize, Sequelize)
+models.CalibrationMasterListReport = require("./CalibrationMasterListReport")(sequelize, Sequelize)
+models.useraccess = require("./useraccess")(sequelize, Sequelize)
+models.iddescription = require("./iddescription")(sequelize, Sequelize)
+
+
+
 
 
 
@@ -48,7 +53,6 @@ models.CalibrationMasterListReport = require("./CalibrationMasterListReport")(se
 
 
 models.User.sync();
-// models.User.sync();
 models.CategoryMaster.sync();
 models.TypeMaster.sync();
 models.EquipmentMaster.sync();
@@ -82,6 +86,9 @@ models.monthly_shedule.sync();
 models.CalibrationReport.sync();
 models.CalibrationMasterListReport.sync();
 models.RaiseDC.sync();
+models.useraccess.sync();
+models.iddescription.sync();
+
 
 
 

@@ -36,6 +36,13 @@
 //   CalibrationReport: 'http://10.0.0.11:3000/api/CalibrationReport',
 //   CalibratuionMasterListReport:
 //     'http://10.0.0.11:3000/api/CalibratuionMasterListReport',
+//   fileupload: 'http://10.0.0.11:3000/api/file',
+//   Useraccess: 'http://10.0.0.11:3000/api/useraccess',
+//   Moduledescription: 'http://10.0.0.11:3000/api/iddescription',
+//   Ohem: 'http://10.0.0.11:3000/api/ohem',
+//   RaiseDC: 'http://10.0.0.11:3000/api/RaiseDC',
+
+//   uploadurl: 'http://10.0.0.11:3001',
 // };
 
 export const environment = {
@@ -44,6 +51,7 @@ export const environment = {
   Typeurl: 'http://localhost:3000/api/type',
   Makeurl: 'http://localhost:3000/api/make',
   Instrument: 'http://localhost:3000/api/Instrument',
+  Ohem: 'http://localhost:3000/api/ohem',
   Equipment: 'http://localhost:3000/api/equipment',
   Gauges: 'http://localhost:3000/api/gauges',
   Login: 'http://localhost:3000/api/auth',
@@ -72,6 +80,9 @@ export const environment = {
   CalibratuionMasterListReport:
     'http://localhost:3000/api/CalibratuionMasterListReport',
   fileupload: 'http://localhost:3000/api/file',
+  Useraccess: 'http://localhost:3000/api/useraccess',
+  Moduledescription: 'http://localhost:3000/api/iddescription',
+  uploadurl: 'http://localhost:3001',
 };
 
 /*

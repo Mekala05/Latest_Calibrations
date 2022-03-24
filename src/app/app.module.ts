@@ -75,6 +75,7 @@ import { CalibrationMasterListReportComponent } from './calibration-master-list-
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 // import { NgxFileDropModule } from 'ngx-file-drop';
 import { DataTablesModule } from 'angular-datatables';
+import { UseraccessComponent } from './useraccess/useraccess.component';
 // import { BreakageModule } from './breakage-list-details/breakage-list-details.module';
 
 @NgModule({
@@ -113,6 +114,7 @@ import { DataTablesModule } from 'angular-datatables';
     CalibrationmasterlistComponent,
     CalibrationReportComponent,
     CalibrationMasterListReportComponent,
+    UseraccessComponent,
   ],
   imports: [
     MatIconModule,

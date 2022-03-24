@@ -70,7 +70,7 @@ export class CalibrationMasterListReportComponent implements OnInit {
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
     this.tabledata();
-    debugger;
+    // debugger;
   }
 
   ngOnInit(): void {
@@ -102,7 +102,7 @@ export class CalibrationMasterListReportComponent implements OnInit {
 
   calibrationlistdata(): void {
     this.dataservice.calibrationmasterlist_getView().subscribe((data) => {
-      debugger;
+      // debugger;
     });
   }
 

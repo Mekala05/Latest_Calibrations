@@ -4,7 +4,7 @@ const passport = require('passport')
 const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 var bcrypt = require('bcrypt')
-const { User } = require('./../models')
+const { User, ohem } = require('./../models')
 // const { User } = require('./../models')
 const config = require('./../config')
 var nodemail = require('nodemailer')
@@ -12,7 +12,6 @@ var smtpTransport = require('nodemailer-smtp-transport');
 const { Op } = require('sequelize')
 
 // const { InstrumentMaster ,CategoryMaster, TypeMaster} = require('../models');
-
 
 function sendError(res, err) {
     var result = {
@@ -141,7 +140,7 @@ router.post('/resend', (req, res, next) => {
 
 function signupProcess(req, res, next) {
     return passport.authenticate('local-signup', (result) => {
-        console.log("singup"+result);
+        console.log("singup" + result);
 
 
         if (result == null) {
@@ -226,12 +225,12 @@ router.post('/signup', (req, res, next) => {
 router.get('/userdetails', (req, res) => {
     return new Promise((resolve, reject) => {
         User.findAll().then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
@@ -342,11 +341,11 @@ router.put('/resetchk', async (req, res) => {
     // return new Promise(async (resolve, reject) => {
     await User.findOne({ where: { passwordResetToken: req.body.token } }).then(async function (result) {
 
-        console.log(result.passwordResetExpires)
+        // console.log(result.passwordResetExpires)
         expDate = new Date(result.passwordResetExpires)
         if (expDate > new Date()) {
-            console.log("valid")
-            console.log(req.body);
+            // console.log("valid")
+            // console.log(req.body);
             await User.update({
                 password: bcrypt.hashSync(req.body.password, 8, async (err, hash) => {
                     return await hash;
@@ -407,13 +406,25 @@ router.put('/delete/:id', (req, res) => {
 
 router.get('/view', (req, res) => {
     return new Promise((resolve, reject) => {
-        TypeMaster.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        TypeMaster.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
+})
+
+router.get('/viewOhem', (req, res) => {
+    return new Promise((resolve, reject) => {
+        ohem.findAll({ attributes: ['empID', 'firstName', 'lastName', 'jobTitle', 'dept', 'branch', 'U_U_UserName', 'U_U_UserPWD', 'U_userpassC', 'U_usernameC'], }).then(function (result) {
+            // console.log("inside Data", result);
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 // router.get('/viewuser', (req, res) => {
@@ -427,7 +438,7 @@ router.get('/view', (req, res) => {
 //                 sendError(res, err);
 //             });
 //         })  
-   
+
 // })
 
 
@@ -442,7 +453,7 @@ router.get('/view', (req, res) => {
 //                 sendError(res, err);
 //             });
 //         })  
-   
+
 // })
 
 
