@@ -22,7 +22,7 @@ module.exports = new PassportLocalStrategy({
             return done("enter valid credentials")
         } else {
             const token = jwt.sign({ sub: result.id }, config.JWT_SECRET, { expiresIn: Math.floor(Date.now() / 1000) + (60 * 60 * 24) })
-            return done(null, token, { name: result.U_U_UserName, userRole: result.userRole, logRole: result.logRole, id: result.empID, unit: result.unit, department: result.department })
+            return done(null, token, { name: result.U_usernameC, userRole: result.userRole, logRole: result.logRole, id: result.empID, unit: result.unit, department: result.department })
 
         }
 

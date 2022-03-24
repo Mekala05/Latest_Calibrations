@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/shared/service/data.service';
+import { DataService } from '../../shared/service/data.service';
 import { Calibrationlocationmaster } from './model';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -93,6 +93,8 @@ export class LocationmasterComponent implements OnInit {
     this.dataservice
       .Calibrationlocationmastervalue_getView()
       .subscribe((data) => {
+        console.log('inisde dept', data.data);
+
         this.Department = data.data;
       });
   }

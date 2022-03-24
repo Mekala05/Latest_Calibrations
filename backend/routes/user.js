@@ -78,7 +78,7 @@ router.put('/userUpdate/:revid/:usrid', (req, res) => {
 })
 
 router.post('/login', (req, res, next) => {
-    
+
 
 
 
@@ -144,7 +144,7 @@ router.post('/resend', (req, res, next) => {
 
 function signupProcess(req, res, next) {
     return passport.authenticate('local-signup', (result) => {
-        console.log("singup"+result);
+        console.log("singup" + result);
 
 
         if (result == null) {
@@ -228,13 +228,13 @@ router.post('/signup', (req, res, next) => {
 })
 router.get('/userdetails', (req, res) => {
     return new Promise((resolve, reject) => {
-        User.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        User.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
@@ -410,14 +410,16 @@ router.put('/delete/:id', (req, res) => {
 
 router.get('/view', (req, res) => {
     return new Promise((resolve, reject) => {
-        TypeMaster.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        TypeMaster.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
+
+
 
 // router.get('/viewuser', (req, res) => {
 //     return new Promise((resolve, reject) => {
@@ -430,7 +432,7 @@ router.get('/view', (req, res) => {
 //                 sendError(res, err);
 //             });
 //         })  
-   
+
 // })
 
 
@@ -445,7 +447,7 @@ router.get('/view', (req, res) => {
 //                 sendError(res, err);
 //             });
 //         })  
-   
+
 // })
 
 

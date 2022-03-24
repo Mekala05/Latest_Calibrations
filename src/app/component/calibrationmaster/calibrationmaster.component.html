@@ -454,6 +454,27 @@
               (change)="checkedAmc($event)"
             />
           </div>
+          <div class="col-4">
+            <input
+              (change)="fileChanges($event)"
+              type="file"
+              id="inputGroupFile01"
+              multiple
+              aria-describedby="inputGroupFileAddon01"
+            />
+
+            <span
+              class="input-group-text upload"
+              (click)="selectimage()"
+              id="btnUpload"
+              >Upload</span
+            >
+          </div>
+
+          <!-- <pre>{{ myFiles | json }}</pre> -->
+          <!-- <div *ngFor="let file of myFiles">
+            <div>Datas {{ file.name }} - {{ file.type }} - {{ file.size }}</div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -685,6 +706,13 @@
           />
         </td>
         <td class="gene_name tablethtd icons">
+          <input
+            (change)="fileChange($event)"
+            type="file"
+            id="inputGroupFile01"
+            multiple
+            aria-describedby="inputGroupFileAddon01"
+          />
           <!-- <ngx-file-drop
             (onFileDrop)="dropped($event)"
             (onFileOver)="fileOver($event)"
@@ -757,7 +785,7 @@
         </td>
       </tr>
       <!-- <div *ngIf="AmcChecked" > -->
-      <tr class="table table-sm" *ngIf="AmcChecked">
+      <!-- <tr class="table table-sm" *ngIf="AmcChecked">
         <ng-container
           *ngFor="
             let data of collectiondata
@@ -775,23 +803,9 @@
             />
           </td>
           <td class="gene_name tablethtd icons">
-            <!-- <ngx-file-drop
-              (onFileDrop)="dropped($event)"
-              (onFileOver)="fileOver($event)"
-              (onFileLeave)="fileLeave($event)"
-            >
-              <ng-template
-                ngx-file-drop-content-tmp
-                let-openFileSelector="openFileSelector"
-              >
-                <button type="button" (click)="openFileSelector()">
-                  Choose Files
-                </button>
-                No file Chosen
-              </ng-template>
-            </ngx-file-drop> -->
+            
 
-            <!-- <div id="myCarousel" class="carousel slide">
+            <div id="myCarousel" class="carousel slide">
               <div class="carousel-inner">
                 <div class="item" [ngClass]="{'active': i == 0}"  *ngFor="let list of mydata;let i = index">
                   <div class="img-video-div">
@@ -802,18 +816,18 @@
               </div>
         
               <a *ngIf="mydata.length > 0" class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-              <a *ngIf="mydata.length > 0" class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
-            <!-- </div> -->
+              <a *ngIf="mydata.length > 0" class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+            </div>
 
-            <!-- <input
+            <input
               type="file"
               name
               [(ngModel)]="registerDetails.file"
               multiple
               (change)="selectimage($event)"
-            /> -->
-            <!-- <input  (change)="fileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01"> -->
-            <!-- <span  class="input-group-text upload"  (click)="upload()"  id="btnUpload">Upload</span> -->
+            />
+            <input  (change)="fileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01">
+            <span  class="input-group-text upload"  (click)="upload()"  id="btnUpload">Upload</span>
           </td>
           <td class="gene_name tablethtd dicons">
             <button mat-flat-button id="color_sv" class="submit-button">
@@ -828,7 +842,7 @@
             <i class="fa fa-trash" aria-hidden="true" (click)="delete()"></i>
           </td>
         </ng-container>
-      </tr>
+      </tr>  -->
       <!-- </div> -->
 
       <tr
@@ -1088,21 +1102,5 @@
   enctype="multipart/form-data"
   method="POST"
 > -->
-<div>
-  <ng-container>
-    <input
-      type="file"
-      id="file"
-      multiple
-      (change)="getFileDetails($event)"
-      #fileUpload
-    />
 
-    <button (click)="submit()">Upload</button>
-  </ng-container>
-</div>
-<pre>{{ myFiles | json }}</pre>
-<div *ngFor="let file of myFiles">
-  <div>Datas {{ file.name }} - {{ file.type }} - {{ file.size }}</div>
-</div>
 <!-- </form> -->

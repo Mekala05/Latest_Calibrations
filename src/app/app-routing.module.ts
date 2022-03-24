@@ -26,6 +26,7 @@ import { CalibrationtypeComponent } from './calibrationtype/calibrationtype.comp
 import { CalibrationmasterlistComponent } from './component/calibrationmasterlist/calibrationmasterlist.component';
 import { CalibrationReportComponent } from './calibration-report/calibration-report.component';
 import { CalibrationMasterListReportComponent } from './calibration-master-list-report/calibration-master-list-report.component';
+import { UseraccessComponent } from './useraccess/useraccess.component';
 
 const routes: Routes = [
   { path: 'login', redirectTo: '/login', pathMatch: 'full' },
@@ -33,6 +34,7 @@ const routes: Routes = [
     path: '',
     component: LoginComponent,
   },
+
   {
     path: 'header',
     component: HeaderComponent,
@@ -158,6 +160,10 @@ const routes: Routes = [
       {
         path: 'CalibrationMasterListReport',
         component: CalibrationMasterListReportComponent,
+      },
+      {
+        path: 'useraccess',
+        component: UseraccessComponent,
       },
     ],
   },

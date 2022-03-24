@@ -214,8 +214,28 @@
   
   
   ]
-}
+},
 
+{
+  "id": "4",
+  "icon": "../../../assets/img/component/sidenav/DB.svg",
+  "name": "User",
+  "url": "/User",
+  "children": [
+
+
+    {
+      "id": "5",
+      "icon": "../../../assets/img/component/sidenav/Operation.svg",
+      "name": "User Access",
+      "url": "/header/useraccess"
+
+      
+    }
+  
+  
+  ]
+}
 
 
 

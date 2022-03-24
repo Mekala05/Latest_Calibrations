@@ -1,32 +1,34 @@
 const express = require('express');
 const router = express.Router()
-const multer  = require('multer')
+const multer = require('multer')
 const path = require("path")
 const app = express()
 const https = require('https');
 const fs = require("fs")
 const bodyParser = require("body-parser");
 const { Op } = require("sequelize");
-const  multipart  =  require('connect-multiparty');
-const  multipartMiddleware  =  multipart({ uploadDir:  './uploads' });
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart({ uploadDir: './uploads' });
 // router.use(multer({dest:'image/'}).single('image'));
-router.use(multer({dest:'./image'}).single('image'));
+router.use(multer({ dest: './image' }).single('image'));
 
 
-const { MakeMaster, CategoryMaster, TypeMaster, CalibrationMaster_1,oitm ,CalibrationLocationMaster, InstrumentMaster} = require('../models');
+const { MakeMaster, CategoryMaster, TypeMaster, CalibrationMaster_1, oitm, CalibrationLocationMaster, InstrumentMaster } = require('../models');
 // const oitm = require('../models/oitm');
 
 
 var storage = multer.diskStorage({
-  destination: 'image/',
-  filename: function(req, file, callback) {
-    callback(null, file.originalname);
-  }
+    destination: 'image/',
+    filename: function (req, file, callback) {
+        callback(null, file.originalname);
+    }
 });
 var upload = multer({ storage: storage });
 
+console.log("upload", upload);
+
 router.post('/single', upload.single('image'), function (req, res, next) {
-    console.log("00000000",req.file);
+    console.log("00000000", req.file);
     res.send("created");
 })
 
@@ -43,7 +45,7 @@ function sendError(res, err) {
 function sendSuccess(res, result) {
     var finalResult = {
         "success": true,
-        "count": Number(result)+1,
+        "count": Number(result) + 1,
         "data": result
     };
     return res.json(finalResult);
@@ -51,26 +53,26 @@ function sendSuccess(res, result) {
 // GET TypeMaster 
 router.get('/Gettype', (req, res) => {
     return new Promise((resolve, reject) => {
-        TypeMaster.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        TypeMaster.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
 router.get('/Gettype/:typedata', (req, res) => {
     return new Promise((resolve, reject) => {
-        console.log("ddd",req.params.categorydata);
-        InstrumentMaster.findAll({ where: {deleteStatus: false, typeId: req.params.typedata  }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        console.log("ddd", req.params.categorydata);
+        InstrumentMaster.findAll({ where: { deleteStatus: false, typeId: req.params.typedata } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
@@ -78,76 +80,76 @@ router.get('/Gettype/:typedata', (req, res) => {
 //GET CategoryMaster
 router.get('/GetCategory', (req, res) => {
     return new Promise((resolve, reject) => {
-        CategoryMaster.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        CategoryMaster.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
 router.get('/GetCategory/:categorydata', (req, res) => {
     return new Promise((resolve, reject) => {
-        console.log("ddd",req.params.categorydata);
-        TypeMaster.findAll({ where: {deleteStatus: false, categoryId: req.params.categorydata  }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        console.log("ddd", req.params.categorydata);
+        TypeMaster.findAll({ where: { deleteStatus: false, categoryId: req.params.categorydata } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
 router.get('/GetCategory/:categorydata', (req, res) => {
     return new Promise((resolve, reject) => {
-        console.log("ddd",req.params.categorydata);
-        InstrumentMaster.findAll({ where: {deleteStatus: false, categoryId: req.params.categorydata  }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        console.log("ddd", req.params.categorydata);
+        InstrumentMaster.findAll({ where: { deleteStatus: false, categoryId: req.params.categorydata } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 // GET Make
 router.get('/GetMake', (req, res) => {
     return new Promise((resolve, reject) => {
-        MakeMaster.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        MakeMaster.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
 router.get('/department', (req, res) => {
     return new Promise((resolve, reject) => {
-        CalibrationLocationMaster.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        CalibrationLocationMaster.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
 router.get('/department/:departmentdata', (req, res) => {
     return new Promise((resolve, reject) => {
-        console.log("ddd",req.params.categorydata);
-        CalibrationLocationMaster.findAll({ where: {deleteStatus: false, ShortName: req.params.departmentdata  }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
+        console.log("ddd", req.params.categorydata);
+        CalibrationLocationMaster.findAll({ where: { deleteStatus: false, ShortName: req.params.departmentdata } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 
@@ -169,7 +171,7 @@ router.get('/department/:departmentdata', (req, res) => {
 
 
 router.post('/insert', (req, res) => {
-        console.log("inside insert");
+    console.log("inside insert");
 
     return new Promise((resolve, reject) => {
         console.log("inside insert");
@@ -185,45 +187,45 @@ router.post('/insert', (req, res) => {
 
 router.get('/view', (req, res) => {
     return new Promise((resolve, reject) => {
-        CalibrationMaster_1.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
-})
-
-router.get('/particular1/:id', (req, res) => {
-    return new Promise((resolve, reject) => {
-        CalibrationMaster_1.findAll({ where: {deleteStatus: false }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
-})
-
-router.get('/view/:id', (req, res) => {
-    return new Promise((resolve, reject) => {
-        CalibrationMaster_1.findAll({ where: {deleteStatus: false, id: req.params.id }  }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {
-                sendError(res, err);
-            });
-        })  
-   
-})
-
-router.put('/update/:id', (req, res) => { 
-    return new Promise((resolve, reject) => {
-        CalibrationMaster_1.update(req.body, { where: { id: req.params.id  } }).then(function (result) {
+        CalibrationMaster_1.findAll({ where: { deleteStatus: false, active: true } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
             sendError(res, err);
         });
-    })      
+    })
+
+})
+
+router.get('/particular1/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        CalibrationMaster_1.findAll({ where: { deleteStatus: false } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
+})
+
+router.get('/view/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        CalibrationMaster_1.findAll({ where: { deleteStatus: false, id: req.params.id } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
+})
+
+router.put('/update/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        CalibrationMaster_1.update(req.body, { where: { id: req.params.id } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
 })
 
 // router.put('/update1/:id', (req, res) => { 
@@ -238,14 +240,14 @@ router.put('/update/:id', (req, res) => {
 //     })  
 // })
 
-router.put('/delete/:id', (req, res) => { 
+router.put('/delete/:id', (req, res) => {
     return new Promise((resolve, reject) => {
-        CalibrationMaster_1.update({deleteStatus: true}, { where: { id: req.params.id  } }).then(function (result) {
+        CalibrationMaster_1.update({ deleteStatus: true }, { where: { id: req.params.id } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
             sendError(res, err);
         });
-    })  
+    })
 })
 
 
@@ -253,15 +255,16 @@ router.put('/delete/:id', (req, res) => {
 router.post('/update', (req, res) => {
     return new Promise((resolve, reject) => {
         oitm.findAll({
-            attributes: ['ItemCode','ItemName'],
+            attributes: ['ItemCode', 'ItemName'],
         }).then(function (result) {
-            console.log("res update",res);
-                sendSuccess(res, result);
-            }).catch(function (err) {0
-                sendError(res, err);
-            });
-        })  
-   
+            console.log("res update", res);
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            0
+            sendError(res, err);
+        });
+    })
+
 })
 
 
@@ -271,14 +274,15 @@ router.post('/update', (req, res) => {
 router.get('/view-sapref', (req, res) => {
     return new Promise((resolve, reject) => {
         oitm.findAll({
-           attributes: ['ItemCode','ItemName'],
+            attributes: ['ItemCode', 'ItemName'],
         }).then(function (result) {
-                sendSuccess(res, result);
-            }).catch(function (err) {0
-                sendError(res, err);
-            });
-        })  
-   
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            0
+            sendError(res, err);
+        });
+    })
+
 })
 
 
@@ -290,7 +294,7 @@ router.get('/view-sapref', (req, res) => {
 //                 sendError(res, err);
 //             });
 //         })  
-   
+
 // })
 
 
@@ -298,34 +302,35 @@ router.get('/saprefcodeitems/:data', (req, res) => {
     //console.log("00000     "+req.params.data);
     return new Promise((resolve, reject) => {
 
-        
+
         oitm.findAll({
-           attributes: ['ItemCode', 'ItemName', 'ItmsGrpCod', 'U_Branch'],where:{
-            U_Branch:req.params.data,
-            [Op.or]: [
-                {
-                    ItmsGrpCod: {
-                    [Op.eq]: 131,
-                  },
-                }, {
-                    ItmsGrpCod: {
-                    [Op.eq]: 138,
-                  },
-                },
-              ],
+            attributes: ['ItemCode', 'ItemName', 'ItmsGrpCod', 'U_Branch'], where: {
+                U_Branch: req.params.data,
+                [Op.or]: [
+                    {
+                        ItmsGrpCod: {
+                            [Op.eq]: 131,
+                        },
+                    }, {
+                        ItmsGrpCod: {
+                            [Op.eq]: 138,
+                        },
+                    },
+                ],
             },
-            
-           }
+
+        }
         ).then(function (result) {
-             //console.log("sdts    "+result)
-                sendSuccess(res, result);
-            }).catch(function (err) {0
-                sendError(res, err);
-            });
-        })  
-   
+            //console.log("sdts    "+result)
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            0
+            sendError(res, err);
+        });
+    })
+
 });
-   
+
 
 
 
@@ -398,15 +403,15 @@ app.post('/api/upload', multipartMiddleware, (req, res) => {
 
 
 
-router.delete('/delete/:id', (req, res) => { 
+router.delete('/delete/:id', (req, res) => {
     console.log(req.params.id);
     return new Promise((resolve, reject) => {
-        CalibrationMaster_1.destroy( { where: { id: req.params.id  } }).then(function (result) {
+        CalibrationMaster_1.destroy({ where: { id: req.params.id } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
             sendError(res, err);
         });
-    })  
+    })
 })
 
 
@@ -420,7 +425,7 @@ router.get('/tablerecord1', (req, res) => {
 
             ],
             limit: 1,
-           
+
         }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {

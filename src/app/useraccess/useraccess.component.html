@@ -1,0 +1,140 @@
+<mat-card>
+  <!-- <div class="new_bor pt-1 pb-3">
+    
+  </div> -->
+
+  <div class="row px-4 pt-3 align-items-center">
+    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <div class="col-4">
+          <mat-label class="gene_name newname">Unit</mat-label>
+        </div>
+        <div class="col-8">
+          <!-- <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+          <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+          <select
+            name=""
+            id=""
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.unit"
+            (change)="unit($event)"
+          >
+            <option disabled selected value="">--Select--</option>
+            <option *ngFor="let unit of units; let i = index" [value]="unit">
+              {{ unit }}
+            </option>
+            <!-- <option value="2">2</option> -->
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <div class="col-4">
+          <mat-label class="gene_name newname"> Department</mat-label>
+        </div>
+        <div class="col-8">
+          <!-- <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+          <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+          <select
+            name=""
+            id=""
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.department"
+            (change)="department($event)"
+          >
+            <option disabled selected value="">--Select--</option>
+            <option
+              *ngFor="let depart of dep; let i = index"
+              [value]="depart.dept"
+            >
+              {{ depart.dept }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+      <div class="row form-group align-items-center">
+        <div class="col-4">
+          <mat-label class="gene_name newname">Employee</mat-label>
+        </div>
+        <div class="col-8">
+          <!-- <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+          <!-- <textarea type="text" class="form-control input_text"></textarea> -->
+          <!-- <input
+                  type="text"
+                  class="form-control input_text"
+                  [(ngModel)]="registerDetails.employee"
+                /> -->
+          <select
+            name=""
+            id=""
+            class="form-control input_text"
+            [(ngModel)]="registerDetails.employee"
+          >
+            <option disabled selected value="">--Select--</option>
+            <option
+              *ngFor="let employee of emp; let i = index"
+              [value]="employee.empID"
+            >
+              {{ employee.firstName }} .{{ employee.lastName }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 button-section">
+      <div class="row form-group align-items-center">
+        <button mat-raised-button color="warn" (click)="load()">Load</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="show">
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th scope="col">Module ID</th>
+          <th scope="col">Modules Name</th>
+          <th scope="col">Edit</th>
+          <th scope="col">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of tableData; let i = index">
+          <!-- <th scope="row">1</th> -->
+          <td>{{ data.moduleId }}</td>
+          <td>{{ data.moduleDescription }}</td>
+          <td>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="check1"
+              name="edit"
+              value="edit"
+              (change)="edit($event, data)"
+            />
+          </td>
+          <td>
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="check2"
+              name="view"
+              value="view"
+              (change)="edit($event, data)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 button-section">
+      <div class="row form-group align-items-center">
+        <button mat-raised-button color="warn" (click)="allow()">
+          Allow Access
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-card>

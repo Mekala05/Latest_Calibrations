@@ -92,7 +92,7 @@ module.exports = function (sequelize, DataTypes) {
     User.checkLogin = function (email, password) {
         return new Promise((resolve, reject) => {
             console.log("email", typeof email, "pass", typeof password);
-            OHEM.findOne({ where: { U_U_UserName: email, U_U_UserPWD: password } }).then(result => {
+            OHEM.findOne({ where: { U_usernameC: email, U_userpassC: password } }).then(result => {
                 // console.log("Result Data", result.U_U_UserName);
                 // console.log("CHekkkkk",result);
                 if (!result) {
