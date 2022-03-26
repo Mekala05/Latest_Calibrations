@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { returncomponent } from './model';
 import { ReturnList } from 'src/app/return-list/model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-return',
@@ -91,7 +92,8 @@ export class ReturnComponent implements OnInit {
     private dataservice: DataService,
     private toastr: ToastrService,
     private router: Router,
-    private routers: ActivatedRoute
+    private routers: ActivatedRoute,
+    private datePipe: DatePipe
   ) {
     if (this.routers.snapshot.queryParams.id) {
       console.log(this.routers.snapshot.queryParams.id);
@@ -105,10 +107,20 @@ export class ReturnComponent implements OnInit {
             console.log(data);
             this.registerDetails.InstrumentName = data.data[0].InstrumentName;
             this.registerDetails.InstrumentCode = data.data[0].InstrumentCode;
-            // this.registerDetails.IssueDate=data.data[0].IssueDate;
+            let issudate = this.datePipe.transform(
+              data.data[0].IssueDate,
+              'dd-mmm-yyyy'
+            );
+            if (issudate) {
+              this.registerDetails.IssueDate = issudate;
+            }
             this.registerDetails.IssueNo = data.data[0].IssueNo;
             this.registerDetails.MachineCode = data.data[0].MachineCode;
             this.registerDetails.Location = data.data[0].Location;
+            this.user_name = localStorage.getItem('Login_name');
+            console.log(this.user_name);
+
+            this.registerDetails.ReturnLoginEmployeeDetails = this.user_name;
           },
           (err) => console.log('its error')
         );
@@ -126,8 +138,6 @@ export class ReturnComponent implements OnInit {
     this.tabledata();
     this.registerDetails.ReturnDate = new Date();
     this.registerDetails.ReturnDate = new Date();
-    this.user_name = localStorage.getItem('Login_name');
-    this.registerDetails.ReturnLoginEmployeeDetails = this.user_name;
 
     this.dataservice.Return_getViewParticular().subscribe((data) => {
       // console.log(data.data[0].id);
@@ -272,7 +282,7 @@ export class ReturnComponent implements OnInit {
     this.registerDetails.ReturnNo = '';
     this.registerDetails.ReturnReason = '';
     this.registerDetails.ReturnLoginEmployeeDetails = '';
-    this.registerDetails.IssueDate = new Date();
+    this.registerDetails.IssueDate = '';
     this.registerDetails.IssueNo = '';
     this.registerDetails.InstrumentCode = '';
     this.registerDetails.InstrumentName = '';

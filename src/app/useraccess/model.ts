@@ -10,4 +10,6 @@ export interface EmployeeAccessDetails {
   moduleid: string;
   ModuleidDescription: string;
   employeeid: string;
+  unit: string;
+  department: string;
 }

@@ -7,14 +7,13 @@ import { ReturnList } from './model';
 @Component({
   selector: 'app-return-list',
   templateUrl: './return-list.component.html',
-  styleUrls: ['./return-list.component.scss']
+  styleUrls: ['./return-list.component.scss'],
 })
 export class ReturnListComponent implements OnInit {
-
   public collection: any[] = [];
   public searchvalue: any;
   public HighlightRow: any;
-  public registerDetails:ReturnList  = {};
+  public registerDetails: ReturnList = {};
   public HighlightHead: any = 1;
   public SearchField: string = 'Type';
   public BackUpdata = [] as any;
@@ -22,7 +21,7 @@ export class ReturnListComponent implements OnInit {
   public InstrumentNameof: any = [];
   public InstrumentCodeof: any = [];
   public timeout: any = null;
-  public text : any = [];
+  public text: any = [];
   public Return: any = [];
   public TableHeading = [
     {
@@ -87,64 +86,70 @@ export class ReturnListComponent implements OnInit {
     private dataservice: DataService,
     private toastr: ToastrService,
     private router: Router
-  ) { }
-  
+  ) {}
 
   ngOnInit(): void {
     this.tabledata();
     this.registerDetails.IssueDate = new Date();
     this.registerDetails.ReturnDate = new Date();
-    this.registerDetails.Quantity='1';
+    this.registerDetails.Quantity = '1';
     this.user_name = localStorage.getItem('Login_name');
+  }
 
+  setFilteredItems(eve: any) {
+    const eventVal = eve.target.value;
+    if (eventVal && eventVal.trim() !== '') {
+      this.collection = this.BackUpdata.filter(
+        (item: any) =>
+          item.Location.toLowerCase().indexOf(eventVal.toLowerCase()) > -1 ||
+          item.InstrumentCode.toLowerCase().indexOf(eventVal.toLowerCase()) >
+            -1 ||
+          item.InstrumentName.toLowerCase().indexOf(eventVal.toLowerCase()) >
+            -1 ||
+          item.MachineCode.toLowerCase().indexOf(eventVal.toLowerCase()) > -1
+      );
+    } else {
+      this.collection = this.BackUpdata;
+    }
   }
 
   private tabledata(): void {
-    this.dataservice
-      .IssueReturn_getView()
-      .subscribe((data) => {
-        this.collection = data.data;
-        this.BackUpdata = data.data;
-      });
+    this.dataservice.IssueReturn_getView().subscribe((data) => {
+      this.collection = data.data;
+      this.BackUpdata = data.data;
+      console.log('collection', data.data);
+    });
 
-      this.dataservice
-      .MasterTest_getView()
-      .subscribe((data) => {
-        // console.log(data.data[0].type);
-        this.InstrumentNameof = data.data;
-        // this.BackUpdata = data.data;
-      });
-      this.dataservice
-      .MasterTest_getView()
-      .subscribe((data) => {
-        // console.log(data.data[0].type);
-        this.InstrumentCodeof = data.data;
-        // this.BackUpdata = data.data;
-      });
+    this.dataservice.MasterTest_getView().subscribe((data) => {
+      // console.log(data.data[0].type);
+      this.InstrumentNameof = data.data;
+      // this.BackUpdata = data.data;
+    });
+    this.dataservice.MasterTest_getView().subscribe((data) => {
+      // console.log(data.data[0].type);
+      this.InstrumentCodeof = data.data;
+      // this.BackUpdata = data.data;
+    });
   }
 
-  onKeyIns(x:any) { 
-
-    this.dataservice.ReturnList_postUser(this.registerDetails.InstrumentCode,this.collection).subscribe((data)=>{
-      console.log(data.data[0]);
-       this.registerDetails.InstrumentName = data.data[0].InstrumentName;
-       this.registerDetails.MachineCode = data.data[0].MachineCode;
-       this.registerDetails.IssueDate = data.data[0].IssueDate;
-       this.registerDetails.Location = data.data[0].Location;
-       this.registerDetails.ReturnDate = data.data[0].ReturnDate;
-       this.registerDetails.ReturnNo = data.data[0].ReturnNo;
-       this.registerDetails.InstrumentDetails = data.data[0].InstrumentDetails;
-       this.registerDetails.IssueNo = data.data[0].IssueNo;
-
-
-    })
-   
-
-   
+  onKeyIns(x: any) {
+    this.dataservice
+      .ReturnList_postUser(this.registerDetails.InstrumentCode, this.collection)
+      .subscribe((data) => {
+        console.log(data.data[0]);
+        this.registerDetails.InstrumentName = data.data[0].InstrumentName;
+        this.registerDetails.MachineCode = data.data[0].MachineCode;
+        this.registerDetails.IssueDate = data.data[0].IssueDate;
+        this.registerDetails.Location = data.data[0].Location;
+        this.registerDetails.ReturnDate = data.data[0].ReturnDate;
+        this.registerDetails.ReturnNo = data.data[0].ReturnNo;
+        this.registerDetails.InstrumentDetails = data.data[0].InstrumentDetails;
+        this.registerDetails.IssueNo = data.data[0].IssueNo;
+      });
   }
   getUser1(id: any) {
     // alert(id)
-    this.router.navigate([`header/Return2`], { queryParams: { id: id} });
+    this.router.navigate([`header/Return2`], { queryParams: { id: id } });
   }
   // helpWindow(id:any) {
   //   alert(id);
@@ -152,85 +157,116 @@ export class ReturnListComponent implements OnInit {
   // }
 
   update() {
-    if ((this.registerDetails.IssueDate === undefined) || (this.registerDetails.IssueNo ==='') || (this.registerDetails.InstrumentCode ==='')|| (this.registerDetails.InstrumentName ==='')|| (this.registerDetails.MachineCode ==='')|| (this.registerDetails.Location ==='')|| (this.registerDetails.Quantity ==='')|| (this.registerDetails.ReturnDate ===undefined)|| (this.registerDetails.ReturnNo ==='')|| (this.registerDetails.InstrumentDetails ==='')) {
-      alert("Enter the Details");
+    if (
+      this.registerDetails.IssueDate === undefined ||
+      this.registerDetails.IssueNo === '' ||
+      this.registerDetails.InstrumentCode === '' ||
+      this.registerDetails.InstrumentName === '' ||
+      this.registerDetails.MachineCode === '' ||
+      this.registerDetails.Location === '' ||
+      this.registerDetails.Quantity === '' ||
+      this.registerDetails.ReturnDate === undefined ||
+      this.registerDetails.ReturnNo === '' ||
+      this.registerDetails.InstrumentDetails === ''
+    ) {
+      alert('Enter the Details');
+    } else {
+      // this.submitted = true;
+      this.dataservice
+        .IssueReturn_updateSingleUser(
+          this.registerDetails.id,
+          this.registerDetails
+        )
+        .subscribe(
+          (data) => {
+            // alert("Update");
+            // console.log(data);
+            if (data.data) {
+              this.toastr.success(
+                'Updated!!!',
+                'IssueReturn Updated Successfully.',
+                {
+                  timeOut: 3000,
+                }
+              );
+              let currentUrl = this.router.url;
+              this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+              this.router.onSameUrlNavigation = 'reload';
+              this.router.navigate([currentUrl]);
+              this.tabledata();
+            } else {
+              if (data.error.errors[0].validatorKey) {
+                this.toastr.error('Error!!!', 'issueReturn Already Exists.', {
+                  timeOut: 3000,
+                });
+              }
+            }
+          },
+          (err) => console.log(err)
+        );
     }
-    else{
-    // this.submitted = true;
-    this.dataservice.IssueReturn_updateSingleUser(this.registerDetails.id, this.registerDetails).subscribe(
-      (data) => {
-        // alert("Update");
-        // console.log(data);
-        if (data.data) {
-          this.toastr.success('Updated!!!', 'IssueReturn Updated Successfully.', {
-            timeOut: 3000,
-          });
-          let currentUrl = this.router.url;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate([currentUrl]);
-          this.tabledata();
-        }
-        else{
-          if (data.error.errors[0].validatorKey) {
-            this.toastr.error('Error!!!', 'issueReturn Already Exists.', {
-              timeOut: 3000,
-            });
-          }
-        }
-        
-      },
-      (err) => console.log(err)
-    );
-  }
-   
   }
   getUser(id: object) {
-    this.registerDetails = {...id};
+    this.registerDetails = { ...id };
   }
   public deleteUsers(id: string): void {
     // console.log(id);
-    this.dataservice.IssueReturn_DeleteSingleUser(id,this.collection).subscribe((data: any) => {
-      this.tabledata();
-    }, err => console.log('its error')
-    );
+    this.dataservice
+      .IssueReturn_DeleteSingleUser(id, this.collection)
+      .subscribe(
+        (data: any) => {
+          this.tabledata();
+        },
+        (err) => console.log('its error')
+      );
   }
   public store(): void {
-    if ((this.registerDetails.IssueDate === undefined) || (this.registerDetails.IssueNo ==='') || (this.registerDetails.InstrumentCode ==='')|| (this.registerDetails.InstrumentName ==='')|| (this.registerDetails.MachineCode ==='')|| (this.registerDetails.Location ==='')|| (this.registerDetails.Quantity ==='')|| (this.registerDetails.ReturnDate ===undefined)|| (this.registerDetails.ReturnNo ==='')|| (this.registerDetails.InstrumentDetails ==='')) {
-      alert("Enter the Details");
-    }
-    else{
-    this.dataservice.IssueReturn_postUser(this.registerDetails).subscribe(
-      (data) => {
-        // alert("Added");
-        // console.log("Inserted"+data);
-        if (data.data) {
-          this.toastr.success('Created!!!', 'IssueReturn Created Successfully.', {
-            timeOut: 3000,
-          });
-          let currentUrl = this.router.url;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate([currentUrl]);
-          this.tabledata();
-        }
-        else{
-          if (data.error.errors[0].validatorKey) {
-            this.toastr.error('Error!!!', 'IssueReturn Already Exists.', {
-              timeOut: 3000,
-            });
+    if (
+      this.registerDetails.IssueDate === undefined ||
+      this.registerDetails.IssueNo === '' ||
+      this.registerDetails.InstrumentCode === '' ||
+      this.registerDetails.InstrumentName === '' ||
+      this.registerDetails.MachineCode === '' ||
+      this.registerDetails.Location === '' ||
+      this.registerDetails.Quantity === '' ||
+      this.registerDetails.ReturnDate === undefined ||
+      this.registerDetails.ReturnNo === '' ||
+      this.registerDetails.InstrumentDetails === ''
+    ) {
+      alert('Enter the Details');
+    } else {
+      this.dataservice.IssueReturn_postUser(this.registerDetails).subscribe(
+        (data) => {
+          // alert("Added");
+          // console.log("Inserted"+data);
+          if (data.data) {
+            this.toastr.success(
+              'Created!!!',
+              'IssueReturn Created Successfully.',
+              {
+                timeOut: 3000,
+              }
+            );
+            let currentUrl = this.router.url;
+            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+            this.router.onSameUrlNavigation = 'reload';
+            this.router.navigate([currentUrl]);
+            this.tabledata();
+          } else {
+            if (data.error.errors[0].validatorKey) {
+              this.toastr.error('Error!!!', 'IssueReturn Already Exists.', {
+                timeOut: 3000,
+              });
+            }
           }
-        }
-        
-       
-      },err => console.log('its error')
-    );
+        },
+        (err) => console.log('its error')
+      );
+    }
   }
-      
-}
-// public reloadpage(){
-//   window.location.reload('');
-// }
+  // public reloadpage(){
+  //   window.location.reload('');
+  // }
   public Click_Head(index: number, heading: string): void {
     this.collection = [...this.BackUpdata];
     if (heading == 'Type' || heading == 'Create On') {
@@ -279,9 +315,6 @@ export class ReturnListComponent implements OnInit {
     this.registerDetails.Quantity = '';
     this.registerDetails.ReturnDate = new Date();
     this.registerDetails.ReturnNo = '';
-    this.registerDetails.InstrumentDetails = ''
-    
-    
+    this.registerDetails.InstrumentDetails = '';
   }
-   
 }

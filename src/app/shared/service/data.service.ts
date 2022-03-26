@@ -822,9 +822,9 @@ export class DataService {
     return this.http.get<any>(`${environment.Useraccess}/view/${id}`);
   }
 
-  // useracess_get(id: any) {
-  //   return this.http.get<any>(`${environment.Useraccess}/view`);
-  // }
+  useracess_gets() {
+    return this.http.get<any>(`${environment.Useraccess}/view`);
+  }
 
   useracess_post(data: any) {
     return this.http.post<any>(`${environment.Useraccess}/insert`, data);

@@ -22,25 +22,38 @@ export class UseraccessComponent implements OnInit {
   show: boolean = false;
   tableData: any = [];
   accessgiven: any = [];
+  public user: any = [];
 
   constructor(public dataservice: DataService) {}
 
   ngOnInit(): void {
     this.accessgiven = [];
+    // this.load();
     this.dataservice.getViewOhem().subscribe((item: any) => {
       this.userDetails = item.data;
       item.data.map((data: any) => {
         if (data.branch) {
           this.units.push(data.branch);
         }
-        // if (data.dept) {
-        //   this.dep.push(data.dept);
-        // }
-        // if (data.firstName) {
-        //   this.emp.push(data);
-        // }
+        if (data.dept) {
+          this.dep.push(data.dept);
+        }
+        if (data.firstName) {
+          this.emp.push(data);
+        }
       });
+      console.log('dep', this.dep);
     });
+
+    this.dataservice.useracess_gets().subscribe((data: any) => {
+      console.log(data);
+      this.user = data.data;
+    });
+  }
+
+  getUser(data: any) {
+    console.log(data);
+    this.registerDetails = data;
   }
 
   unit(eve: any) {
@@ -50,6 +63,7 @@ export class UseraccessComponent implements OnInit {
         this.dep.push(data);
       }
     });
+    console.log(this.dep);
   }
 
   department(eve: any) {
@@ -67,6 +81,7 @@ export class UseraccessComponent implements OnInit {
     console.log('inside load');
     this.dataservice.iddescription_get().subscribe((data: any) => {
       this.tableData = data.data;
+      // console.log('table', this.tableData);
     });
   }
 
@@ -120,11 +135,17 @@ export class UseraccessComponent implements OnInit {
         moduleid: item.moduleId,
         ModuleidDescription: item.moduleDescription,
         employeeid: this.registerDetails.employee,
+        unit: this.registerDetails.unit,
+        department: this.registerDetails.department,
       });
     });
 
     this.registered.map((item: any) => {
       this.dataservice.useracess_post(item).subscribe((data: any) => {});
+    });
+
+    this.dataservice.useracess_gets().subscribe((data: any) => {
+      this.user = data.data;
     });
 
     console.log('register', this.registered);

@@ -105,7 +105,7 @@
           </div>
         </div>
         -->
-            <!-- <div style="margin: auto">
+<!-- <div style="margin: auto">
               <div class="row form-group">
                 <div class="col-4" style="margin-right: 15px">
                   <span>
@@ -143,64 +143,64 @@
       />
     </div>
   </div> -->
-  
-  <div class="pt-3 mb-3">
-    <table class="table table-borderless table-hover " >
-      <thead>
-        <tr class="header_color">
-          <td
-            scope="col"
-            *ngFor="let head of TableHeading; let i = index"
-            class="gene_name tablethtd"
-            [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
-            (click)="Click_Head(i, head.name)"
-            
+<input
+  matInput
+  name="search"
+  placeholder="SEARCH"
+  (input)="setFilteredItems($event)"
+  class="search"
+/>
 
-          >
-            {{ head.name }}
+<div class="pt-3 mb-3">
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="header_color">
+        <td
+          scope="col"
+          *ngFor="let head of TableHeading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm text-nowrap">
+      <tr *ngFor="let data of collection; let i = index">
+        <!-- <td class="gene_name tablethtd">{{ i + 1 }}</td> -->
+        <!-- <td class="gene_name tablethtd">{{ data.id }}</td> -->
+        <!-- <td class="gene_name tablethtd">{{ data.IssueDate }}</td> -->
+        <td class="gene_name tablethtd">{{ data.IssueNo }}</td>
+        <td class="gene_name tablethtd">{{ data.IssueDate }}</td>
 
-          </td>
-        </tr>
-      </thead>
-      <tbody class="table table-sm text-nowrap">
-        <tr *ngFor="let data of collection; let i = index">
-          <!-- <td class="gene_name tablethtd">{{ i + 1 }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.id }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.IssueDate }}</td> -->
-          <td class="gene_name tablethtd">{{ data.IssueNo }}</td>
-          <td class="gene_name tablethtd">{{ data.IssueDate }}</td>
+        <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
+        <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
+        <!-- <td class="gene_name tablethtd">{{ data.action }}</td> -->
 
-          <td class="gene_name tablethtd">{{ data.InstrumentCode }}</td>
-          <td class="gene_name tablethtd">{{ data.InstrumentName }}</td>
-          <!-- <td class="gene_name tablethtd">{{ data.action }}</td> -->
-       
-            <!-- <i class="fa fa-trash" aria-hidden="true" (click)="view(data.id)"></i> -->
+        <!-- <i class="fa fa-trash" aria-hidden="true" (click)="view(data.id)"></i> -->
 
-            
-      
-          <!-- <td class="gene_name tablethtd">{{ data.MachineCode }}</td>
+        <!-- <td class="gene_name tablethtd">{{ data.MachineCode }}</td>
           <td class="gene_name tablethtd">{{ data.Location }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.Quantity }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.ReturnDate }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.ReturnNo }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.InstrumentDetails }}</td> -->
-          <!-- <td class="gene_name tablethtd">{{ data.createdAt | date: 'dd-MMM-yyyy,  h:mm a' }}</td>
+        <!-- <td class="gene_name tablethtd">{{ data.Quantity }}</td> -->
+        <!-- <td class="gene_name tablethtd">{{ data.ReturnDate }}</td> -->
+        <!-- <td class="gene_name tablethtd">{{ data.ReturnNo }}</td> -->
+        <!-- <td class="gene_name tablethtd">{{ data.InstrumentDetails }}</td> -->
+        <!-- <td class="gene_name tablethtd">{{ data.createdAt | date: 'dd-MMM-yyyy,  h:mm a' }}</td>
           <td class="gene_name tablethtd">{{ data.createdBy }}{{user_name}} </td>
           <td class="gene_name tablethtd">{{ data.updatedAt | date: 'dd-MMM-yyyy,  h:mm a' }}</td>
           <td class="gene_name tablethtd">{{ data.UpdateBy }}{{user_name}}</td> -->
 
-          <button class="btn btn-dark my-1"  (click)="getUser1(data.id)">
-            View
-          </button>
-          <!-- <a [routerLink]="['/Return2']" [queryParams]="{ id:data.id}" >View</a> -->
-          <!-- <a class="btn btn-white-view" [routerLink]="[ '/Return2',data.id]">view</a> -->
-          <!-- <a [routerLink]="['/Return', data.id]">  <button mat-flat-button id="Return"  class="view-button" *ngIf="!registerDetails.id"  >
+        <button class="btn btn-dark my-1" (click)="getUser1(data.id)">
+          View
+        </button>
+        <!-- <a [routerLink]="['/Return2']" [queryParams]="{ id:data.id}" >View</a> -->
+        <!-- <a class="btn btn-white-view" [routerLink]="[ '/Return2',data.id]">view</a> -->
+        <!-- <a [routerLink]="['/Return', data.id]">  <button mat-flat-button id="Return"  class="view-button" *ngIf="!registerDetails.id"  >
             VIEW
           </button></a> -->
-        
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <!-- </div> -->
-  
