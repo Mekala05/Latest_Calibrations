@@ -20,6 +20,7 @@ export class MakemasterComponent implements OnInit {
   CalibrationNew = null;
   public registerDetails: MakeMaster = {};
   public user_name: any = [];
+  public editAccess: boolean = false;
   public TableHeading = [
     {
       name: 'SI No',
@@ -53,6 +54,23 @@ export class MakemasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    console.log(useraccess);
+
+    // this.dataservice.useraccess.subscribe((item: any) => {
+    //   console.log('item', item);
+    let datas = useraccess.filter((element: any) => element.moduleid === 4);
+    console.log(datas);
+    this.editAccess = datas[0].Edit;
+    console.log(!this.editAccess);
+
+    // useraccess.map((element: any) => {
+    //   if (element.moduleid === 4) {
+    //     if (element.Edit) {
+    //       this.editAccess = element.Edit;
+    //     }
+    //   }
+    // });
     this.tabledata();
     this.user_name = localStorage.getItem('Login_name');
   }

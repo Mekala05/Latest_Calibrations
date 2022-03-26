@@ -296,6 +296,7 @@
                 class="submit-button"
                 *ngIf="!registerDetails.id"
                 (click)="store()"
+                [disabled]="!editAccess"
               >
                 ADD
               </button>
@@ -305,6 +306,7 @@
                 class="submit-button"
                 *ngIf="registerDetails.id"
                 (click)="update()"
+                [disabled]="!editAccess"
               >
                 Update
               </button>

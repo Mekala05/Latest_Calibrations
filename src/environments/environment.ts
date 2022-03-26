@@ -41,6 +41,8 @@
 //   Moduledescription: 'http://10.0.0.11:3000/api/iddescription',
 //   Ohem: 'http://10.0.0.11:3000/api/ohem',
 //   RaiseDC: 'http://10.0.0.11:3000/api/RaiseDC',
+// header: 'http://10.0.0.11:3001/header',
+// attachment: 'http://10.0.0.11:3001/attachment',
 
 //   uploadurl: 'http://10.0.0.11:3001',
 // };
@@ -82,7 +84,8 @@ export const environment = {
   fileupload: 'http://localhost:3000/api/file',
   Useraccess: 'http://localhost:3000/api/useraccess',
   Moduledescription: 'http://localhost:3000/api/iddescription',
-  uploadurl: 'http://localhost:3001',
+  header: 'http://localhost:3001/header',
+  attachment: 'http://localhost:3001/attachment',
 };
 
 /*

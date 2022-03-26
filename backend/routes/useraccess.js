@@ -46,7 +46,7 @@ router.get('/view', (req, res) => {
 
 router.get('/view/:id', (req, res) => {
     return new Promise((resolve, reject) => {
-        useraccess.findAll({ where: { deleteStatus: false, id: req.params.id } }).then(function (result) {
+        useraccess.findAll({ where: { deleteStatus: false, employeeid: req.params.id } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
             sendError(res, err);

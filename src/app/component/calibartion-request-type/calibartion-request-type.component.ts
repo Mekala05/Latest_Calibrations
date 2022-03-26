@@ -20,6 +20,7 @@ export class CalibartionRequestTypeComponent implements OnInit {
   public registerDetails: Request_Cali = {};
   showButton: boolean = false;
   public user_name: any = [];
+  public editAccess: boolean = false;
 
   public TableHeading = [
     {
@@ -54,6 +55,9 @@ export class CalibartionRequestTypeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 8);
+    this.editAccess = datas[0].Edit;
     this.tabledata();
     this.user_name = localStorage.getItem('Login_name');
   }

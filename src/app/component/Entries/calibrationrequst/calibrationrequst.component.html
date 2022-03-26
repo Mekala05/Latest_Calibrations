@@ -311,6 +311,7 @@
                 class="submit-button"
                 *ngIf="!registerDetails.id"
                 (click)="store()"
+                [disabled]="!editAccess"
               >
                 ADD
               </button>
@@ -320,6 +321,7 @@
                 class="submit-button"
                 *ngIf="registerDetails.id"
                 (click)="update()"
+                [disabled]="!editAccess"
               >
                 Update
               </button>
@@ -415,11 +417,13 @@
           ></i>
         </td>
         <td class="gene_name tablethtd dicons">
-          <i
-            class="fa fa-trash"
-            aria-hidden="true"
-            (click)="deleteUsers(data.id)"
-          ></i>
+          <button [disabled]="!editAccess">
+            <i
+              class="fa fa-trash"
+              aria-hidden="true"
+              (click)="deleteUsers(data.id)"
+            ></i>
+          </button>
         </td>
       </tr>
     </tbody>

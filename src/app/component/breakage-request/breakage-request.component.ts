@@ -27,6 +27,7 @@ export class BreakageRequestComponent implements OnInit {
   public InstrumentNameof: any = [];
   public InstrumentCodeof: any = [];
   public MachineCode: any = [];
+  editAccess: boolean = false;
 
   public TableHeading = [
     {
@@ -88,6 +89,9 @@ export class BreakageRequestComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 11);
+    this.editAccess = datas[0].Edit;
     this.tabledata();
     this.getEmployee();
     this.getLocation();

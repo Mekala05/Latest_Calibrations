@@ -322,11 +322,21 @@
         *ngIf="remove"
       >
         <div class="row form-group align-items-center">
-          <button mat-raised-button class="mx-2 approve1" (click)="accept()">
+          <button
+            mat-raised-button
+            class="mx-2 approve1"
+            (click)="accept()"
+            [disabled]="!editAccess"
+          >
             Accept
           </button>
 
-          <button mat-raised-button class="mx-2 con" (click)="conaccept()">
+          <button
+            mat-raised-button
+            class="mx-2 con"
+            (click)="conaccept()"
+            [disabled]="!editAccess"
+          >
             Con Accept
           </button>
         </div>
@@ -353,6 +363,7 @@
                   class="submit-button"
                   *ngIf="!registerDetails.id"
                   (click)="store()"
+                  [disabled]="!editAccess"
                 >
                   ADD
                 </button>
@@ -362,6 +373,7 @@
                   class="submit-button"
                   *ngIf="registerDetails.id"
                   (click)="update()"
+                  [disabled]="!editAccess"
                 >
                   Update
                 </button>

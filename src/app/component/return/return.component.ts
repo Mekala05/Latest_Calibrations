@@ -25,6 +25,7 @@ export class ReturnComponent implements OnInit {
   public sub: any;
   public userId: any;
   public timeout: any = null;
+  public editAccess: boolean = false;
   public TableHeading = [
     // {
     //   name: 'SI No',
@@ -119,6 +120,9 @@ export class ReturnComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 15);
+    this.editAccess = datas[0].Edit;
     this.tabledata();
     this.registerDetails.ReturnDate = new Date();
     this.registerDetails.ReturnDate = new Date();

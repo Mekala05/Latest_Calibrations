@@ -29,6 +29,7 @@ export class IssuereturnComponent implements OnInit {
   public selectedItems = [];
   public timeout: any = null;
   public code: any[] = [];
+  public editAccess: boolean = false;
   public TableHeading = [
     // {
     //   name: 'SI No',
@@ -92,6 +93,9 @@ export class IssuereturnComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 14);
+    this.editAccess = datas[0].Edit;
     // this.collection = [];
     // document.getElementById('tabledata')
     //this.tabledata();

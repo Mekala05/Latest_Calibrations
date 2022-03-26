@@ -1,9 +1,6 @@
 <div>
-  <div class="pt-3">
-    
-  </div>
+  <div class="pt-3"></div>
 
-  
   <div class="new_bor pt-1 pb-3">
     <div class="row px-4 pt-3 align-items-center">
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -20,16 +17,10 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-     
-      </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-     
-      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
 
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-        
-      </div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
       <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
         <div class="row">
           <div class="col-4" style="margin-right: 15px">
@@ -43,7 +34,7 @@
               </button>
             </span>
           </div>
-          <div class="col-3" >
+          <div class="col-3">
             <span>
               <button
                 mat-flat-button
@@ -51,6 +42,7 @@
                 class="submit-button"
                 *ngIf="!registerDetails.id"
                 (click)="store()"
+                [disabled]="!editAccess"
               >
                 ADD
               </button>
@@ -60,16 +52,14 @@
                 class="submit-button"
                 *ngIf="registerDetails.id"
                 (click)="update()"
+                [disabled]="!editAccess"
               >
                 Update
               </button>
             </span>
           </div>
         </div>
-       
       </div>
-
-     
     </div>
   </div>
 </div>
@@ -109,7 +99,7 @@
     <tbody class="table table-sm">
       <tr
         *ngFor="
-          let data of collection | searchfilter: searchvalue:['category',];
+          let data of collection | searchfilter: searchvalue:['category'];
           let i = index
         "
       >
@@ -118,11 +108,11 @@
         <td class="gene_name tablethtd">
           {{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}
         </td>
-        <td class="gene_name tablethtd">{{ data.createdBy }}{{user_name}} </td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
         <td class="gene_name tablethtd">
           {{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}
         </td>
-        <td class="gene_name tablethtd">{{ data.updatedBy }}{{user_name}}</td>
+        <td class="gene_name tablethtd">{{ data.updatedBy }}{{ user_name }}</td>
         <td class="gene_name tablethtd icons">
           <i
             class="fa fa-pencil-square-o"
@@ -131,11 +121,13 @@
           ></i>
         </td>
         <td class="gene_name tablethtd dicons">
-          <i
-            class="fa fa-trash"
-            aria-hidden="true"
-            (click)="deleteUsers(data.id)"
-          ></i>
+          <button [disabled]="!editAccess">
+            <i
+              class="fa fa-trash"
+              aria-hidden="true"
+              (click)="deleteUsers(data.id)"
+            ></i>
+          </button>
         </td>
       </tr>
     </tbody>

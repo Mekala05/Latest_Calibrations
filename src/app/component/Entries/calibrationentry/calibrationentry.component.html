@@ -563,15 +563,31 @@
 </table> -->
   <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 button-section">
     <div class="row form-group align-items-center">
-      <button mat-raised-button class="mx-2 approve1" (click)="openDialog()">
+      <button
+        mat-raised-button
+        class="mx-2 approve1"
+        (click)="openDialog()"
+        [disabled]="!editAccess"
+      >
         Accept
       </button>
 
-      <button mat-raised-button color="warn" class="mx-2" (click)="Dialogbox()">
+      <button
+        mat-raised-button
+        color="warn"
+        class="mx-2"
+        (click)="Dialogbox()"
+        [disabled]="!editAccess"
+      >
         Reject
       </button>
 
-      <button mat-raised-button class="mx-2 con" (click)="conrejection()">
+      <button
+        mat-raised-button
+        class="mx-2 con"
+        (click)="conrejection()"
+        [disabled]="!editAccess"
+      >
         Con Accept
       </button>
     </div>
