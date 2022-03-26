@@ -14,11 +14,11 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 // app.use(multer({dest:'./image'}).single('image'));
 
-const aa = multer({dest:'./image'});
+const aa = multer({ dest: './image' });
 
-app.post("/bbb",aa.single('image'),function(req,res){
-  console.log(req.file);
-})  
+// app.post("/bbb",aa.single('image'),function(req,res){
+//   console.log(req.file);
+// })  
 
 
 

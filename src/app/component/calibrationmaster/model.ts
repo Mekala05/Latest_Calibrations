@@ -13,7 +13,8 @@ export interface master {
   MxLifeTime?: string;
   MxLifeTimeNumber?: string;
   Location?: string;
-  file?: File;
+  file?: string[];
+  filepath?: string[];
   active?: boolean;
   amccheckbox?: boolean;
   Description?: string;
@@ -26,6 +27,7 @@ export interface master {
   Department?: string;
   dueDate?: Date;
   headerImage?: string;
+  headerImagepath?: string;
 }
 
 export interface Image {

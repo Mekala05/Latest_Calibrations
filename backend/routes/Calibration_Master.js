@@ -1,36 +1,64 @@
 const express = require('express');
 const router = express.Router()
-const multer = require('multer')
-const path = require("path")
+// const multer = require('multer')
+// const path = require("path")
 const app = express()
-const https = require('https');
-const fs = require("fs")
-const bodyParser = require("body-parser");
+// const https = require('https');
+// const fs = require("fs")
+// const bodyParser = require("body-parser");
 const { Op } = require("sequelize");
-const multipart = require('connect-multiparty');
-const multipartMiddleware = multipart({ uploadDir: './uploads' });
+// const multipart = require('connect-multiparty');
+// const multipartMiddleware = multipart({ uploadDir: './uploads' });
 // router.use(multer({dest:'image/'}).single('image'));
-router.use(multer({ dest: './image' }).single('image'));
+// router.use(multer({ dest: './image' }).single('image'));
+// const fileStream = Readable.from(file.buffer)
+// const fileSize = Buffer.byteLength(file.buffer)
+
+// const express = require('express')
+// const cors = require('cors')
+
+// const app = express()
+// const port = 3001
+// const bodyParser = require("body-parser");
+// const multipart = require('connect-multiparty');
+// const multipartMiddleware = multipart({
+//     uploadDir: './uploads'
+// });
+
+// console.log("multipart", multipertMiddleware);
+
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
+// app.use(cors());
+
+// app.get('/', (req, res) => {
+//     res.json({
+//         'message': 'hello'
+//     });
+// });
+
 
 
 const { MakeMaster, CategoryMaster, TypeMaster, CalibrationMaster_1, oitm, CalibrationLocationMaster, InstrumentMaster } = require('../models');
 // const oitm = require('../models/oitm');
 
 
-var storage = multer.diskStorage({
-    destination: 'image/',
-    filename: function (req, file, callback) {
-        callback(null, file.originalname);
-    }
-});
-var upload = multer({ storage: storage });
+// var storage = multer.diskStorage({
+//     destination: 'image/',
+//     filename: function (req, file, callback) {
+//         callback(null, file.originalname);
+//     }
+// });
+// var upload = multer({ storage: storage });
 
-console.log("upload", upload);
+// console.log("upload", upload);
 
-router.post('/single', upload.single('image'), function (req, res, next) {
-    console.log("00000000", req.file);
-    res.send("created");
-})
+// router.post('/single', upload.single('image'), function (req, res, next) {
+//     console.log("00000000", req.file);
+//     res.send("created");
+// })
 
 
 
@@ -342,11 +370,11 @@ router.get('/saprefcodeitems/:data', (req, res) => {
 //     res.end();
 //   });
 
-app.post('/api/upload', multipartMiddleware, (req, res) => {
-    res.json({
-        'message': 'File uploaded successfully'
-    });
-});
+// app.post('/api/upload', multipartMiddleware, (req, res) => {
+//     res.json({
+//         'message': 'File uploaded successfully'
+//     });
+// });
 
 
 

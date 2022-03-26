@@ -131,10 +131,67 @@
     </table>
     <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 button-section">
       <div class="row form-group align-items-center">
-        <button mat-raised-button color="warn" (click)="allow()">
-          Allow Access
-        </button>
+        <button mat-raised-button color="warn" (click)="allow()">Allow</button>
       </div>
     </div>
   </div>
 </mat-card>
+
+<div class="pt-3 mb-3">
+  <table class="table table-hover">
+    <thead>
+      <tr class="header_color">
+        <!-- <td
+          scope="col"
+          *ngFor="let head of TableHeading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+          (click)="Click_Head(i, head.name)"
+        >
+          {{ head.name }}
+        </td> -->
+        <td>SI.No</td>
+        <td>Employee Id</td>
+        <td>Module ID</td>
+        <td>Module description</td>
+        <td>CreatedAt</td>
+        <!-- <td>CreatedBy</td> -->
+        <td>UpdatedAt</td>
+        <td>Edit</td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm">
+      <tr *ngFor="let data of user; let i = index">
+        <td class="gene_name tablethtd">{{ i + 1 }}</td>
+        <td class="gene_name tablethtd">{{ data.employeeid }}</td>
+        <td class="gene_name tablethtd">{{ data.moduleid }}</td>
+        <td class="gene_name tablethtd">{{ data.ModuleidDescription }}</td>
+
+        <td class="gene_name tablethtd">
+          {{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <!-- <td class="gene_name tablethtd">{{ data.createdBy }}</td> -->
+        <td class="gene_name tablethtd">
+          {{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <!-- <td class="gene_name tablethtd">{{ data.updatedBy }}</td> -->
+        <td class="gene_name tablethtd icons">
+          <i
+            class="fa fa-pencil-square-o"
+            aria-hidden="true"
+            (click)="getUser(data)"
+          ></i>
+        </td>
+        <!-- <td class="gene_name tablethtd dicons">
+          <button>
+            <i
+              class="fa fa-trash"
+              aria-hidden="true"
+              (click)="deleteUsers(data.id)"
+            ></i>
+          </button>
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>

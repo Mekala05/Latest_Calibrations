@@ -47,6 +47,7 @@ export class CalibrationrequstComponent implements OnInit {
   // public InstrumentCode: any;
   public instrucodetionselect: any;
   public buttonShow: boolean = false;
+  public editAccess: boolean = false;
 
   public TableHeading = [
     {
@@ -122,6 +123,9 @@ export class CalibrationrequstComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 9);
+    this.editAccess = datas[0].Edit;
     this.buttonShow = true;
     this.tabledata();
     this.registerDetails.date = new Date();

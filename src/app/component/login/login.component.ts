@@ -64,6 +64,12 @@ export class LoginComponent implements OnInit {
           this.toastr.success('Successfully logined', 'Success', {
             timeOut: 3000,
           });
+
+          this.dataservice.useracess_get(data.user.id).subscribe((data) => {
+            console.log(data.data);
+            localStorage.setItem('userAccess', JSON.stringify(data.data));
+            // this.dataservice.setUser(data);
+          });
           this.router.navigate(['/header']);
         }
       },

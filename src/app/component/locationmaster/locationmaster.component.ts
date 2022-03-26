@@ -23,6 +23,7 @@ export class LocationmasterComponent implements OnInit {
   public Branchunit: any = [];
   public Department: any = [];
   public SearchField: string = 'Department';
+  editAccess: boolean = false;
   public TableHeading = [
     {
       name: 'SI No',
@@ -66,6 +67,9 @@ export class LocationmasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 5);
+    this.editAccess = datas[0].Edit;
     this.tabledata();
     this.getCategory();
     this.getType();

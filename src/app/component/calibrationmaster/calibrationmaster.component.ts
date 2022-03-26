@@ -55,7 +55,6 @@ export class CalibrationmasterComponent implements OnInit {
   attachmentdelete: any[] = [];
   images: any;
   event: any[] = [];
-  closeResult = '';
   element: any[] = [];
   mydata: any[] = [];
   test = false;
@@ -104,10 +103,14 @@ export class CalibrationmasterComponent implements OnInit {
   public isShown: boolean = true;
   public instrucodetionselect: any;
   public maximumTime: any;
-  imageSrc: string = '';
+  imageSrc: any[] = [];
   headerImage: any;
   myFiles: any[] = [];
   sMsg: string = '';
+  title = 'appBootstrap';
+  editAccess: boolean = false;
+
+  closeResult: string = '';
 
   public Heading = [
     {
@@ -235,7 +238,7 @@ export class CalibrationmasterComponent implements OnInit {
 
               console.log(instrument[0].headerImage);
 
-              this.imageSrc = instrument[0].headerImage;
+              // this.imageSrc = instrument[0].headerImage;
             },
             () => console.log('its error')
           );
@@ -246,6 +249,9 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 6);
+    this.editAccess = datas[0].Edit;
     this.getCategory();
     this.getType();
     this.getMake();
@@ -502,42 +508,71 @@ export class CalibrationmasterComponent implements OnInit {
 
   fileChange(element: any) {
     this.uploadedFiles = element.target.files;
-  }
 
-  public selectimage() {
-    console.log('inside image');
+    const reader = new FileReader();
+    if (this.uploadedFiles && this.uploadedFiles.length) {
+      // console.log(element.target.files[0]);
 
-    //   console.log(event.target.files);
-    //   this.images = event.target.files;
-    //   debugger;
-    //   this.dataservice.fileupload_Master(this.images).subscribe((data) => {
-    //     console.log('suc', data);
-    //   });
-    //   // debugger;
-    // if (event.target.files.length > 0) {
-    //   const files = event.target.files[0];
-    //   this.images = files;
-    // }
+      if (this.uploadedFiles && this.uploadedFiles[0]) {
+        const numberOfFiles = this.uploadedFiles.length;
 
-    let formData = new FormData();
-    console.log(this.uploadedFiles.length);
+        for (let i = 0; i < numberOfFiles; i++) {
+          let reader = new FileReader();
 
-    for (var i = 0; i < this.uploadedFiles.length; i++) {
-      formData.append(
-        'uploads[]',
-        this.uploadedFiles[i],
-        this.uploadedFiles[i].name
-      );
+          reader.onload = (e: any) => {
+            // console.log(e.target.result);
+            this.imageSrc = e.target.result;
+            console.log(this.imageSrc);
+          };
+          reader.readAsDataURL(this.uploadedFiles[i]);
+        }
+        // reader.onload = (e: any) => {
+        //   // console.log(e.target.result);
+        //   this.imageSrc = e.target.result;
+        //   console.log('img', this.imageSrc);
+        // };
+      }
     }
-    this.dataservice.fileupload_Master(formData).subscribe((data: any) => {
-      console.log(data);
-      this.registerDetails.headerImage = data.message;
-    });
   }
 
-  fileChanges(element: any) {
-    this.uploadedFiles = element.target.files;
+  public selectimage(eve: any) {
+    this.images = eve.target.files;
   }
+
+  // public selectimage() {
+  //   console.log('inside image');
+
+  //   console.log(event.target.files);
+  //   this.images = event.target.files;
+  //   debugger;
+  //   this.dataservice.fileupload_Master(this.images).subscribe((data) => {
+  //     console.log('suc', data);
+  //   });
+  //   // debugger;
+  // if (event.target.files.length > 0) {
+  //   const files = event.target.files[0];
+  //   this.images = files;
+  // }
+
+  // let formData = new FormData();
+  // console.log(this.uploadedFiles.length);
+
+  // for (var i = 0; i < this.uploadedFiles.length; i++) {
+  //   formData.append(
+  //     'uploads[]',
+  //     this.uploadedFiles[i],
+  //     this.uploadedFiles[i].name
+  //   );
+  // }
+  // this.dataservice.fileupload_Master(formData).subscribe((data: any) => {
+  //   console.log(data);
+  //   this.registerDetails.headerImage = data.message;
+  // });
+  // }
+
+  // fileChanges(element: any) {
+  //   this.uploadedFiles = element.target.files;
+  // }
 
   public store(): void {
     // this.date = this.datePipe.transform(this.registerDetails.date, 'yyyy-MM-dd,h:mm a');
@@ -861,7 +896,56 @@ export class CalibrationmasterComponent implements OnInit {
     }
     this.registerDetails.file = this.images;
 
-    console.log('vvvv      ', this.images);
+    // console.log('vvvv      ', this.images);
+    let formData = new FormData();
+    console.log(this.images.length);
+
+    for (var i = 0; i < this.images.length; i++) {
+      formData.append('images[]', this.images[i], this.images[i].name);
+    }
+    console.log('formdata', formData);
+    // console.log();
+
+    this.dataservice.fileupload_Master(formData).subscribe((data: any) => {
+      console.log('single', data.message);
+      this.registerDetails.headerImage =
+        data.message.images[0].originalFilename;
+      this.registerDetails.headerImagepath = data.message.images[0].path;
+    });
+
+    let formDatas = new FormData();
+    console.log(this.uploadedFiles.length);
+
+    for (var i = 0; i < this.uploadedFiles.length; i++) {
+      formDatas.append(
+        'uploads[]',
+        this.uploadedFiles[i],
+        this.uploadedFiles[i].name
+      );
+    }
+    console.log('formdatas', formDatas);
+
+    this.dataservice
+      .fileuploadmulti_Master(formDatas)
+      .subscribe((data: any) => {
+        let imagedata: any[] = [],
+          imagepath: any[] = [],
+          imagename,
+          path;
+
+        console.log('multi', data.message);
+        data.message.uploads.map((item: any) => {
+          imagedata.push(item.originalFilename);
+          imagepath.push(item.path);
+        });
+        // console.log('imagedata', JSON.stringify(imagedata));
+        this.registerDetails.file = imagedata;
+        // console.log('imagepath', JSON.stringify(imagepath));
+        this.registerDetails.filepath = imagepath;
+
+        // this.registerDetails.file = imagedata  .toString()
+        // this.registerDetails.headerImage = data.message;
+      });
 
     // this.dataservice.fileupload(this.registerDetails).subscribe((data) => {
     //   console.log(data);
@@ -894,10 +978,11 @@ export class CalibrationmasterComponent implements OnInit {
     //     this.uploadedFiles[i].name
     //   );
     // }
+    console.log('registerDetails', this.registerDetails);
 
-    // this.dataservice
-    //   .MasterImage_postUser(formData)
-    //   .subscribe((data: any) => {});
+    this.dataservice
+      .MasterImage_postUser(formData)
+      .subscribe((data: any) => {});
 
     this.dataservice.MasterTest_postUser(this.registerDetails).subscribe(
       (data) => {
@@ -1634,20 +1719,20 @@ export class CalibrationmasterComponent implements OnInit {
   //     this.uploadedFiles = element.target.files;
   // }
 
-  upload() {
-    let formData = new FormData();
-    // FormData.append('file',this.images);
-    for (var i = 0; i < this.uploadedFiles.length; i++) {
-      formData.append(
-        'uploads[]',
-        this.uploadedFiles[i],
-        this.uploadedFiles[i].name
-      );
-    }
-    this.http.post('/api/upload', formData).subscribe((response) => {
-      console.log('response received is ', response);
-    });
-  }
+  // upload() {
+  //   let formData = new FormData();
+  //   // FormData.append('file',this.images);
+  //   for (var i = 0; i < this.uploadedFiles.length; i++) {
+  //     formData.append(
+  //       'uploads[]',
+  //       this.uploadedFiles[i],
+  //       this.uploadedFiles[i].name
+  //     );
+  //   }
+  //   this.http.post('/api/upload', formData).subscribe((response) => {
+  //     console.log('response received is ', response);
+  //   });
+  // }
 
   // onsubmit(){
   //   const formData = new FormData();
@@ -1659,6 +1744,29 @@ export class CalibrationmasterComponent implements OnInit {
   //   (err) => console.log(res),
 
   // }
+
+  open(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
   onSelectFile(event: any) {
     const files = event.target.files;
@@ -1711,30 +1819,30 @@ export class CalibrationmasterComponent implements OnInit {
     this.fileUploadChangeEmitter.emit('');
   }
 
-  public viewImage(content: any): void {
+  public viewImage(): void {
     console.log('inside view image');
 
-    console.log('image', this.imagePreviewUrl);
-    if (this.imagePreviewUrl) {
-      // this.dataservice.setImageViewPopupTrigger(this.imagePreviewUrl);
-      this.modalService.open('view-image-modal');
-      return;
-    }
+    console.log('image', this.uploadedFiles);
+    // if (this.uploadedFiles) {
+    // this.dataservice.setImageViewPopupTrigger(this.imagePreviewUrl);
+    //   this.modalService.open('content');
+    //   return;
+    // }
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreviewUrl = reader.result as string;
       // this.dataservice.setImageViewPopupTrigger(this.imagePreviewUrl);
       // this.modalService.open('view-image-modal');
-      this.modalService
-        .open(content, { ariaLabelledBy: 'modal-basic-title' })
-        .result.then(
-          (result: any) => {
-            this.closeResult = `Closed with: ${result}`;
-          },
-          (reason: any) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-          }
-        );
+      // this.modalService
+      //   .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      //   .result.then(
+      //     (result: any) => {
+      //       this.closeResult = `Closed with: ${result}`;
+      //     },
+      //     (reason: any) => {
+      //       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      //     }
+      //   );
     };
     // console.log('file', this.file);
 
@@ -1749,15 +1857,15 @@ export class CalibrationmasterComponent implements OnInit {
     console.log(event);
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === 'Cross click') {
-      return 'Cross Click';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  // private getDismissReason(reason: any): string {
+  //   if (reason === ModalDismissReasons.ESC) {
+  //     return 'by pressing ESC';
+  //   } else if (reason === 'Cross click') {
+  //     return 'Cross Click';
+  //   } else {
+  //     return `with: ${reason}`;
+  //   }
+  // }
 
   // onFileChange(event: any) {
   //   const reader = new FileReader();

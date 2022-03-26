@@ -1,104 +1,112 @@
 const CalibrationLocationMaster = require("./CalibrationLocationMaster")
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     let CalibrationMaster1 = sequelize.define('CalibrationMaster_1', {
 
-       id: {
+        id: {
             type: DataTypes.INTEGER(11).UNSIGNED,
             field: 'id',
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        category:{
+        category: {
             type: DataTypes.STRING(250),
             field: 'category'
         },
-        type:{
+        type: {
             type: DataTypes.STRING(250),
             field: 'type'
         },
-        MasterType:{
+        MasterType: {
             type: DataTypes.STRING(250),
             field: 'MasterType'
         },
-        InstrumentCode:{
+        InstrumentCode: {
             type: DataTypes.STRING(250),
             field: 'InstrumentRefferenceCode'
         },
-        InstrumentName:{
+        InstrumentName: {
             type: DataTypes.STRING(250),
             field: 'InstrumentName',
             // unique : true
         },
-        make:{
+        make: {
             type: DataTypes.STRING(250),
             field: 'make'
         },
-        range:{
+        range: {
             type: DataTypes.STRING(250),
             field: 'range'
         },
-        masterspecification:{
+        masterspecification: {
             type: DataTypes.STRING(250),
             field: 'masterspecification',
             // unique : true
-            
+
         },
-        SAPRefferenceCode:{
+        SAPRefferenceCode: {
             type: DataTypes.STRING(250),
             field: 'SAPRefferenceCode'
         },
 
-        Location:{
+        Location: {
             type: DataTypes.STRING(250),
             field: 'Location'
         },
 
-        CurrentLocation:{
+        CurrentLocation: {
             type: DataTypes.STRING(250),
             field: 'CurrentLocation'
         },
 
-        Department:{
+        Department: {
             type: DataTypes.STRING(250),
             field: 'Department '
         },
 
-        date:{
+        date: {
             type: DataTypes.DATE,
             field: 'date'
         },
-        MxLifeTime:{
+        MxLifeTime: {
             type: DataTypes.STRING(250),
             field: 'MxLifeTime'
         },
-        MxLifeTimeNumber:{
+        MxLifeTimeNumber: {
             type: DataTypes.STRING(250),
             field: 'MxLifeTimeNumber'
         },
-        file:{
+        file: {
             type: DataTypes.STRING(250),
             field: 'file'
+        },
+        filepath: {
+            type: DataTypes.STRING(250),
+            field: 'filepath'
         },
         headerImage: {
             type: DataTypes.STRING(250),
             field: 'headerImage'
         },
-        active:{
+        headerImagepath: {
+            type: DataTypes.STRING(250),
+            field: 'headerImagepath'
+        },
+        active: {
             type: DataTypes.BOOLEAN,
             field: 'active'
         },
-        amccheckbox:{
+        amccheckbox: {
             type: DataTypes.BOOLEAN,
             field: 'amccheckbox'
         },
 
-         
-        dueDate:{
+
+        dueDate: {
             type: DataTypes.DATE,
             field: 'dueDate'
-        }, 
+        },
 
         Description: {
             type: DataTypes.STRING(250),
@@ -111,21 +119,21 @@ module.exports = function(sequelize, DataTypes) {
             // unique : true
         },
 
-        InstrumentRefferenceCode:{
+        InstrumentRefferenceCode: {
             type: DataTypes.STRING(250),
             field: 'InstrumentRefferenceCode'
         },
-        Observation:{
+        Observation: {
             type: DataTypes.STRING(250),
             field: 'Observation',
             // unique : true
         },
-        Remark:{
+        Remark: {
             type: DataTypes.STRING(250),
             field: 'Remark',
             // unique : true
         },
-        fileErrorDiscription:{
+        fileErrorDiscription: {
             type: DataTypes.STRING(250),
             field: 'fileErrorDiscription'
         },
@@ -150,9 +158,9 @@ module.exports = function(sequelize, DataTypes) {
         },
     },
         {
-            timestamps:true,
-            tableName:'Calibration_Master'
+            timestamps: true,
+            tableName: 'Calibration_Master'
         })
-        // CalibrationLocationMaster.belongsTo(cali, {foreignKey: 'user_id'})
-        return CalibrationMaster1
-    }
+    // CalibrationLocationMaster.belongsTo(cali, {foreignKey: 'user_id'})
+    return CalibrationMaster1
+}

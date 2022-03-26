@@ -1,7 +1,33 @@
+$font-family: "Montserrat", sans-serif;
+
 .button-section {
   padding-left: 85%;
 }
 
 .text-center {
   text-align: center;
+}
+
+table {
+  width: 100%;
+  border: 1px solid #707070;
+  font-family: $font-family;
+}
+tr {
+  border: 1px solid #cfcfcf;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.table tr.active td {
+  background-color: #dfdfdf !important;
+  color: white;
+}
+
+.tablethtd {
+  padding-left: 1.01rem;
+}
+.header_color {
+  background-color: #f7f7f7;
+  font-weight: 400 !important;
 }

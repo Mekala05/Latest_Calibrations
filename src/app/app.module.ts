@@ -76,6 +76,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 // import { NgxFileDropModule } from 'ngx-file-drop';
 import { DataTablesModule } from 'angular-datatables';
 import { UseraccessComponent } from './useraccess/useraccess.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { BreakageModule } from './breakage-list-details/breakage-list-details.module';
 
 @NgModule({
@@ -123,6 +124,7 @@ import { UseraccessComponent } from './useraccess/useraccess.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    NgbModule,
     MaterialModule,
     LoaderModule,
     ReactiveFormsModule,

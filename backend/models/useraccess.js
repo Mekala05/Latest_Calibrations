@@ -20,6 +20,14 @@ module.exports = function (sequelize, DataTypes) {
             field: 'ModuleidDescription',
 
         },
+        unit: {
+            type: DataTypes.STRING(250),
+            field: 'unit',
+        },
+        department: {
+            type: DataTypes.STRING(250),
+            field: 'department',
+        },
 
         employeeid: {
             type: DataTypes.STRING(250),

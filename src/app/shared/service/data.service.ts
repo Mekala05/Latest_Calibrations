@@ -28,6 +28,8 @@ export class DataService {
   scrap = this.scrapDetails$.asObservable();
   url$ = new BehaviorSubject<any>(null);
   url = this.url$.asObservable();
+  // userAccess$ = new BehaviorSubject<any>(null);
+  // useraccess = this.userAccess$.asObservable();
 
   constructor(private http: HttpClient) {
     // this.setImageViewPopup = new BehaviorSubject('');
@@ -64,6 +66,9 @@ export class DataService {
     this.url$.next(data);
   }
 
+  // setUser(data: any[]) {
+  //   this.userAccess$.next(data);
+  // }
   // Categroy Master Api
   getView() {
     return this.http.get<any>(`${environment.url}/view`);
@@ -813,7 +818,11 @@ export class DataService {
 
   //useraccess
 
-  useracess_get() {
+  useracess_get(id: any) {
+    return this.http.get<any>(`${environment.Useraccess}/view/${id}`);
+  }
+
+  useracess_gets() {
     return this.http.get<any>(`${environment.Useraccess}/view`);
   }
 
@@ -836,7 +845,12 @@ export class DataService {
   }
 
   fileupload_Master(data: any) {
-    debugger;
-    return this.http.post<any>(`${environment.uploadurl}/upload`, data);
+    // debugger;
+    return this.http.post<any>(`${environment.header}/upload`, data);
+  }
+
+  fileuploadmulti_Master(data: any) {
+    // debugger;
+    return this.http.post<any>(`${environment.attachment}/upload`, data);
   }
 }

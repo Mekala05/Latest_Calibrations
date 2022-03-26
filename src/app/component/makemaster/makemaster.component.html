@@ -16,39 +16,58 @@
             <mat-label class="gene_name newname"> Description</mat-label>
           </div>
           <div class="col-8">
-            <textarea type="text" class="form-control input_text" [(ngModel)]="registerDetails.description"></textarea>
+            <textarea
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.description"
+            ></textarea>
           </div>
         </div>
       </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-      </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-      </div>
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
       <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group">
-          <div class="col-4" >
+          <div class="col-4">
             <span>
-              <button mat-stroked-button class="submit-button" (click)="reset()">CLEAR</button>
+              <button
+                mat-stroked-button
+                class="submit-button"
+                (click)="reset()"
+              >
+                CLEAR
+              </button>
             </span>
           </div>
-          <div class="col-4" >
+          <div class="col-4">
             <span>
-              <button mat-flat-button id="color_sv" class="submit-button" *ngIf="!registerDetails.id" (click)="store()">
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="!registerDetails.id"
+                (click)="store()"
+                [disabled]="!editAccess"
+              >
                 ADD
               </button>
-              <button mat-flat-button id="color_sv" class="submit-button" *ngIf="registerDetails.id"
-                (click)="update()">Update
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="registerDetails.id"
+                (click)="update()"
+                [disabled]="!editAccess"
+              >
+                Update
               </button>
             </span>
           </div>
         </div>
       </div>
 
-      <div style="margin: auto">
-      
-      </div>
+      <div style="margin: auto"></div>
     </div>
   </div>
 </div>
@@ -84,18 +103,37 @@
       </tr>
     </thead>
     <tbody class="table table-sm">
-      <tr *ngFor="let data of collection  | searchfilter: searchvalue:['description',]; let i = index">
+      <tr
+        *ngFor="
+          let data of collection | searchfilter: searchvalue:['description'];
+          let i = index
+        "
+      >
         <td class="gene_name tablethtd">{{ i + 1 }}</td>
         <td class="gene_name tablethtd">{{ data.description }}</td>
-        <td class="gene_name tablethtd">{{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}</td>
-        <td class="gene_name tablethtd">{{ data.createdBy }}{{user_name}} </td>
-        <td class="gene_name tablethtd">{{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}</td>
-        <td class="gene_name tablethtd">{{ data.updatedBy }}{{user_name}}</td>
+        <td class="gene_name tablethtd">
+          {{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.updatedBy }}{{ user_name }}</td>
         <td class="gene_name tablethtd icons">
-          <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="getUser(data)" ></i>
+          <i
+            class="fa fa-pencil-square-o"
+            aria-hidden="true"
+            (click)="getUser(data)"
+          ></i>
         </td>
         <td class="gene_name tablethtd dicons">
-          <i class="fa fa-trash" aria-hidden="true" (click)="deleteUsers(data.id)"></i>
+          <button [disabled]="!editAccess">
+            <i
+              class="fa fa-trash"
+              aria-hidden="true"
+              (click)="deleteUsers(data.id)"
+            ></i>
+          </button>
         </td>
       </tr>
     </tbody>

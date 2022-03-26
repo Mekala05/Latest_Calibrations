@@ -40,6 +40,7 @@ export class BreagedetailsComponent implements OnInit {
   public Requesttype: any = [];
   public url: string = '';
   public show: boolean = false;
+  public editAccess: boolean = false;
 
   constructor(
     private dataservice: DataService,
@@ -73,6 +74,9 @@ export class BreagedetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 12);
+    this.editAccess = datas[0].Edit;
     this.dataservice.url$.subscribe((data: any) => {
       this.url = data;
       console.log(this.url);

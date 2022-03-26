@@ -24,53 +24,48 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-      </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-      </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12"></div>
+      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12"></div>
       <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-      </div>
-      <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12">
-       
-          <div class="row form-group">
-            <div class="col-4" >
-              <span>
-                <button
-                  mat-stroked-button
-                  class="submit-button"
-                  (click)="reset()"
-                >
-                  CLEAR
-                </button>
-              </span>
-            </div>
-            <div class="col-4" >
-              <span>
-                <button
-                  mat-flat-button
-                  id="color_sv"
-                  class="submit-button"
-                  *ngIf="!registerDetails.id"
-                  (click)="store()"
-                >
-                  ADD
-                </button>
-                <button
-                  mat-flat-button
-                  id="color_sv"
-                  class="submit-button"
-                  *ngIf="registerDetails.id"
-                  (click)="update()"
-                >
-                  Update
-                </button>
-              </span>
-            </div>
+        <div class="row form-group">
+          <div class="col-4">
+            <span>
+              <button
+                mat-stroked-button
+                class="submit-button"
+                (click)="reset()"
+              >
+                CLEAR
+              </button>
+            </span>
           </div>
-      
+          <div class="col-4">
+            <span>
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="!registerDetails.id"
+                (click)="store()"
+                [disabled]="!editAccess"
+              >
+                ADD
+              </button>
+              <button
+                mat-flat-button
+                id="color_sv"
+                class="submit-button"
+                *ngIf="registerDetails.id"
+                (click)="update()"
+                [disabled]="!editAccess"
+              >
+                Update
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
-
-     
     </div>
   </div>
 </div>
@@ -110,7 +105,8 @@
     <tbody class="table table-sm">
       <tr
         *ngFor="
-          let data of collection | searchfilter: searchvalue:['CalibrationRequest',];
+          let data of collection
+            | searchfilter: searchvalue:['CalibrationRequest'];
           let i = index
         "
       >
@@ -119,11 +115,11 @@
         <td class="gene_name tablethtd">
           {{ data.createdAt | date: "dd-MMM-yyyy,  h:mm a" }}
         </td>
-        <td class="gene_name tablethtd">{{ data.createdBy }}{{user_name}} </td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
         <td class="gene_name tablethtd">
           {{ data.updatedAt | date: "dd-MMM-yyyy,  h:mm a" }}
         </td>
-        <td class="gene_name tablethtd">{{ data.updatedBy }}{{user_name}}</td>
+        <td class="gene_name tablethtd">{{ data.updatedBy }}{{ user_name }}</td>
         <td class="gene_name tablethtd icons">
           <i
             class="fa fa-pencil-square-o"
@@ -132,11 +128,13 @@
           ></i>
         </td>
         <td class="gene_name tablethtd dicons">
-          <i
-            class="fa fa-trash"
-            aria-hidden="true"
-            (click)="deleteUsers(data.id)"
-          ></i>
+          <button [disabled]="!editAccess">
+            <i
+              class="fa fa-trash"
+              aria-hidden="true"
+              (click)="deleteUsers(data.id)"
+            ></i>
+          </button>
         </td>
       </tr>
     </tbody>
