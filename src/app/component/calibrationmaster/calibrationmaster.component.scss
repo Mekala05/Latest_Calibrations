@@ -128,7 +128,9 @@ tr {
 @media only screen and (min-width: 1200px) {
   .searchbox {
     display: flex;
+    width: 100%;
     justify-content: flex-end;
+    padding-top: 20px;
   }
 }
 @media only screen and (max-width: 1024px) {
@@ -189,7 +191,7 @@ tr {
   /* text-align-last: right; */
   float: right;
   /* left: 66% !important; */
-  margin-right: 47px;
+  margin-right: 20px;
 }
 
 ngx-file-drop {
@@ -225,4 +227,26 @@ ngx-file-drop {
 
 input[type="checkbox"][readonly] {
   pointer-events: none;
+}
+
+.l-20 {
+  left: 20px;
+}
+
+.ml-140 {
+  margin-left: 140px;
+}
+
+.justify-center {
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.upload-image {
+  float: right;
+  margin-left: 140px;
+  background-color: #3f5161;
+  color: white;
 }

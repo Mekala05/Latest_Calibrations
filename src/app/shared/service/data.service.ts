@@ -853,4 +853,15 @@ export class DataService {
     // debugger;
     return this.http.post<any>(`${environment.attachment}/upload`, data);
   }
+
+  fileinsertmulti_Master(data: any) {
+    // debugger;
+    return this.http.post<any>(`${environment.attachment}/insert`, data);
+  }
+
+  fileviewmulti_Master(instrumentCode: any) {
+    return this.http.get<any>(
+      `${environment.attachment}/view/${instrumentCode}`
+    );
+  }
 }

@@ -44,11 +44,8 @@
             (change)="department($event)"
           >
             <option disabled selected value="">--Select--</option>
-            <option
-              *ngFor="let depart of dep; let i = index"
-              [value]="depart.dept"
-            >
-              {{ depart.dept }}
+            <option *ngFor="let depart of dep; let i = index" [value]="depart">
+              {{ depart }}
             </option>
           </select>
         </div>
@@ -71,7 +68,7 @@
             name=""
             id=""
             class="form-control input_text"
-            [(ngModel)]="registerDetails.employee"
+            [(ngModel)]="registerDetails.employeeid"
           >
             <option disabled selected value="">--Select--</option>
             <option
@@ -86,7 +83,9 @@
     </div>
     <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 button-section">
       <div class="row form-group align-items-center">
-        <button mat-raised-button color="warn" (click)="load()">Load</button>
+        <button mat-raised-button color="warn" *ngIf="!update" (click)="load()">
+          Load
+        </button>
       </div>
     </div>
   </div>
@@ -131,7 +130,22 @@
     </table>
     <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 button-section">
       <div class="row form-group align-items-center">
-        <button mat-raised-button color="warn" (click)="allow()">Allow</button>
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="!update"
+          (click)="allow()"
+        >
+          Allow
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="update"
+          (click)="updateData()"
+        >
+          Update
+        </button>
       </div>
     </div>
   </div>

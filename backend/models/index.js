@@ -9,6 +9,8 @@ let models = {};
 // models.User = require("./user.js")(sequelize, Sequelize)
 models.User = require("./ohem.js")(sequelize, Sequelize)
 models.CategoryMaster = require("./CategoryMaster.js")(sequelize, Sequelize)
+models.ImageAttachment = require("./ImageAttachment.js")(sequelize, Sequelize)
+
 models.TypeMaster = require("./TypeMaster.js")(sequelize, Sequelize)
 models.EquipmentMaster = require("./EquipmentMaster.js")(sequelize, Sequelize)
 models.GaugesMaster = require("./GaugesMaster.js")(sequelize, Sequelize)
@@ -54,6 +56,8 @@ models.iddescription = require("./iddescription")(sequelize, Sequelize)
 
 models.User.sync();
 models.CategoryMaster.sync();
+models.ImageAttachment.sync();
+
 models.TypeMaster.sync();
 models.EquipmentMaster.sync();
 models.GaugesMaster.sync();

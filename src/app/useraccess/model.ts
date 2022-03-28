@@ -1,7 +1,7 @@
 export interface EmployeeAccess {
   unit: string;
   department: string;
-  employee: string;
+  employeeid: string;
 }
 
 export interface EmployeeAccessDetails {
