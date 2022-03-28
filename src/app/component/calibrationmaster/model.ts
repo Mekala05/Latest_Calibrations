@@ -34,3 +34,10 @@ export interface Image {
   headerImages?: string | Blob;
   errorDescription?: string | Blob;
 }
+
+export interface MultipleImage {
+  filename?: string;
+  instrumentCode?: string;
+  filepath?: string;
+  type?: string;
+}

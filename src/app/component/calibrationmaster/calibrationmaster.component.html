@@ -8,9 +8,7 @@
   <!-- Table End -->
 
   <!-- form start -->
-  <button class="btn btn-primary back-button mb-2" (click)="back()">
-    Back
-  </button>
+
   <div class="new_bor pt-1 pb-3">
     <div class="row px-4 pt-3 align-items-center">
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
@@ -161,7 +159,6 @@
             >
           </div>
           <div class="col-8">
-            {{ registerDetails?.SAPRefferenceCode }}
             <select
               name=""
               id=""
@@ -454,21 +451,44 @@
               (change)="checkedAmc($event)"
             />
           </div>
-          <div class="col-4">
+          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+            <div class="row form-group align-items-center">
+              <div class="col-8">
+                <mat-label class="gene_name newname"
+                  >Instrument Image Reference</mat-label
+                >
+              </div>
+              <div class="col-4">
+                <!-- <input type="text" bsDatepicker   class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+                <input
+                  (change)="selectimage($event)"
+                  type="file"
+                  id="inputGroupFile01"
+                  accept="image/*"
+                  [(ngModel)]="registerDetails.headerImage"
+                  aria-describedby="inputGroupFileAddon01"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-8">
+            <mat-label class="gene_name newname"
+              >Instrument Image Reference</mat-label
+            >
             <input
               (change)="selectimage($event)"
               type="file"
               id="inputGroupFile01"
               aria-describedby="inputGroupFileAddon01"
-            />
+            /> -->
 
-            <!-- <span
+          <!-- <span
               class="input-group-text upload"
               (click)="selectimage()"
               id="btnUpload"
               >Upload</span
             > -->
-          </div>
+          <!-- </div> -->
 
           <!-- <pre>{{ myFiles | json }}</pre> -->
           <!-- <div *ngFor="let file of myFiles">
@@ -582,22 +602,42 @@
     <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12"></div>
     <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
       <div class="row form-group">
-        <div class="col-6">
+        <div class="col-6 ml-140">
           <span>
-            <button
+            <!-- <button
               mat-flat-button
               class="error-button btn-success mr-2"
               *ngIf="!registerDetails.id"
               (click)="adderror()"
             >
               <mat-icon> + </mat-icon>
-            </button>
+            </button> -->
             <button mat-stroked-button class="submit-button" (click)="reset()">
               CLEAR
             </button>
+            <button
+              mat-flat-button
+              id="color_sv"
+              class="submit-button l-20"
+              *ngIf="!registerDetails.id"
+              (click)="adderror()"
+              [disabled]="!editAccess"
+            >
+              ADD
+            </button>
+            <button
+              mat-flat-button
+              id="color_sv"
+              class="submit-button l-20"
+              *ngIf="registerDetails.id"
+              (click)="update()"
+              [disabled]="!editAccess"
+            >
+              Update
+            </button>
           </span>
         </div>
-        <div class="col-6">
+        <!-- <div class="col-6">
           <body>
             <form
               action="/upload-images"
@@ -607,28 +647,15 @@
               <span>
                 <button
                   mat-flat-button
-                  id="color_sv"
-                  class="submit-button"
+                  class="error-button btn-success mr-2"
                   *ngIf="!registerDetails.id"
-                  (click)="store()"
+                  (click)="adderror()"
                   [disabled]="!editAccess"
-                >
-                  ADD
-                </button>
-                <button
-                  mat-flat-button
-                  id="color_sv"
-                  class="submit-button"
-                  *ngIf="registerDetails.id"
-                  (click)="update()"
-                  [disabled]="!editAccess"
-                >
-                  Update
-                </button>
+                ></button>
               </span>
             </form>
           </body>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -665,9 +692,9 @@
 
 <div class="addrow">
   <div>
-    <!-- <button     mat-flat-button id="color_sv" class="submit-button" (click)="AddRow()">    
-       Attachment
-    </button> -->
+    <button class="btn btn-primary addrow-button mb-2" (click)="back()">
+      Back
+    </button>
     <button class="btn btn-primary addrow-button mb-2" (click)="AddRow()">
       Attachment
     </button>
@@ -772,17 +799,36 @@
             mat-flat-button
             id="color_sv"
             class="submit-button"
-            (click)="open(mymodal)"
+            (click)="viewImages(data, i)"
           >
             view
           </button>
         </td>
 
         <td class="gene_name tablethtd icons">
-          <button mat-stroked-button class="submit-button">Download</button>
+          <button
+            mat-stroked-button
+            class="submit-button"
+            (click)="downloadFile()"
+          >
+            Download
+          </button>
         </td>
         <td class="gene_name tablethtd dicons">
           <i class="fa fa-trash" aria-hidden="true" (click)="delete()"></i>
+        </td>
+        <td
+          *ngIf="
+            imageSrc[i] &&
+            types[i] ===
+              ('image/jpeg' || 'image/png' || 'image/jpg' || 'image/jfif')
+          "
+        >
+          <img
+            src="../../../../backend/uploads/{{ imageSrc[i] }}"
+            width="200px"
+            height="200px"
+          />
         </td>
       </tr>
 
@@ -921,6 +967,24 @@
     </tbody>
   </table>
 </div>
+<button mat-stroked-button class="upload-image" (click)="uploadImage()">
+  UPLOAD
+</button>
+<!-- <mat-card *ngIf="viewimage">
+  <mat-card-header class="justify-center">Uploaded Images</mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-md-3" *ngFor="let images of imageSrc; let i = index">
+        {{ images.filepath }}
+        <img
+          src="../../../../backend/uploads/{{ images }}"
+          width="200px"
+          height="200px"
+        />
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card> -->
 <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">
   Open My Modal
 </button> -->
@@ -992,7 +1056,8 @@
     </tbody>
   </table>
 </div>
-<ng-template #mymodal let-modal>
+
+<!-- <ng-template #mymodal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Uploaded files</h4>
     <button
@@ -1010,24 +1075,22 @@
       class="carousel slide"
       data-ride="carousel"
     >
-      <div class="carousel-inner" *ngIf="uploadedFiles">
-        <div class="carousel-item active" *ngFor="let image of imageSrc">
-          <div
-            *ngIf="image.type === 'image/jpeg' || 'image/png' || 'image/jfif'"
-          >
-            <p>
-              <a href="{{ image.url }}">{{ image.name }}</a>
-            </p>
-            <img src="{{ image.url }}" alt="{{ image.name }}" height="80px" />
-            <!-- <img width="100%" src="{{ image.name }}" class="image" /> -->
+      <div class="carousel-inner">
+        <div
+          class="carousel-item"
+          *ngFor="let images of imageSrc; let i = index"
+        >
+          <img
+            src="{{ images.filepath }}"
+            alt="{{ images.filename }}"
+            width="100px"
+            height="400px"
+          />
+          <div class="carousel-caption">
+            <h3>{{ caroiselProduct.product_name }}</h3>
+            <p>{{ caroiselProduct.productsortdisc }}</p>
           </div>
         </div>
-        <!-- <div class="carousel-item">
-              <img class="d-block w-100" src="..." alt="Second slide">
-            </div>
-            <div class="carousel-item">
-              <img class="d-block w-100" src="..." alt="Third slide">
-            </div> -->
       </div>
       <a
         class="carousel-control-prev"
@@ -1057,6 +1120,8 @@
         Ok
       </button>
     </div>
-    <!-- </ng-template> -->
-  </div>
-</ng-template>
+    </ng-template>
+    </div>
+    </ng-template>
+  </div></ng-template
+> -->

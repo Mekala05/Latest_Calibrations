@@ -22,8 +22,6 @@ router.use('/master', require('./master'))
 router.use('/calibrationmaster', require('./Calibration_Master'))
 router.use('/header', require('./Calibration_Master'))
 router.use('/attachment', require('./Calibration_Master'))
-
-
 router.use('/monthlyReport', require('./Monthly_report'))
 router.use('/CalibrationRequest', require('./CalibrationEntiresRequest'))
 router.use('/RaiseDC', require('./RaiseDC'))

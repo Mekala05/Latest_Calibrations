@@ -11,7 +11,7 @@ export class UseraccessComponent implements OnInit {
   public registerDetails: EmployeeAccess = {
     unit: '',
     department: '',
-    employee: '',
+    employeeid: '',
   };
 
   public registered: EmployeeAccessDetails[] = [];
@@ -23,6 +23,7 @@ export class UseraccessComponent implements OnInit {
   tableData: any = [];
   accessgiven: any = [];
   public user: any = [];
+  update: boolean = false;
 
   constructor(public dataservice: DataService) {}
 
@@ -39,7 +40,11 @@ export class UseraccessComponent implements OnInit {
           this.dep.push(data.dept);
         }
         if (data.firstName) {
-          this.emp.push(data);
+          this.emp.push({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            empID: data.empID,
+          });
         }
       });
       console.log('dep', this.dep);
@@ -52,33 +57,49 @@ export class UseraccessComponent implements OnInit {
   }
 
   getUser(data: any) {
-    console.log(data);
+    this.load();
+    this.update = true;
+    // console.log(data);
     this.registerDetails = data;
+    this.registered = data;
+    // this.tableData = data;
+    console.log('register details', this.registerDetails);
+    console.log('register', this.registered);
   }
 
   unit(eve: any) {
     let eventValue = eve.target.value;
     this.userDetails.map((data: any) => {
       if (JSON.stringify(data.branch) === eventValue) {
-        this.dep.push(data);
+        let dept = [];
+        dept.push(data.dept);
+        this.dep = dept;
       }
     });
     console.log(this.dep);
   }
 
   department(eve: any) {
-    console.log(eve.target.value);
+    // console.log(eve.target.value);
     let emp = eve.target.value;
     this.userDetails.map((data: any) => {
       if (JSON.stringify(data.dept) === emp) {
-        this.emp.push(data);
+        let employee = [];
+
+        employee.push({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          empID: data.empID,
+        });
+
+        this.emp = employee;
       }
     });
   }
 
   load() {
     this.show = true;
-    console.log('inside load');
+    // console.log('inside load');
     this.dataservice.iddescription_get().subscribe((data: any) => {
       this.tableData = data.data;
       // console.log('table', this.tableData);
@@ -122,6 +143,22 @@ export class UseraccessComponent implements OnInit {
   }
 
   allow() {
+    // this.show = true;
+    // this.dataservice.getViewOhem().subscribe((item: any) => {
+    //   this.userDetails = item.data;
+    //   item.data.map((data: any) => {
+    //     if (data.branch) {
+    //       this.units.push(data.branch);
+    //     }
+    //     if (data.dept) {
+    //       this.dep.push(data.dept);
+    //     }
+    //     if (data.firstName) {
+    //       this.emp.push(data);
+    //     }
+    //   });
+    //   console.log('dep', this.dep);
+    // });
     this.accessgiven.map((item: any) => {
       if (item.view === undefined) {
         item.view = false;
@@ -129,25 +166,44 @@ export class UseraccessComponent implements OnInit {
       if (item.edit === undefined) {
         item.edit = false;
       }
+      // console.log('emp', this.registerDetails.employeeid);
+
       this.registered.push({
         view: item.view,
         Edit: item.edit,
         moduleid: item.moduleId,
         ModuleidDescription: item.moduleDescription,
-        employeeid: this.registerDetails.employee,
+        employeeid: this.registerDetails.employeeid,
         unit: this.registerDetails.unit,
         department: this.registerDetails.department,
       });
     });
 
-    this.registered.map((item: any) => {
-      this.dataservice.useracess_post(item).subscribe((data: any) => {});
-    });
+    if (!this.update) {
+      this.registered.map((item: any) => {
+        this.dataservice.useracess_post(item).subscribe((data: any) => {});
+      });
 
-    this.dataservice.useracess_gets().subscribe((data: any) => {
-      this.user = data.data;
-    });
+      this.dataservice.useracess_gets().subscribe((data: any) => {
+        this.user = data.data;
+      });
+    }
 
-    console.log('register', this.registered);
+    if (this.update) {
+      console.log(this.registerDetails.employeeid);
+      console.log(this.registered);
+
+      this.dataservice
+        .useracess_update(this.registerDetails.employeeid, this.registered)
+        .subscribe((item: any) => {});
+    }
+
+    // console.log('register', this.registered);
+  }
+
+  updateData() {
+    console.log('insie log');
+    console.log(this.registerDetails);
+    this.allow();
   }
 }
