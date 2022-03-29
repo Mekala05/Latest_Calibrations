@@ -735,6 +735,7 @@
         </td>
         <td class="gene_name tablethtd icons">
           <input
+            *ngIf="chooseFile"
             (change)="fileChange($event)"
             type="file"
             id="inputGroupFile01"
@@ -809,7 +810,7 @@
           <button
             mat-stroked-button
             class="submit-button"
-            (click)="downloadFile()"
+            (click)="download(data, i)"
           >
             Download
           </button>
@@ -825,7 +826,7 @@
           "
         >
           <img
-            src="../../../../backend/uploads/{{ imageSrc[i] }}"
+            src="{{ imgUrl }}/{{ imageSrc[i] }}"
             width="200px"
             height="200px"
           />

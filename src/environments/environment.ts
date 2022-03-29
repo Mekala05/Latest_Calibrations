@@ -44,11 +44,12 @@
 // header: 'http://10.0.0.11:3001/header',
 // attachment: 'http://10.0.0.11:3001/attachment',
 
-//   uploadurl: 'http://10.0.0.11:3001',
+//   imgUrl: 'http://10.0.0.11:3000',
 // };
 
 export const environment = {
   production: false,
+  imgUrl: 'http://localhost:3000',
   url: 'http://localhost:3000/api/category',
   Typeurl: 'http://localhost:3000/api/type',
   Makeurl: 'http://localhost:3000/api/make',

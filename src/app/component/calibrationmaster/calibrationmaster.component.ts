@@ -19,6 +19,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 // import {
 //   NgxFileDropEntry,
 //   FileSystemFileEntry,
@@ -112,6 +113,8 @@ export class CalibrationmasterComponent implements OnInit {
   sMsg: string = '';
   title = 'appBootstrap';
   editAccess: boolean = false;
+  imgUrl: string = '';
+  chooseFile: boolean = true;
 
   closeResult: string = '';
 
@@ -553,11 +556,8 @@ export class CalibrationmasterComponent implements OnInit {
     this.headerimage();
   }
 
-  public downloadFile() {
-    console.log('download');
-  }
-
   public uploadImage() {
+    this.chooseFile = false;
     let formDatas = new FormData();
     // console.log(this.uploadedFiles.length);
 
@@ -580,16 +580,19 @@ export class CalibrationmasterComponent implements OnInit {
     this.dataservice
       .fileuploadmulti_Master(formDatas)
       .subscribe((data: any) => {
-        // console.log('uploads', data.message.uploads);
+        // console.log(data.message.uploads);
         imageDatas = data.message.uploads;
         this.collectiondata.pop();
 
-        this.attachmentImage.map((item: any) => {
-          // console.log('image', imageDatas);
+        // console.log('image', imageDatas);
+        // console.log('att', this.attachmentImage);
 
+        this.attachmentImage.map((item: any) => {
           imageDatas.map((element: any) => {
-            item.filepath = element.path;
-            return item;
+            if (item.filename === element.originalFilename) {
+              item.filepath = element.path;
+              return item;
+            }
           });
           this.dataservice
             .fileinsertmulti_Master(item)
@@ -603,7 +606,7 @@ export class CalibrationmasterComponent implements OnInit {
               // console.log('leng', this.collectiondata.length);
               // let index = 0;
               // this.collectiondata.splice(index, 0);
-              console.log(data.data);
+              // console.log(data.data);
 
               this.collectiondata.push(data.data);
               // console.log(this.imageSrc);
@@ -1628,6 +1631,16 @@ export class CalibrationmasterComponent implements OnInit {
     }
   }
 
+  downloadMyFile(file: string) {
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', `${environment.imgUrl}/${file}`);
+    // link.setAttribute('download', `products.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   category(event: any, data: any = '') {
     // alert(event.target.value);
     // console.log('data', data);
@@ -1880,6 +1893,7 @@ export class CalibrationmasterComponent implements OnInit {
     // console.log(image);
     this.imageSrc[i] = image[2];
     this.types[i] = data.type;
+    this.imgUrl = environment.imgUrl;
 
     if (
       this.types[i] !==
@@ -1901,6 +1915,14 @@ export class CalibrationmasterComponent implements OnInit {
 
   public fileLeave(event: any) {
     console.log(event);
+  }
+
+  download(data: any, i: any) {
+    this.imageSrc = [];
+    let image = data.filepath.split('\\');
+    // console.log(image);
+    this.imageSrc[i] = image[2];
+    this.downloadMyFile(this.imageSrc[i]);
   }
 
   // private getDismissReason(reason: any): string {

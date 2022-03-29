@@ -82,18 +82,6 @@ app.post('/attachment/upload', multipartMiddleware, (req, res) => {
 });
 
 app.post('/attachment/insert', multipartMiddleware, (req, res) => {
-    // console.log("req", req.files);
-    // req.files.uploads[0].originalFilename
-    // return res.json({
-    //     'message': res
-    // });
-    // console.log('req.body', req.body);
-    // console.log('req.param', req.param);
-    // console.log(req);
-    // console.log('body', req.body.instrumentCode);
-    // console.log('param', req.param.filename);
-    // console.log('instr', req.params.instrumentCode);
-
     return new Promise((resolve, reject) => {
         ImageAttachment.create(req.body).then(function (result) {
             sendSuccess(res, result);
