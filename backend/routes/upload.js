@@ -96,13 +96,23 @@ app.post('/attachment/insert', multipartMiddleware, (req, res) => {
 
 app.get('/attachment/view/:instrumentCode', (req, res) => {
     return new Promise((resolve, reject) => {
-        TypeMaster.findAll({ where: { deleteStatus: false, id: req.params.instrumentCode } }).then(function (result) {
+        ImageAttachment.findAll({ where: { deleteStatus: false, instrumentCode: req.params.instrumentCode, active: true } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
             sendError(res, err);
         });
     })
 
+})
+
+app.put('/attachment/update/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        ImageAttachment.update(req.body, { where: { id: req.params.id } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

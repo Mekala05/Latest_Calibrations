@@ -107,6 +107,8 @@ export class UseraccessComponent implements OnInit {
   }
 
   edit(eve: any, val: any) {
+    console.log(val);
+
     if (eve.target.value === 'view' || eve.target.value === 'edit') {
       if (this.accessgiven.length) {
         this.accessgiven.map((item: any) => {
@@ -160,6 +162,8 @@ export class UseraccessComponent implements OnInit {
     //   console.log('dep', this.dep);
     // });
     this.accessgiven.map((item: any) => {
+      console.log('item', item);
+
       if (item.view === undefined) {
         item.view = false;
       }
@@ -167,6 +171,8 @@ export class UseraccessComponent implements OnInit {
         item.edit = false;
       }
       // console.log('emp', this.registerDetails.employeeid);
+      console.log('register', this.registered);
+      console.log('type', typeof this.registered);
 
       this.registered.push({
         view: item.view,

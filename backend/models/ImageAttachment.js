@@ -7,6 +7,14 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(250),
             field: 'instrumentCode',
         },
+        instrumentName: {
+            type: DataTypes.STRING(250),
+            field: 'instrumentName',
+        },
+        // ErrorReferenceCode: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'ErrorReferenceCode'
+        // },
         filename: {
             type: DataTypes.STRING(250),
             field: 'filename',
@@ -18,6 +26,10 @@ module.exports = function (sequelize, DataTypes) {
         type: {
             type: DataTypes.STRING(250),
             field: 'type',
+        },
+        active: {
+            type: DataTypes.BOOLEAN,
+            field: 'active'
         },
         createdBy: {
             type: DataTypes.STRING(50),

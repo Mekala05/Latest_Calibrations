@@ -265,6 +265,12 @@ export class DataService {
     );
   }
 
+  // MasterTest_getViewPartic_getView_sapref1(data: any) {
+  //   return this.http.get<any>(
+  //     `${environment.Calibration_Master}/saprefcodeitems/${data}`
+  //   );
+  // }
+
   // MasterTest_getViewParticular() {
   //   return this.http.get<any>(`${environment.Calibration_Master}/oitm`);
   // }
@@ -859,9 +865,18 @@ export class DataService {
     return this.http.post<any>(`${environment.attachment}/insert`, data);
   }
 
-  fileviewmulti_Master(instrumentCode: any) {
-    return this.http.get<any>(
-      `${environment.attachment}/view/${instrumentCode}`
-    );
+  // fileinsertmulti_Master(instrumentCode: any,data: any) {
+  //   // debugger;
+  //   return this.http.post<any>(`${environment.attachment}/insert`, data);
+  // }
+
+  fileupdatemulti_Master(id: any, data: any) {
+    return this.http.put<any>(`${environment.attachment}/update/${id}`, data);
+  }
+
+  fileviewmulti_Master(id: any) {
+    // console.log('instrumentCode', data);
+
+    return this.http.get<any>(`${environment.attachment}/view/${id}`);
   }
 }

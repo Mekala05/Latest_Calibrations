@@ -73,6 +73,7 @@ export class CalibrationmasterComponent implements OnInit {
   public text: any;
   public Make: any[] = [];
   public data: any[] = [];
+  updateButton: boolean = false;
 
   public newDynamic: any[] = [];
   public MxLifeTimeNumber: any[] = [];
@@ -115,22 +116,29 @@ export class CalibrationmasterComponent implements OnInit {
   editAccess: boolean = false;
   imgUrl: string = '';
   chooseFile: boolean = true;
-
+  headerimagePatch: string = '';
+  userLocation: string = '';
   closeResult: string = '';
+  showButton: boolean = true;
+  updateFile: string = '';
+  public table: any[] = [];
 
   public Heading = [
     {
       name: 'SI No',
     },
-    {
-      name: 'File Section',
-    },
+    // {
+    //   name: 'File Section',
+    // },
     {
       name: 'Choosefile',
     },
     {
-      name: 'View',
+      name: 'File name',
     },
+    // {
+    //   name: 'View',
+    // },
     {
       name: 'Download',
     },
@@ -170,9 +178,9 @@ export class CalibrationmasterComponent implements OnInit {
     {
       name: 'Edit',
     },
-    {
-      name: 'Delete',
-    },
+    // {
+    //   name: 'Delete',
+    // },
   ];
 
   constructor(
@@ -188,6 +196,8 @@ export class CalibrationmasterComponent implements OnInit {
   ) {
     {
       if (this.routers.snapshot.queryParams.id) {
+        this.updateButton = true;
+        // this.showButton = true;
         this.dataservice
           .MasterTest_getViewData(this.routers.snapshot.queryParams.id)
           .subscribe(
@@ -198,9 +208,11 @@ export class CalibrationmasterComponent implements OnInit {
                   instrument.push(item);
                 }
               });
+              // console.log('instrument', instrument);
 
               this.collection = instrument;
               this.BackUpdata = instrument;
+              this.registerDetails.id = instrument[0].id;
               this.registerDetails.InstrumentName =
                 instrument[0].InstrumentName;
 
@@ -208,8 +220,7 @@ export class CalibrationmasterComponent implements OnInit {
                 instrument[0].InstrumentCode;
 
               this.registerDetails.category = instrument[0].category;
-
-              this.category('', instrument[0].category);
+              // this.category('', instrument[0].category);
 
               this.registerDetails.type = instrument[0].type;
               this.typemaster('', instrument[0].type);
@@ -219,6 +230,29 @@ export class CalibrationmasterComponent implements OnInit {
                 instrument[0].InstrumentRefferenceCode;
 
               this.registerDetails.Location = instrument[0].Location;
+              let location = instrument[0].Location;
+              let splitted = location.split(',');
+              this.getSapReferenceCode(splitted[1]);
+              // this.locationdata(instrument[0].Location);
+              // this.locationdata('');
+              // this.userLocation = instrument[0].Location;
+              // this.locationdata(instrument[0].Location);
+
+              // if (instrument[0].Location) {
+              //   let selectedLaw = instrument[0].Location;
+              //   var name = selectedLaw.split(',');
+              //   console.log('name', name[1]);
+
+              //   this.dataservice
+              //     .MasterTest_getViewParticular_getView_sapref1(name[1])
+              //     .subscribe((data) => {
+              //       // console.log('tt',data.data);
+              //       // console.log(data.data);
+              //       console.log('data', data.data);
+
+              //       this.SAPRefferenceCode = data.data;
+              //     });
+              // }
               this.registerDetails.CurrentLocation =
                 instrument[0].CurrentLocation;
               this.registerDetails.make = instrument[0].make;
@@ -231,6 +265,10 @@ export class CalibrationmasterComponent implements OnInit {
               this.registerDetails.Description = instrument[0].Description;
               this.registerDetails.Remark = instrument[0].Remark;
               this.registerDetails.MxLifeTime = instrument[0].MxLifeTime;
+              console.log('constructor', instrument[0].SAPRefferenceCode);
+
+              // let location =
+
               this.registerDetails.SAPRefferenceCode =
                 instrument[0].SAPRefferenceCode;
 
@@ -241,8 +279,28 @@ export class CalibrationmasterComponent implements OnInit {
               this.registerDetails.active = instrument[0].active;
               this.registerDetails.amccheckbox = instrument[0].amccheckbox;
               this.registerDetails.headerImage = instrument[0].headerImage;
+              console.log('data', instrument[0].headerImagepath);
+              // console.log();
 
-              console.log(instrument[0].headerImage);
+              let headerimagename = instrument[0].headerImagepath.split('\\');
+              this.headerimagePatch = `${environment.imgUrl}/${headerimagename[2]}`;
+              // console.log(this.headerimagePatch);
+              // let datas = {
+              //   instrumentCode: instrument[0].InstrumentCode,
+              //   instrumentName: instrument[0].InstrumentName,
+              // };
+              // datas.push({
+              //   instrumentCode: ,
+              //   instrumentName: ,
+              // });
+
+              this.dataservice
+                .fileviewmulti_Master(instrument[0].InstrumentCode)
+                .subscribe((data: any) => {
+                  this.collectiondata = data.data;
+                });
+
+              // console.log(instrument[0].headerImage);
 
               // this.imageSrc = instrument[0].headerImage;
             },
@@ -255,27 +313,39 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // console.log(this.registerDetails);
+
+    // if (this.registerDetails !== {}) {
+    //   this.updateButton = false;
+    // } else {
+    //   this.updateButton = true;
+    // }
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
     // console.log('user', useraccess);
 
-    // let datas = useraccess.filter((element: any) => element.moduleid === 6);
+    let datas = useraccess.filter((element: any) => element.moduleid === 6);
     // console.log('datas', datas);
 
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
     // console.log(this.editAccess);
 
     this.getCategory();
     this.getType();
     this.getMake();
     this.type();
+    // this.locationdata();
     this.tabledata();
+    // this.getSapReferenceCode();
     this.AmcChecked = false;
 
     this.registerDetails.date = new Date();
     this.registerDetails.dueDate = new Date();
 
     this.user_name = localStorage.getItem('Login_name');
+    this.dataservice.MasterCategory_getView().subscribe((data: any) => {
+      this.type = data.data;
+    });
 
     // this.dataservice.MasterTest_getViewtablerecord1().subscribe((data) => {
     //   console.log('asdfadf', data);
@@ -284,6 +354,15 @@ export class CalibrationmasterComponent implements OnInit {
     //   // this.BackUpdata = data.data;
     // });
     // this.tabledata();
+    // this.dataservice
+    //   .MasterTest_getViewParticular_getView_sapref()
+    //   .subscribe((data) => {
+    //     // console.log('tt',data.data);
+    //     // console.log(data.data);
+    //     console.log('data', data.data);
+
+    //     this.SAPRefferenceCode = data.data;
+    //   });
   }
 
   public loadInstrument(): void {}
@@ -368,8 +447,59 @@ export class CalibrationmasterComponent implements OnInit {
     this.location.back();
   }
 
+  resetImage() {
+    // We will clear the value of the input
+    // field using the reference variable.
+
+    this.fileUpload.nativeElement.value = '';
+  }
+
+  updateImage(id: any) {
+    let formDatas = new FormData();
+    for (var i = 0; i < this.uploadedFiles.length; i++) {
+      formDatas.append(
+        'uploads[]',
+        this.uploadedFiles[i],
+        this.uploadedFiles[i].name
+      );
+      this.attachmentImage.push({
+        instrumentCode: this.registerDetails.InstrumentCode,
+        instrumentName: this.registerDetails.InstrumentName,
+        filename: this.uploadedFiles[i].name,
+        type: this.uploadedFiles[i].type,
+      });
+    }
+    // console.log('formdatas', formDatas);
+    // console.log('attachment', typeof this.uploadedFiles);
+
+    let imageDatas: any[] = [];
+    this.dataservice
+      .fileuploadmulti_Master(formDatas)
+      .subscribe((data: any) => {
+        imageDatas = data.message.uploads;
+        this.collectiondata.pop();
+
+        this.attachmentImage.map((item: any) => {
+          imageDatas.map((element: any) => {
+            if (item.filename === element.originalFilename) {
+              item.filepath = element.path;
+              return item;
+            }
+          });
+          this.dataservice
+            .fileupdatemulti_Master(id, item)
+            .subscribe((data: any) => {
+              console.log(data.data);
+
+              this.collectiondata.push(data.data);
+              // console.log(this.imageSrc);
+            });
+        });
+      });
+  }
+
   update() {
-    console.log('duedate', this.registerDetails.dueDate);
+    // console.log('duedate', this.registerDetails.dueDate);
 
     if (
       this.registerDetails.Description === '' ||
@@ -472,7 +602,7 @@ export class CalibrationmasterComponent implements OnInit {
               this.registerDetails.Remark = '';
               // console.log(this.registerDetails.Description);
             } else {
-              console.log('inside else');
+              // console.log('inside else');
 
               if (data.error.errors[0].validatorKey) {
                 this.toastr.error(
@@ -523,8 +653,16 @@ export class CalibrationmasterComponent implements OnInit {
 
   // }
 
-  fileChange(element: any) {
+  fileChange(element: any, i?: any) {
+    if (
+      this.registerDetails.InstrumentCode &&
+      this.registerDetails.InstrumentName
+    ) {
+      this.showButton = false;
+    }
     this.uploadedFiles = element.target.files;
+    // this.updateFile = i;
+    // this.updateImage(i);
 
     // const reader = new FileReader();
     // if (this.uploadedFiles && this.uploadedFiles.length) {
@@ -549,15 +687,38 @@ export class CalibrationmasterComponent implements OnInit {
     // };
     // }
     // }
+    // this.dataservice.MasterTest_getView().subscribe((itemData: any) => {
+    //   console.log(itemData);
+    //   if (itemData.length === 0) {
+    //     let num = 100;
+    //     this.registerDetails.ErrorReferenceCode = num.toString();
+    //   } else {
+    //     console.log('itemData', itemData.length);
+    //   }
+    // });
   }
 
   public selectimage(eve: any) {
     this.images = eve.target.files;
+    const file = eve.target.files[0];
+
+    // this.myForm.patchValue({
+    //   img: file
+    // });
+
+    // this.myForm.get('img').updateValueAndValidity()
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.headerimagePatch = reader.result as string;
+    };
+    reader.readAsDataURL(file);
     this.headerimage();
+    this.resetImage();
   }
 
   public uploadImage() {
-    this.chooseFile = false;
+    // this.chooseFile = false;
     let formDatas = new FormData();
     // console.log(this.uploadedFiles.length);
 
@@ -570,7 +731,9 @@ export class CalibrationmasterComponent implements OnInit {
       this.attachmentImage.push({
         instrumentCode: this.registerDetails.InstrumentCode,
         filename: this.uploadedFiles[i].name,
+        instrumentName: this.registerDetails.InstrumentName,
         type: this.uploadedFiles[i].type,
+        active: true,
       });
     }
     // console.log('formdatas', formDatas);
@@ -594,6 +757,7 @@ export class CalibrationmasterComponent implements OnInit {
               return item;
             }
           });
+          this.collectiondata = [];
           this.dataservice
             .fileinsertmulti_Master(item)
             .subscribe((data: any) => {
@@ -782,6 +946,8 @@ export class CalibrationmasterComponent implements OnInit {
     // var fileErrorDiscription = this.registerDetails.fileErrorDiscription;
     var InstrumentRefferenceCode =
       this.registerDetails.InstrumentRefferenceCode;
+    console.log('sapreference', this.registerDetails.SAPRefferenceCode);
+
     var SAPRefferenceCode = this.registerDetails.SAPRefferenceCode;
     var Department = this.registerDetails.Department;
     var dueDate = this.registerDetails.dueDate;
@@ -1045,21 +1211,37 @@ export class CalibrationmasterComponent implements OnInit {
 
   headerimage() {
     let formData = new FormData();
-    console.log(this.images.length);
+    // console.log(this.images.length);
 
     for (var i = 0; i < this.images.length; i++) {
       formData.append('images[]', this.images[i], this.images[i].name);
     }
-    console.log('formdata', formData);
+    // console.log('formdata', formData);
     // console.log();
 
     this.dataservice.fileupload_Master(formData).subscribe((data: any) => {
-      console.log('single', data.message);
+      // console.log('single', data.message);
       this.registerDetails.headerImage =
         data.message.images[0].originalFilename;
       this.registerDetails.headerImagepath = data.message.images[0].path;
     });
   }
+
+  // imagePreview(e: any) {
+  //   const file = (e.target as HTMLInputElement).files[0];
+
+  //   this.myForm.patchValue({
+  //     img: file
+  //   });
+
+  //   this.myForm.get('img').updateValueAndValidity()
+
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.filePath = reader.result as string;
+  //   }
+  //   reader.readAsDataURL(file)
+  // }
 
   adderror() {
     var category = this.registerDetails.category;
@@ -1329,9 +1511,12 @@ export class CalibrationmasterComponent implements OnInit {
             .MasterTest_getViewtablerecord1()
             .subscribe((data) => {
               // console.log('view', this.collection);
+              console.log('data.data', data.data);
 
-              this.collection = data.data;
-              this.BackUpdata = data.data;
+              this.table.push(data.data[0]);
+              this.collection = this.table;
+              this.BackUpdata = this.table;
+              // console.log(this.table);
             });
       });
   }
@@ -1388,21 +1573,32 @@ export class CalibrationmasterComponent implements OnInit {
 
   //   }
 
-  locationdata(event: any) {
+  locationdata(event?: any) {
     //debugger;
+    let selectedLaw: any = '';
 
-    let selectedLaw: any = event.target.value;
+    // if (event.target.value) {
+    // }
+
+    console.log('select', selectedLaw);
+    event
+      ? (selectedLaw = event.target.value)
+      : (selectedLaw = this.userLocation);
+
+    selectedLaw = event.target.value;
+
     // this.locationselect = selectedLaw;
     //console.log('00000000          ' + selectedLaw);
     var shortname = selectedLaw.split(',');
     // console.log('short', shortname);
+    console.log('select', shortname);
 
     var instrument_code: any = this.InstrumentCodeof;
     // console.log(instrument_code);
     let code = instrument_code.split('||');
     let typesortname = this.valueof;
     let tsortname = typesortname.split('||');
-    console.log('inssd', code[0]);
+    // console.log('inssd', code[0]);
     this.registerDetails.InstrumentRefferenceCode = shortname[0];
     this.registerDetails.InstrumentCode = shortname[0];
 
@@ -1426,11 +1622,16 @@ export class CalibrationmasterComponent implements OnInit {
       this.registerDetails.Department = data.data[0].Department;
     });
 
+    this.getSapReferenceCode(shortname[1]);
+  }
+
+  public getSapReferenceCode(data?: any) {
     this.dataservice
-      .MasterTest_getViewParticular_getView_sapref1(shortname[1])
+      .MasterTest_getViewParticular_getView_sapref1(data)
       .subscribe((data) => {
         // console.log('tt',data.data);
         // console.log(data.data);
+        console.log('data', data.data);
 
         this.SAPRefferenceCode = data.data;
       });
@@ -1644,14 +1845,16 @@ export class CalibrationmasterComponent implements OnInit {
   category(event: any, data: any = '') {
     // alert(event.target.value);
     // console.log('data', data);
+    // console.log('inside cat', event.target.value);
 
     let selectedvalue1: any = event != '' ? event.target.value : data;
-    // console.log('ddddddddddddddddd', selectedvalue1);
+    console.log('ddddddddddddddddd', selectedvalue1);
 
     this.dataservice.categorydetails(selectedvalue1).subscribe((data) => {
       // console.log('typeeee', data);
       this.Type = data.data;
       this.instrument = data.data;
+      // this.registerDetails.type = data.data;
       // console.log(this.Category);
       // this.BackUpdata = data.data;
     });
@@ -1660,7 +1863,7 @@ export class CalibrationmasterComponent implements OnInit {
   typemaster(event: any, data: any = '') {
     // alert(event.target.value);
     let selectedvalue: any = event != '' ? event.target.value : data;
-    console.log(typeof selectedvalue);
+    // console.log(typeof selectedvalue);
 
     var shortname = selectedvalue.split('||');
 
@@ -1673,7 +1876,7 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   public Click_Head(index: number, heading: string): void {
-    console.log(this.collection);
+    // console.log(this.collection);
 
     this.collection = [...this.BackUpdata];
     if (heading == 'Description') {
@@ -1690,7 +1893,7 @@ export class CalibrationmasterComponent implements OnInit {
     // this.searchvalue = this.searchvalue.toUpperCase();
     if (this.searchvalue) {
       if (this.SearchField == 'Description') {
-        console.log('collect', this.collection);
+        // console.log('collect', this.collection);
 
         this.collection = this.collection.filter(
           (f) => f.type == this.searchvalue
@@ -1747,19 +1950,27 @@ export class CalibrationmasterComponent implements OnInit {
   // }
 
   AddRow() {
+    if (
+      this.registerDetails.InstrumentCode &&
+      this.registerDetails.InstrumentName
+    ) {
+      this.showButton = false;
+    }
     // this.dataservice = {};
     // console.log('col', this.collectiondata.length);
     if (this.collectiondata.length === 0) {
       this.collectiondata.push(this.newDynamic);
       this.toastr.success('New row added successfully', 'New Row');
-    }
-
-    if (this.viewimage) {
-      console.log('len', this.collectiondata.length);
-
+    } else {
+      this.chooseFile = true;
       this.collectiondata.push(this.newDynamic);
       this.toastr.success('New row added successfully', 'New Row');
     }
+
+    // if (this.viewimage) {
+    // console.log('len', this.collectiondata.length);
+
+    // }
 
     // console.log(this.dynamicArray);
     return true;
@@ -1769,9 +1980,15 @@ export class CalibrationmasterComponent implements OnInit {
     this.AmcChecked = event.target.checked;
   }
 
-  delete() {
+  delete(id: any, data: any) {
     this.collectiondata.pop();
     this.toastr.success('New row deleted successfully');
+    console.log('data', data);
+
+    data.active = false;
+    this.dataservice.fileupdatemulti_Master(id, data).subscribe((data: any) => {
+      console.log('delete', data);
+    });
   }
 
   // selectimage(event: any) {
@@ -1886,36 +2103,36 @@ export class CalibrationmasterComponent implements OnInit {
     this.fileUploadChangeEmitter.emit('');
   }
 
-  public viewImages(data: any, i: number): void {
-    this.viewimage = true;
-    this.imageSrc = [];
-    let image = data.filepath.split('\\');
-    // console.log(image);
-    this.imageSrc[i] = image[2];
-    this.types[i] = data.type;
-    this.imgUrl = environment.imgUrl;
+  // public viewImages(data: any, i: number): void {
+  //   this.viewimage = true;
+  //   this.imageSrc = [];
+  //   let image = data.filepath.split('\\');
+  //   // console.log(image);
+  //   this.imageSrc[i] = image[2];
+  //   this.types[i] = data.type;
+  //   this.imgUrl = environment.imgUrl;
 
-    if (
-      this.types[i] !==
-      ('image/jpeg' || 'image/png' || 'image/jpg' || 'image/jfif')
-    ) {
-      this.toastr.error(
-        'Download file if it is not image file',
-        'View only image files',
-        {
-          timeOut: 3000,
-        }
-      );
-    }
-  }
+  //   if (
+  //     this.types[i] !==
+  //     ('image/jpeg' || 'image/png' || 'image/jpg' || 'image/jfif')
+  //   ) {
+  //     this.toastr.error(
+  //       'Download file if it is not image file',
+  //       'View only image files',
+  //       {
+  //         timeOut: 3000,
+  //       }
+  //     );
+  //   }
+  // }
 
-  public fileOver(event: any) {
-    console.log(event);
-  }
+  // public fileOver(event: any) {
+  //   console.log(event);
+  // }
 
-  public fileLeave(event: any) {
-    console.log(event);
-  }
+  // public fileLeave(event: any) {
+  //   console.log(event);
+  // }
 
   download(data: any, i: any) {
     this.imageSrc = [];
@@ -1925,35 +2142,12 @@ export class CalibrationmasterComponent implements OnInit {
     this.downloadMyFile(this.imageSrc[i]);
   }
 
-  // private getDismissReason(reason: any): string {
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === 'Cross click') {
-  //     return 'Cross Click';
-  //   } else {
-  //     return `with: ${reason}`;
-  //   }
-  // }
-
-  // onFileChange(event: any) {
-  //   const reader = new FileReader();
-
-  //   if (event.target.files && event.target.files.length) {
-  //     const [file] = event.target.files;
-  //     reader.readAsDataURL(file);
-
-  //     reader.onload = () => {
-  //       this.imageSrc = reader.result as string;
-  //       this.registerDetails.headerImage = this.imageSrc;
-  //     };
-  //   }
-  // }
   getFileDetails(e: any) {
     //console.log (e.target.files);
     for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
-    console.log('myfiles', this.myFiles);
+    // console.log('myfiles', this.myFiles);
   }
 
   submit() {

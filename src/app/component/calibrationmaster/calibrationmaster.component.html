@@ -217,12 +217,19 @@
           </div>
           <div class="col-8">
             <!-- <input type="text" class="form-control input_text" [(ngModel)]="registerDetails.InstrumentName" /> -->
-            <input
+            <textarea
               type="text"
               class="form-control input_text"
               [(ngModel)]="registerDetails.InstrumentName"
               [disabled]="test"
-            />
+            >
+            </textarea>
+            <!-- <input
+              type="text"
+              class="form-control input_text"
+              [(ngModel)]="registerDetails.InstrumentName"
+              [disabled]="test"
+            /> -->
           </div>
         </div>
       </div>
@@ -424,14 +431,21 @@
             </div>
         </div>
       </div> -->
-      <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-        <div class="row form-group align-items-center">
+      <div class="col-md-4">
+        <div class="row form-group">
           <!-- <div class="col-4"> -->
           <!-- <button type="button" class="Viewbtn">VIEW</button> -->
           <!-- </div> -->
           <div class="col-2">
             <mat-label class="gene_name newname">Active</mat-label>
-            <input type="checkbox" id="scales" name="scales" checked readonly />
+            <input
+              type="checkbox"
+              id="scales"
+              name="scales"
+              checked
+              readonly
+              [disabled]="test"
+            />
           </div>
           <!-- <div class="col-2">
             <input type="checkbox" class="form-control ex" id="active"  [(ngModel)]="registerDetails.active"  (change)="GetStats($event)" checked/>
@@ -449,28 +463,15 @@
               id="scales"
               name="scales"
               (change)="checkedAmc($event)"
+              [disabled]="test"
             />
           </div>
-          <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
-            <div class="row form-group align-items-center">
-              <div class="col-8">
-                <mat-label class="gene_name newname"
-                  >Instrument Image Reference</mat-label
-                >
-              </div>
-              <div class="col-4">
-                <!-- <input type="text" bsDatepicker   class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
-                <input
-                  (change)="selectimage($event)"
-                  type="file"
-                  id="inputGroupFile01"
-                  accept="image/*"
-                  [(ngModel)]="registerDetails.headerImage"
-                  aria-describedby="inputGroupFileAddon01"
-                />
-              </div>
-            </div>
+          <div class="col-8">
+            <mat-label class="gene_name newname"
+              >Instrument Image Reference</mat-label
+            >
           </div>
+
           <!-- <div class="col-8">
             <mat-label class="gene_name newname"
               >Instrument Image Reference</mat-label
@@ -496,6 +497,50 @@
           </div> -->
         </div>
       </div>
+      <div class="col-xl-4 col-lg-6 col-md-8 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-8">
+            <!-- <input type="text" bsDatepicker   class="form-control input_text"  [(ngModel)]="registerDetails.date" /> -->
+            <input
+              (change)="selectimage($event)"
+              type="file"
+              id="inputGroupFile01"
+              accept="image/*"
+              [(ngModel)]="registerDetails.headerImage"
+              aria-describedby="inputGroupFileAddon01"
+              [disabled]="test"
+              #fileUpload
+            />
+          </div>
+          <img
+            [src]="headerimagePatch"
+            *ngIf="headerimagePatch"
+            width="20%"
+            height="50%"
+          />
+        </div>
+      </div>
+
+      <!-- <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+        <div class="row form-group align-items-center">
+          <div class="col-8">
+            <mat-label class="gene_name newname"
+              >Instrument Image Reference</mat-label
+            >
+          </div>
+          <div class="col-4">
+            <input type="text" bsDatepicker   class="form-control input_text"  [(ngModel)]="registerDetails.date" />
+            <input
+              (change)="selectimage($event)"
+              type="file"
+              id="inputGroupFile01"
+              accept="image/*"
+              [(ngModel)]="registerDetails.headerImage"
+              aria-describedby="inputGroupFileAddon01"
+            />
+          </div>
+        </div>
+      </div> -->
     </div>
     <!-- <div class="row">
       <div class="col-md-12">
@@ -619,7 +664,7 @@
               mat-flat-button
               id="color_sv"
               class="submit-button l-20"
-              *ngIf="!registerDetails.id"
+              *ngIf="!updateButton"
               (click)="adderror()"
               [disabled]="!editAccess"
             >
@@ -629,7 +674,7 @@
               mat-flat-button
               id="color_sv"
               class="submit-button l-20"
-              *ngIf="registerDetails.id"
+              *ngIf="updateButton"
               (click)="update()"
               [disabled]="!editAccess"
             >
@@ -690,10 +735,85 @@
 </div>
 <br />
 
+<div class="searchbox">
+  <div class="has-search text-right">
+    <span class="fa fa-search form-control-feedback" slot="end"></span>
+    <input
+      type="text"
+      class="search"
+      placeholder="Search"
+      (keyup)="onKeySearch($event)"
+      (input)="Empty()"
+      placeholder="Search {{ SearchField }}"
+      [(ngModel)]="searchvalue"
+    />
+  </div>
+</div>
+<div class="pt-3 mb-3">
+  <table class="table table-borderless table-hover">
+    <thead>
+      <tr class="header_color">
+        <td
+          scope="col"
+          *ngFor="let head of TableHeading; let i = index"
+          class="gene_name tablethtd"
+          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
+        >
+          {{ head.name }}
+        </td>
+      </tr>
+    </thead>
+    <tbody class="table table-sm">
+      <tr
+        *ngFor="
+          let data of collection | searchfilter: searchvalue:['Description'];
+          let i = index
+        "
+      >
+        <td class="gene_name tablethtd">{{ i + 1 }}</td>
+        <td class="gene_name tablethtd">{{ data.Description }}</td>
+        <td class="gene_name tablethtd">{{ data.Specification }}</td>
+        <td class="gene_name tablethtd">{{ data.Observation }}</td>
+        <td class="gene_name tablethtd">{{ data.Remark }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.createdAt | date: "dd-MMM-yyyy" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
+        <td class="gene_name tablethtd">
+          {{ data.updatedAt | date: "dd-MMM-yyyy" }}
+        </td>
+        <td class="gene_name tablethtd">{{ data.updatedBy }}{{ user_name }}</td>
+        <td class="gene_name tablethtd icons">
+          <i
+            class="fa fa-pencil-square-o"
+            aria-hidden="true"
+            (click)="getUser(data)"
+          ></i>
+        </td>
+        <!-- <td class="gene_name tablethtd dicons">
+          <i
+            class="fa fa-trash"
+            aria-hidden="true"
+            (click)="deleteUsers(data.id)"
+          ></i>
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <div class="addrow">
   <div>
     <button class="btn btn-primary addrow-button mb-2" (click)="back()">
       Back
+    </button>
+    <button
+      mat-stroked-button
+      class="upload-image addrow-button"
+      (click)="uploadImage()"
+      [disabled]="showButton"
+    >
+      UPLOAD
     </button>
     <button class="btn btn-primary addrow-button mb-2" (click)="AddRow()">
       Attachment
@@ -725,18 +845,18 @@
         "
       >
         <td class="gene_name tablethtd">{{ i + 1 }}</td>
-        <td>
+        <!-- <td>
           <input
             type="text"
             class="form-control input_text"
             value="Attachment"
             disabled
           />
-        </td>
+        </td> -->
         <td class="gene_name tablethtd icons">
           <input
-            *ngIf="chooseFile"
-            (change)="fileChange($event)"
+            *ngIf="!data.filename"
+            (change)="fileChange($event, i)"
             type="file"
             id="inputGroupFile01"
             multiple
@@ -795,7 +915,7 @@
           <!-- <input  (change)="fileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01"> -->
           <!-- <span  class="input-group-text upload"  (click)="upload()"  id="btnUpload">Upload</span> -->
         </td>
-        <td class="gene_name tablethtd dicons">
+        <!-- <td class="gene_name tablethtd dicons">
           <button
             mat-flat-button
             id="color_sv"
@@ -804,7 +924,8 @@
           >
             view
           </button>
-        </td>
+        </td> -->
+        <td>{{ data.filename }}</td>
 
         <td class="gene_name tablethtd icons">
           <button
@@ -816,9 +937,13 @@
           </button>
         </td>
         <td class="gene_name tablethtd dicons">
-          <i class="fa fa-trash" aria-hidden="true" (click)="delete()"></i>
+          <i
+            class="fa fa-trash"
+            aria-hidden="true"
+            (click)="delete(data.id, data)"
+          ></i>
         </td>
-        <td
+        <!-- <td
           *ngIf="
             imageSrc[i] &&
             types[i] ===
@@ -827,10 +952,10 @@
         >
           <img
             src="{{ imgUrl }}/{{ imageSrc[i] }}"
-            width="200px"
-            height="200px"
+            width="70px"
+            height="60px"
           />
-        </td>
+        </td> -->
       </tr>
 
       <!-- <div *ngIf="AmcChecked" > -->
@@ -968,9 +1093,15 @@
     </tbody>
   </table>
 </div>
-<button mat-stroked-button class="upload-image" (click)="uploadImage()">
-  UPLOAD
-</button>
+
+<!-- <button
+  mat-stroked-button
+  class="upload-image"
+  (click)="updateImage()"
+  *ngIf="!showButton"
+>
+  UPDATE DOCUMENT
+</button> -->
 <!-- <mat-card *ngIf="viewimage">
   <mat-card-header class="justify-center">Uploaded Images</mat-card-header>
   <mat-card-content>
@@ -991,72 +1122,6 @@
 </button> -->
 
 <!-- <br /> -->
-<div class="searchbox">
-  <div class="has-search text-right">
-    <span class="fa fa-search form-control-feedback" slot="end"></span>
-    <input
-      type="text"
-      class="search"
-      placeholder="Search"
-      (keyup)="onKeySearch($event)"
-      (input)="Empty()"
-      placeholder="Search {{ SearchField }}"
-      [(ngModel)]="searchvalue"
-    />
-  </div>
-</div>
-<div class="pt-3 mb-3">
-  <table class="table table-borderless table-hover">
-    <thead>
-      <tr class="header_color">
-        <td
-          scope="col"
-          *ngFor="let head of TableHeading; let i = index"
-          class="gene_name tablethtd"
-          [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
-        >
-          {{ head.name }}
-        </td>
-      </tr>
-    </thead>
-    <tbody class="table table-sm">
-      <tr
-        *ngFor="
-          let data of collection | searchfilter: searchvalue:['Description'];
-          let i = index
-        "
-      >
-        <td class="gene_name tablethtd">{{ i + 1 }}</td>
-        <td class="gene_name tablethtd">{{ data.Description }}</td>
-        <td class="gene_name tablethtd">{{ data.Specification }}</td>
-        <td class="gene_name tablethtd">{{ data.Observation }}</td>
-        <td class="gene_name tablethtd">{{ data.Remark }}</td>
-        <td class="gene_name tablethtd">
-          {{ data.createdAt | date: "dd-MMM-yyyy" }}
-        </td>
-        <td class="gene_name tablethtd">{{ data.createdBy }}{{ user_name }}</td>
-        <td class="gene_name tablethtd">
-          {{ data.updatedAt | date: "dd-MMM-yyyy" }}
-        </td>
-        <td class="gene_name tablethtd">{{ data.updatedBy }}{{ user_name }}</td>
-        <td class="gene_name tablethtd icons">
-          <i
-            class="fa fa-pencil-square-o"
-            aria-hidden="true"
-            (click)="getUser(data)"
-          ></i>
-        </td>
-        <td class="gene_name tablethtd dicons">
-          <i
-            class="fa fa-trash"
-            aria-hidden="true"
-            (click)="deleteUsers(data.id)"
-          ></i>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
 
 <!-- <ng-template #mymodal let-modal>
   <div class="modal-header">
