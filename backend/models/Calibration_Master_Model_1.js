@@ -107,6 +107,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DATE,
             field: 'dueDate'
         },
+        // ErrorReferenceCode: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'ErrorReferenceCode'
+        // },
 
         Description: {
             type: DataTypes.STRING(250),

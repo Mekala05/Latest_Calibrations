@@ -28,6 +28,7 @@ export interface master {
   dueDate?: Date;
   headerImage?: string;
   headerImagepath?: string;
+  // ErrorReferenceCode?: string;
 }
 
 export interface Image {
@@ -38,6 +39,9 @@ export interface Image {
 export interface MultipleImage {
   filename?: string;
   instrumentCode?: string;
+  instrumentName?: string;
   filepath?: string;
   type?: string;
+  active?: boolean;
+  // ErrorReferenceCode?: string;
 }
