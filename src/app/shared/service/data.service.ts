@@ -255,6 +255,11 @@ export class DataService {
   MasterTest_getViewParticular_getView() {
     return this.http.get<any>(`${environment.Calibration_Master}/view`);
   }
+  User_getolct() {
+    return this.http.get<any>(
+      `${environment.CalibrationLocationmaster}/viewolct`
+    );
+  }
   MasterTest_getViewParticular_getView_sapref() {
     return this.http.get<any>(`${environment.Calibration_Master}/view-sapref`);
   }
