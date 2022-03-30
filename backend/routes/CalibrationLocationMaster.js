@@ -36,7 +36,7 @@ router.post('/insert', (req, res) => {
     })
 })
 
-router.get('/viewData', (req, res) => {
+router.get('/viewolct', (req, res) => {
     return new Promise((resolve, reject) => {
         Olct.findAll({
             attributes: ['code', 'Location', 'U_BranchName', 'U_Branch'],

@@ -30,25 +30,30 @@ export class UseraccessComponent implements OnInit {
   ngOnInit(): void {
     this.accessgiven = [];
     // this.load();
-    this.dataservice.getViewOhem().subscribe((item: any) => {
-      this.userDetails = item.data;
-      item.data.map((data: any) => {
-        if (data.branch) {
-          this.units.push(data.branch);
-        }
-        if (data.dept) {
-          this.dep.push(data.dept);
-        }
-        if (data.firstName) {
-          this.emp.push({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            empID: data.empID,
-          });
-        }
-      });
-      console.log('dep', this.dep);
+    this.dataservice.User_getolct().subscribe((data: any) => {
+      console.log('data', data);
+
+      this.units = data.data;
     });
+    // this.dataservice.getViewOhem().subscribe((item: any) => {
+    //   this.userDetails = item.data;
+    //   item.data.map((data: any) => {
+    //     if (data.branch) {
+    //       this.units.push(data.branch);
+    //     }
+    //     if (data.dept) {
+    //       this.dep.push(data.dept);
+    //     }
+    //     if (data.firstName) {
+    //       this.emp.push({
+    //         firstName: data.firstName,
+    //         lastName: data.lastName,
+    //         empID: data.empID,
+    //       });
+    //     }
+    //   });
+    //   console.log('dep', this.dep);
+    // });
 
     this.dataservice.useracess_gets().subscribe((data: any) => {
       console.log(data);
@@ -63,8 +68,8 @@ export class UseraccessComponent implements OnInit {
     this.registerDetails = data;
     this.registered = data;
     // this.tableData = data;
-    console.log('register details', this.registerDetails);
-    console.log('register', this.registered);
+    // console.log('register details', this.registerDetails);
+    // console.log('register', this.registered);
   }
 
   unit(eve: any) {
