@@ -321,14 +321,15 @@ export class CalibrationmasterComponent implements OnInit {
     //   this.updateButton = true;
     // }
     let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // console.log('user', useraccess);
-
     let datas = useraccess.filter((element: any) => element.moduleid === 6);
-    // console.log('datas', datas);
-
     this.editAccess = datas[0].Edit;
     // this.editAccess = true;
     // console.log(this.editAccess);
+    // if(useraccess === 'HR') {
+    //   this.editAccess = true
+    // } else {
+    //   this.editAccess = false;
+    // }
 
     this.getCategory();
     this.getType();
