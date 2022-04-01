@@ -5,6 +5,7 @@ export interface EmployeeAccess {
 }
 
 export interface EmployeeAccessDetails {
+  id?: string;
   view: boolean;
   Edit: boolean;
   moduleid: string;

@@ -1,6 +1,4 @@
-export  interface Request_Cali{
-    id?: string;
-    CalibrationRequest?: string;
-
-   
-  }
+export interface Request_Cali {
+  id?: string;
+  CalibrationRequest?: string;
+}

@@ -321,11 +321,7 @@ export class CalibrationmasterComponent implements OnInit {
     //   this.updateButton = true;
     // }
     let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // console.log('user', useraccess);
-
     let datas = useraccess.filter((element: any) => element.moduleid === 6);
-    // console.log('datas', datas);
-
     this.editAccess = datas[0].Edit;
     // this.editAccess = true;
     // console.log(this.editAccess);
@@ -1950,12 +1946,12 @@ export class CalibrationmasterComponent implements OnInit {
   // }
 
   AddRow() {
-    if (
-      this.registerDetails.InstrumentCode &&
-      this.registerDetails.InstrumentName
-    ) {
-      this.showButton = false;
-    }
+    // if (
+    //   this.registerDetails.InstrumentCode &&
+    //   this.registerDetails.InstrumentName
+    // ) {
+    //   this.showButton = false;
+    // }
     // this.dataservice = {};
     // console.log('col', this.collectiondata.length);
     if (this.collectiondata.length === 0) {

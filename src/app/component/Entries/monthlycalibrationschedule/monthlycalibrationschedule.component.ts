@@ -152,7 +152,7 @@ export class MonthlycalibrationscheduleComponent implements OnInit {
 
   public tableData(year: any, month: any) {
     this.dataservice.Monthly_report(year, month).subscribe((data) => {
-      if (data.data != '') {
+      if (data.data) {
         // console.log(data.data);
         data.data.map((item: any) => {
           if (item.MxLifeTime === 'Quarterly||3') {
