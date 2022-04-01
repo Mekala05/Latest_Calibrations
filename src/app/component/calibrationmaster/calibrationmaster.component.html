@@ -929,6 +929,7 @@
 
         <td class="gene_name tablethtd icons">
           <button
+            *ngIf="data.filename"
             mat-stroked-button
             class="submit-button"
             (click)="download(data, i)"

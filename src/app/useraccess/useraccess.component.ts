@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataService } from '../shared/service/data.service';
 import { EmployeeAccess, EmployeeAccessDetails } from './model';
 
@@ -21,53 +22,59 @@ export class UseraccessComponent implements OnInit {
   userDetails: any = [];
   show: boolean = false;
   tableData: any = [];
-  accessgiven: any = [];
+  accessgiven: EmployeeAccessDetails[] = [];
   public user: any = [];
+  updateUser: any[] = [];
   update: boolean = false;
 
-  constructor(public dataservice: DataService) {}
+  constructor(public dataservice: DataService, public router: Router) {}
 
   ngOnInit(): void {
     this.accessgiven = [];
     // this.load();
-    this.dataservice.User_getolct().subscribe((data: any) => {
-      console.log('data', data);
-
-      this.units = data.data;
-    });
-    // this.dataservice.getViewOhem().subscribe((item: any) => {
-    //   this.userDetails = item.data;
-    //   item.data.map((data: any) => {
-    //     if (data.branch) {
-    //       this.units.push(data.branch);
-    //     }
-    //     if (data.dept) {
-    //       this.dep.push(data.dept);
-    //     }
-    //     if (data.firstName) {
-    //       this.emp.push({
-    //         firstName: data.firstName,
-    //         lastName: data.lastName,
-    //         empID: data.empID,
-    //       });
-    //     }
-    //   });
-    //   console.log('dep', this.dep);
+    // this.update = false;
+    // this.load();
+    // this.dataservice.User_getolct().subscribe((data: any) => {
+    //   this.units = data.data;
     // });
+    this.dataservice.getViewOhem().subscribe((item: any) => {
+      this.userDetails = item.data;
+      item.data.map((data: any) => {
+        if (data.branch) {
+          this.units.push(data.branch);
+        }
+        if (data.dept) {
+          this.dep.push(data.dept);
+        }
+        if (data.firstName) {
+          this.emp.push({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            empID: data.empID,
+          });
+        }
+      });
+      // console.log('dep', this.dep);
+    });
 
     this.dataservice.useracess_gets().subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
       this.user = data.data;
     });
   }
 
   getUser(data: any) {
-    this.load();
-    this.update = true;
     // console.log(data);
+    this.update = true;
+
+    this.load();
+    // console.log('data ', data);
     this.registerDetails = data;
     this.registered = data;
-    // this.tableData = data;
+    this.tableData = data;
+
+    // console.log('data', this.tableData);
+
     // console.log('register details', this.registerDetails);
     // console.log('register', this.registered);
   }
@@ -81,7 +88,7 @@ export class UseraccessComponent implements OnInit {
         this.dep = dept;
       }
     });
-    console.log(this.dep);
+    // console.log(this.dep);
   }
 
   department(eve: any) {
@@ -105,19 +112,37 @@ export class UseraccessComponent implements OnInit {
   load() {
     this.show = true;
     // console.log('inside load');
-    this.dataservice.iddescription_get().subscribe((data: any) => {
-      this.tableData = data.data;
-      // console.log('table', this.tableData);
-    });
+    // console.log(this.update);
+
+    // if (this.update === true) {
+    //   console.log('update');
+
+    //   this.dataservice.iddescription_get().subscribe((data: any) => {
+    //     this.updateUser = data.data;
+    //     console.log('table', this.tableData);
+    //   });
+    // }
+
+    if (this.update === false) {
+      console.log('not update');
+
+      this.dataservice.iddescription_get().subscribe((data: any) => {
+        this.tableData = data.data;
+        // console.log('table', this.tableData);
+      });
+    }
   }
 
   edit(eve: any, val: any) {
-    console.log(val);
+    // console.log('eve', eve.target.value);
+    // console.log('val', val);
 
     if (eve.target.value === 'view' || eve.target.value === 'edit') {
       if (this.accessgiven.length) {
+        // console.log('inside length');
+
         this.accessgiven.map((item: any) => {
-          if (item.moduleId === val.moduleId) {
+          if (item.moduleid === val.moduleId) {
             if (eve.target.value === 'view') {
               val.view = eve.target.checked;
             }
@@ -138,6 +163,8 @@ export class UseraccessComponent implements OnInit {
           return this.accessgiven;
         });
       } else {
+        // console.log('inside else');
+
         if (eve.target.value === 'view') {
           val.view = eve.target.checked;
         }
@@ -146,38 +173,76 @@ export class UseraccessComponent implements OnInit {
         }
         this.accessgiven.push(val);
       }
+
+      // console.log('access', this.accessgiven);
     }
   }
 
-  allow() {
-    // this.show = true;
-    // this.dataservice.getViewOhem().subscribe((item: any) => {
-    //   this.userDetails = item.data;
-    //   item.data.map((data: any) => {
-    //     if (data.branch) {
-    //       this.units.push(data.branch);
-    //     }
-    //     if (data.dept) {
-    //       this.dep.push(data.dept);
-    //     }
-    //     if (data.firstName) {
-    //       this.emp.push(data);
-    //     }
-    //   });
-    //   console.log('dep', this.dep);
-    // });
-    this.accessgiven.map((item: any) => {
-      console.log('item', item);
+  edited(eve: any, val: any) {
+    // console.log('eve', eve.target.value);
+    // console.log('val', val);
 
+    if (eve.target.value === 'view') {
+      // if (this.accessgiven.length) {
+      //   console.log('inside length');
+
+      //   this.accessgiven.map((item: any) => {
+      //     if (
+      //       item.moduleId === val.moduleId ||
+      //       item.moduleid === val.moduleid
+      //     ) {
+      //       if (eve.target.value === 'view') {
+      //         val.view = eve.target.checked;
+      //       }
+      //       if (eve.target.value === 'edit') {
+      //         val.edit = eve.target.checked;
+      //       }
+      //     } else {
+      //       if (eve.target.value === 'view') {
+      //         val.view = eve.target.checked;
+      //       }
+      //       if (eve.target.value === 'edit') {
+      //         val.edit = eve.target.checked;
+      //       }
+      //       if (!this.accessgiven.includes(val)) {
+      //         this.accessgiven.push(val);
+      //       }
+      //     }
+      //     return this.accessgiven;
+      //   });
+      // } else {
+      //   console.log('inside else');
+
+      //   if (eve.target.value === 'view') {
+      //     val.view = eve.target.checked;
+      //   }
+      //   if (eve.target.value === 'edit') {
+      //     val.edit = eve.target.checked;
+      //   }
+      //   this.accessgiven.push(val);
+      // }
+      // if (eve.target.value === 'edit') {
+      // }
+      // if (eve.target.value === 'view') {
+      val.view = eve.target.checked;
+      val.edit = val.Edit;
+      // }
+    }
+    if (eve.target.value === 'edit') {
+      val.edit = eve.target.checked;
+    }
+    this.updateUser.push(val);
+    // console.log('access', this.updateUser);
+  }
+
+  allow() {
+    this.accessgiven.map((item: any) => {
       if (item.view === undefined) {
         item.view = false;
       }
       if (item.edit === undefined) {
         item.edit = false;
       }
-      // console.log('emp', this.registerDetails.employeeid);
-      console.log('register', this.registered);
-      console.log('type', typeof this.registered);
 
       this.registered.push({
         view: item.view,
@@ -190,31 +255,41 @@ export class UseraccessComponent implements OnInit {
       });
     });
 
-    if (!this.update) {
-      this.registered.map((item: any) => {
-        this.dataservice.useracess_post(item).subscribe((data: any) => {});
+    this.registered.map((item: any) => {
+      this.dataservice.useracess_post(item).subscribe((data: any) => {
+        this.tableData = data;
       });
-
-      this.dataservice.useracess_gets().subscribe((data: any) => {
-        this.user = data.data;
-      });
-    }
-
-    if (this.update) {
-      console.log(this.registerDetails.employeeid);
-      console.log(this.registered);
-
-      this.dataservice
-        .useracess_update(this.registerDetails.employeeid, this.registered)
-        .subscribe((item: any) => {});
-    }
-
-    // console.log('register', this.registered);
+    });
+    // this.ngOnInit();
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+    // this.tabledata();
   }
 
   updateData() {
-    console.log('insie log');
-    console.log(this.registerDetails);
-    this.allow();
+    this.updateUser.map((item: any) => {
+      return (
+        (item.view = this.updateUser[0].view),
+        (item.Edit = this.updateUser[0].edit),
+        delete this.updateUser[0].edit,
+        (item.moduleid = this.updateUser[0].moduleid),
+        (item.ModuleidDescription = this.updateUser[0].ModuleidDescription),
+        (item.employeeid = this.registerDetails.employeeid),
+        (item.unit = this.registerDetails.unit),
+        (item.department = this.registerDetails.department)
+      );
+    });
+
+    this.dataservice
+      .useracess_update(this.updateUser[0].id, this.updateUser[0])
+      .subscribe((item: any) => {});
+    this.ngOnInit();
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+    this.ngOnInit();
   }
 }

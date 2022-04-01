@@ -57,6 +57,7 @@ router.get('/view/:id', (req, res) => {
 
 router.put('/update/:id', (req, res) => {
     return new Promise((resolve, reject) => {
+        // console.log('req.body', req.body);
         useraccess.update(req.body, { where: { id: req.params.id } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {

@@ -325,11 +325,6 @@ export class CalibrationmasterComponent implements OnInit {
     this.editAccess = datas[0].Edit;
     // this.editAccess = true;
     // console.log(this.editAccess);
-    // if(useraccess === 'HR') {
-    //   this.editAccess = true
-    // } else {
-    //   this.editAccess = false;
-    // }
 
     this.getCategory();
     this.getType();
@@ -1951,12 +1946,12 @@ export class CalibrationmasterComponent implements OnInit {
   // }
 
   AddRow() {
-    if (
-      this.registerDetails.InstrumentCode &&
-      this.registerDetails.InstrumentName
-    ) {
-      this.showButton = false;
-    }
+    // if (
+    //   this.registerDetails.InstrumentCode &&
+    //   this.registerDetails.InstrumentName
+    // ) {
+    //   this.showButton = false;
+    // }
     // this.dataservice = {};
     // console.log('col', this.collectiondata.length);
     if (this.collectiondata.length === 0) {
