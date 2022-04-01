@@ -43,5 +43,6 @@ export interface MultipleImage {
   filepath?: string;
   type?: string;
   active?: boolean;
+  ids?: Number;
   // ErrorReferenceCode?: string;
 }

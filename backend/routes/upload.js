@@ -96,7 +96,7 @@ app.post('/attachment/insert', multipartMiddleware, (req, res) => {
 
 app.get('/attachment/view/:instrumentCode', (req, res) => {
     return new Promise((resolve, reject) => {
-        ImageAttachment.findAll({ where: { deleteStatus: false, instrumentCode: req.params.instrumentCode, active: true } }).then(function (result) {
+        ImageAttachment.findAll({ where: { deleteStatus: false, ids: req.params.instrumentCode, active: true } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
             sendError(res, err);

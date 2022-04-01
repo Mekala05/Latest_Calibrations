@@ -2,7 +2,10 @@ const { ImageAttachment } = require(".")
 
 module.exports = function (sequelize, DataTypes) {
     let ImageAttachment = sequelize.define('ImageAttachment', {
-
+        ids: {
+            type: DataTypes.INTEGER(10),
+            field: 'ids',
+        },
         instrumentCode: {
             type: DataTypes.STRING(250),
             field: 'instrumentCode',

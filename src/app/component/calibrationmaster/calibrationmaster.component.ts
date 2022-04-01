@@ -121,6 +121,7 @@ export class CalibrationmasterComponent implements OnInit {
   closeResult: string = '';
   showButton: boolean = true;
   updateFile: string = '';
+  ids: any;
   public table: any[] = [];
 
   public Heading = [
@@ -212,6 +213,8 @@ export class CalibrationmasterComponent implements OnInit {
 
               this.collection = instrument;
               this.BackUpdata = instrument;
+              console.log(instrument[0].id);
+
               this.registerDetails.id = instrument[0].id;
               this.registerDetails.InstrumentName =
                 instrument[0].InstrumentName;
@@ -295,9 +298,10 @@ export class CalibrationmasterComponent implements OnInit {
               // });
 
               this.dataservice
-                .fileviewmulti_Master(instrument[0].InstrumentCode)
+                .fileviewmulti_Master(instrument[0].id)
                 .subscribe((data: any) => {
                   this.collectiondata = data.data;
+                  console.log('collection data', this.collectiondata);
                 });
 
               // console.log(instrument[0].headerImage);
@@ -320,10 +324,10 @@ export class CalibrationmasterComponent implements OnInit {
     // } else {
     //   this.updateButton = true;
     // }
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    let datas = useraccess.filter((element: any) => element.moduleid === 6);
-    this.editAccess = datas[0].Edit;
-    // this.editAccess = true;
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 6);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
     // console.log(this.editAccess);
 
     this.getCategory();
@@ -564,7 +568,7 @@ export class CalibrationmasterComponent implements OnInit {
     } else {
       this.collection = [];
       this.collection.push(this.registerDetails);
-
+      this.ids = this.registerDetails.id;
       this.dataservice
         .MasterTest_updateSingleUser(
           this.registerDetails.id,
@@ -617,6 +621,7 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   getUser(id: object) {
+    this.updateButton = true;
     this.registerDetails = { ...id };
     this.date = this.datePipe.transform(
       this.registerDetails.date,
@@ -717,6 +722,8 @@ export class CalibrationmasterComponent implements OnInit {
     // this.chooseFile = false;
     let formDatas = new FormData();
     // console.log(this.uploadedFiles.length);
+    console.log('len', this.uploadedFiles.length);
+    this.attachmentImage = [];
 
     for (var i = 0; i < this.uploadedFiles.length; i++) {
       formDatas.append(
@@ -730,6 +737,7 @@ export class CalibrationmasterComponent implements OnInit {
         instrumentName: this.registerDetails.InstrumentName,
         type: this.uploadedFiles[i].type,
         active: true,
+        ids: this.ids,
       });
     }
     // console.log('formdatas', formDatas);
@@ -1207,37 +1215,16 @@ export class CalibrationmasterComponent implements OnInit {
 
   headerimage() {
     let formData = new FormData();
-    // console.log(this.images.length);
-
     for (var i = 0; i < this.images.length; i++) {
       formData.append('images[]', this.images[i], this.images[i].name);
     }
-    // console.log('formdata', formData);
-    // console.log();
 
     this.dataservice.fileupload_Master(formData).subscribe((data: any) => {
-      // console.log('single', data.message);
       this.registerDetails.headerImage =
         data.message.images[0].originalFilename;
       this.registerDetails.headerImagepath = data.message.images[0].path;
     });
   }
-
-  // imagePreview(e: any) {
-  //   const file = (e.target as HTMLInputElement).files[0];
-
-  //   this.myForm.patchValue({
-  //     img: file
-  //   });
-
-  //   this.myForm.get('img').updateValueAndValidity()
-
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     this.filePath = reader.result as string;
-  //   }
-  //   reader.readAsDataURL(file)
-  // }
 
   adderror() {
     var category = this.registerDetails.category;
@@ -1495,6 +1482,13 @@ export class CalibrationmasterComponent implements OnInit {
       .MasterTest_postUser(this.registerDetails)
       .subscribe((data) => {
         // console.log('postuser', this.collection);
+        // console.log(data);
+        // console.log('len', data.data.id);
+
+        // console.log(data.data[data.data.length - 1]);
+        if (data.data.id) {
+          this.ids = data.data.id;
+        }
 
         this.collection = data.data;
         this.BackUpdata = data.data;
