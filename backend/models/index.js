@@ -45,6 +45,7 @@ models.CalibrationReport = require("./CalibrationReport")(sequelize, Sequelize)
 models.CalibrationMasterListReport = require("./CalibrationMasterListReport")(sequelize, Sequelize)
 models.useraccess = require("./useraccess")(sequelize, Sequelize)
 models.iddescription = require("./iddescription")(sequelize, Sequelize)
+models.ErrorDescription = require("./ErrorDescription")(sequelize, Sequelize)
 
 
 
@@ -52,8 +53,7 @@ models.iddescription = require("./iddescription")(sequelize, Sequelize)
 
 
 
-
-
+models.ErrorDescription.sync();
 models.User.sync();
 models.CategoryMaster.sync();
 models.ImageAttachment.sync();

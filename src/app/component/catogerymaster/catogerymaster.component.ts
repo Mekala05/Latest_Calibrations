@@ -55,9 +55,10 @@ export class CatogerymasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    let datas = useraccess.filter((element: any) => element.moduleid === 6);
-    this.editAccess = datas[0].Edit;
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 6);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
 
     this.dataservice.getViewOhem().subscribe((item: any) => {
       console.log('ohem', item);

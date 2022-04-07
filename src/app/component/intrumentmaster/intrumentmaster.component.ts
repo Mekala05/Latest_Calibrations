@@ -68,10 +68,11 @@ export class IntrumentmasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    let datas = useraccess.filter((element: any) => element.moduleid === 3);
-    // console.log(datas);
-    this.editAccess = datas[0].Edit;
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 3);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
+
     this.tabledata();
     this.getCategory();
     this.getType();

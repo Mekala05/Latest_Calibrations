@@ -190,9 +190,11 @@ export class ScrapApprovalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    let datas = useraccess.filter((element: any) => element.moduleid === 13);
-    this.editAccess = datas[0].Edit;
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 13);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
+
     this.registerDetails.Approve = false;
     this.registerDetails.Reject = false;
     this.tabledata();

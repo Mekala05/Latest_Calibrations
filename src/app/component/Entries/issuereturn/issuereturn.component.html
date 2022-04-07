@@ -396,7 +396,6 @@
           *ngFor="let head of TableHeading; let i = index"
           class="gene_name tablethtd"
           [style.background-color]="i == HighlightHead ? ' #427caa' : '#dfdfdf'"
-          (click)="Click_Head(i, head.name)"
         >
           {{ head.name }}
         </td>
@@ -433,9 +432,9 @@
           ></i>
         </td>
         <td class="gene_name tablethtd dicons">
-          <button [disabled]="!editAccess">
+          <button [disabled]="!editAccess" class="buttons">
             <i
-              class="fa fa-trash"
+              class="fa fa-trash icon"
               aria-hidden="true"
               (click)="deleteUsers(data.id)"
             ></i>

@@ -74,9 +74,11 @@ export class BreagedetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    let datas = useraccess.filter((element: any) => element.moduleid === 12);
-    this.editAccess = datas[0].Edit;
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 12);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
+
     this.dataservice.url$.subscribe((data: any) => {
       this.url = data;
       console.log(this.url);

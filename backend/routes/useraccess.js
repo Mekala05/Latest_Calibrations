@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 
-const { useraccess } = require('../models');
+const { useraccess, ohem, Olct, OUDP } = require('../models');
 
 
 function sendError(res, err) {
@@ -87,6 +87,37 @@ router.delete('/delete/:id', (req, res) => {
             sendError(res, err);
         });
     })
+})
+
+
+// router.get('/viewuseraccess', (req, res) => {
+//     return new Promise((resolve, reject) => { //models.Olct 
+//         odep.findAll({
+//             include: [{
+//                 model: Olct // will create a left join
+//             }]
+//         }).then(function (result) {
+//             sendSuccess(res, result);
+//         }).catch(function (err) {
+//             sendError(res, err);
+//         });
+//     })
+
+// })
+
+router.get('/viewuserData', (req, res) => {
+    return new Promise((resolve, reject) => { //models.Olct 
+        ohem.findAll({
+            include: [{
+                model: Olct // will create a left join
+            }]
+        }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
 })
 
 module.exports = router

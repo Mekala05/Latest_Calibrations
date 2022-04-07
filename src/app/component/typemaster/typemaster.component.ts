@@ -63,14 +63,11 @@ export class TypemasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // console.log(sample);
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 7);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
 
-    // this.dataservice.useraccess.subscribe((item: any) => {
-    //   console.log('item', item);
-    let datas = useraccess.filter((element: any) => element.moduleid === 7);
-    // console.log(datas);
-    this.editAccess = datas[0].Edit;
     this.tabledata();
     this.getCategory();
     this.user_name = localStorage.getItem('Login_name');

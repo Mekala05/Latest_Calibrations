@@ -9,7 +9,7 @@ export interface master {
   range?: string;
   masterspecification?: string;
   CurrentLocation?: string;
-  date?: Date;
+  date?: any;
   MxLifeTime?: string;
   MxLifeTimeNumber?: string;
   Location?: string;
@@ -25,7 +25,7 @@ export interface master {
   InstrumentRefferenceCode?: string;
   SAPRefferenceCode?: string;
   Department?: string;
-  dueDate?: Date;
+  dueDate?: any;
   headerImage?: string;
   headerImagepath?: string;
   // ErrorReferenceCode?: string;
@@ -45,4 +45,15 @@ export interface MultipleImage {
   active?: boolean;
   ids?: Number;
   // ErrorReferenceCode?: string;
+}
+
+export interface ErrorDescription {
+  InstrumentCode?: string;
+  InstrumentName?: string;
+  Description?: string;
+  Remark?: string;
+  Observation?: string;
+  Specification?: string;
+  active?: boolean;
+  id?: string;
 }

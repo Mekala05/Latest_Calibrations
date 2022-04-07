@@ -23,7 +23,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.category"
               (change)="category($event)"
-              [disabled]="test"
+              [disabled]="showpart"
             >
               <option disabledd selected value="undefined">--Select--</option>
               <option
@@ -49,7 +49,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.type"
               (change)="typemaster($event)"
-              [disabled]="test"
+              [disabled]="showpart"
             >
               <option disabledd selected value="undefined">--Select--</option>
               <option
@@ -77,7 +77,7 @@
               id="code"
               [(ngModel)]="registerDetails.MasterType"
               (change)="code($event)"
-              [disabled]="test"
+              [disabled]="showpart"
             >
               <option value="undefined" disabledd selected>--Select--</option>
               <option
@@ -103,7 +103,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.Location"
               (change)="locationdata($event)"
-              [disabled]="test"
+              [disabled]="showpart"
             >
               <option disabledd selected value="undefined">--Select--</option>
               <option
@@ -647,9 +647,9 @@
     <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12"></div>
     <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
       <div class="row form-group">
-        <div class="col-6 ml-140">
-          <span>
-            <!-- <button
+        <div class="col-12 ml-50">
+          <!-- <span> -->
+          <!-- <button
               mat-flat-button
               class="error-button btn-success mr-2"
               *ngIf="!registerDetails.id"
@@ -657,30 +657,52 @@
             >
               <mat-icon> + </mat-icon>
             </button> -->
-            <button mat-stroked-button class="submit-button" (click)="reset()">
-              CLEAR
-            </button>
-            <button
-              mat-flat-button
-              id="color_sv"
-              class="submit-button l-20"
-              *ngIf="!updateButton"
-              (click)="adderror()"
-              [disabled]="!editAccess"
-            >
-              ADD
-            </button>
-            <button
-              mat-flat-button
-              id="color_sv"
-              class="submit-button l-20"
-              *ngIf="updateButton"
-              (click)="update()"
-              [disabled]="!editAccess"
-            >
-              Update
-            </button>
-          </span>
+          <button mat-stroked-button class="submit-button" (click)="reset()">
+            CLEAR
+          </button>
+          <button
+            mat-flat-button
+            id="color_sv"
+            *ngIf="!updateButton && !test"
+            class="submit-button l-20"
+            (click)="adderror()"
+            [disabled]="!editAccess"
+          >
+            ADD
+          </button>
+          <!-- update:{{ updateButton }} test: {{ test }} -->
+          <button
+            mat-stroked-button
+            id="color_sv"
+            *ngIf="updateButton || test"
+            class="submit-button l-20"
+            (click)="storeData()"
+            [disabled]="!editAccess"
+          >
+            ADD
+          </button>
+          <!-- button: {{ updateButton }} error: {{ updateErrors }} -->
+          <button
+            mat-stroked-button
+            id="color_sv"
+            class="submit-button ml-35"
+            *ngIf="updateButton"
+            (click)="update()"
+            [disabled]="!editAccess"
+          >
+            Update
+          </button>
+          <!-- <button
+            mat-stroked-button
+            id="color_sv"
+            class="submit-button ml-35"
+            *ngIf="!updateButton && updateErrors"
+            (click)="updateError()"
+            [disabled]="!editAccess"
+          >
+            Update
+          </button> -->
+          <!-- </span> -->
         </div>
         <!-- <div class="col-6">
           <body>
@@ -790,6 +812,25 @@
             (click)="getUser(data)"
           ></i>
         </td>
+        <td>
+          <button
+            class="btn btn-primary addrow-button mb-2"
+            (click)="AddRow(i, false, data.id)"
+          >
+            <i class="fa fa-paperclip"></i>
+          </button>
+        </td>
+        <td>
+          <button
+            mat-stroked-button
+            class="upload-image addrow-button"
+            id="{{ i }}"
+            (click)="uploadImage(data.id)"
+            [disabled]="showButton === i ? false : true"
+          >
+            UPLOAD
+          </button>
+        </td>
         <!-- <td class="gene_name tablethtd dicons">
           <i
             class="fa fa-trash"
@@ -804,10 +845,8 @@
 
 <div class="addrow">
   <div>
-    <button class="btn btn-primary addrow-button mb-2" (click)="back()">
-      Back
-    </button>
-    <button
+    <button class="btn btn-primary submit mb-2" (click)="back()">Back</button>
+    <!-- <button
       mat-stroked-button
       class="upload-image addrow-button"
       (click)="uploadImage()"
@@ -817,7 +856,7 @@
     </button>
     <button class="btn btn-primary addrow-button mb-2" (click)="AddRow()">
       Attachment
-    </button>
+    </button> -->
   </div>
 </div>
 <div class="pt-3 mb-3">
@@ -829,7 +868,6 @@
           *ngFor="let head of Heading; let i = index"
           class="gene_name tablethtd"
           [style.background-color]="i == HighlightHead ? '#dfdfdf ' : '#dfdfdf'"
-          (click)="Click_Head(i, head.name)"
         >
           {{ head.name }}
         </td>

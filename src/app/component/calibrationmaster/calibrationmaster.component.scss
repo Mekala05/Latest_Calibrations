@@ -182,7 +182,10 @@ tr {
 .addrow-button {
   // line-height: 1.9rem;
   // font-size: 0.7rem;
-  font-family: "Montserrat", sans-serif;
+  // font-family: "Montserrat", sans-serif;
+  // line-height: 1.9rem;
+  font-size: 0.7rem;
+  font-family: $font-family;
   // border-bottom-width: 0ex;
   // background-color: skyblue;
   // border: 1px skyblue;
@@ -233,10 +236,13 @@ input[type="checkbox"][readonly] {
   left: 20px;
 }
 
-.ml-140 {
-  margin-left: 140px;
+.ml-50 {
+  margin-left: 50px;
 }
 
+.ml-35 {
+  margin-left: 35px;
+}
 .justify-center {
   justify-content: center;
   font-weight: bold;
@@ -249,6 +255,16 @@ input[type="checkbox"][readonly] {
   // margin-left: 140px;
   background-color: #3f5161;
   color: white;
+  line-height: 1.9rem;
+  font-size: 0.7rem;
+  font-family: $font-family;
+}
+
+.submit {
+  background-color: #3f5161;
+  color: white;
+  float: right;
+  margin-right: 20px;
 }
 
 .label {

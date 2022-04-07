@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         InstrumentCode: {
             type: DataTypes.STRING(250),
-            field: 'InstrumentRefferenceCode'
+            field: 'InstrumentCode'
         },
         InstrumentName: {
             type: DataTypes.STRING(250),
@@ -112,31 +112,31 @@ module.exports = function (sequelize, DataTypes) {
         //     field: 'ErrorReferenceCode'
         // },
 
-        Description: {
-            type: DataTypes.STRING(250),
-            field: 'Description',
-            // unique : true
-        },
-        Specification: {
-            type: DataTypes.STRING(250),
-            field: 'Specification',
-            // unique : true
-        },
+        // Description: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'Description',
+        //     // unique : true
+        // },
+        // Specification: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'Specification',
+        //     // unique : true
+        // },
 
         InstrumentRefferenceCode: {
             type: DataTypes.STRING(250),
             field: 'InstrumentRefferenceCode'
         },
-        Observation: {
-            type: DataTypes.STRING(250),
-            field: 'Observation',
-            // unique : true
-        },
-        Remark: {
-            type: DataTypes.STRING(250),
-            field: 'Remark',
-            // unique : true
-        },
+        // Observation: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'Observation',
+        //     // unique : true
+        // },
+        // Remark: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'Remark',
+        //     // unique : true
+        // },
         fileErrorDiscription: {
             type: DataTypes.STRING(250),
             field: 'fileErrorDiscription'

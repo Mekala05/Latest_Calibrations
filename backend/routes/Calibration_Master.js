@@ -41,7 +41,7 @@ const { Op } = require("sequelize");
 
 
 
-const { MakeMaster, CategoryMaster, TypeMaster, CalibrationMaster_1, oitm, CalibrationLocationMaster, InstrumentMaster } = require('../models');
+const { MakeMaster, CategoryMaster, TypeMaster, ErrorDescription, CalibrationMaster_1, oitm, CalibrationLocationMaster, InstrumentMaster } = require('../models');
 // const oitm = require('../models/oitm');
 
 
@@ -278,8 +278,6 @@ router.put('/delete/:id', (req, res) => {
     })
 })
 
-
-
 router.post('/update', (req, res) => {
     return new Promise((resolve, reject) => {
         oitm.findAll({
@@ -294,10 +292,6 @@ router.post('/update', (req, res) => {
     })
 
 })
-
-
-
-
 
 router.get('/view-sapref', (req, res) => {
     return new Promise((resolve, reject) => {
@@ -325,12 +319,9 @@ router.get('/view-sapref', (req, res) => {
 
 // })
 
-
 router.get('/saprefcodeitems/:data', (req, res) => {
     //console.log("00000     "+req.params.data);
     return new Promise((resolve, reject) => {
-
-
         oitm.findAll({
             attributes: ['ItemCode', 'ItemName', 'ItmsGrpCod', 'U_Branch'], where: {
                 U_Branch: req.params.data,
@@ -349,7 +340,7 @@ router.get('/saprefcodeitems/:data', (req, res) => {
 
         }
         ).then(function (result) {
-            //console.log("sdts    "+result)
+            // console.log("sdts    ", res)
             sendSuccess(res, result);
         }).catch(function (err) {
             0
@@ -358,10 +349,6 @@ router.get('/saprefcodeitems/:data', (req, res) => {
     })
 
 });
-
-
-
-
 
 // router.get('/download', function(req, res){   
 //     CalibrationMaster_1.findAll(__dirname + '/upload-folder/dramaticpenguin.MOV', 'binary');
@@ -376,11 +363,6 @@ router.get('/saprefcodeitems/:data', (req, res) => {
 //     });
 // });
 
-
-
-
-
-
 // router.post("single", upload.single("image"),)(req,res=> {
 //     return new Promise((resolve, reject) => {
 //         CalibrationMaster_1.create(req.body).then(function (result) {
@@ -390,7 +372,6 @@ router.get('/saprefcodeitems/:data', (req, res) => {
 //             sendError(res, err);
 //         });
 //     })
-
 
 // const url = "url"
 // router.get(url,function(res){
@@ -402,8 +383,6 @@ router.get('/saprefcodeitems/:data', (req, res) => {
 
 // }
 // });
-
-
 
 // router.get('/getFile',function(req,res,next){
 //     res.download('./public/google.png',function(err){
@@ -417,19 +396,7 @@ router.get('/saprefcodeitems/:data', (req, res) => {
 //     app.listen(3000,function(){
 //     // console.log("Server listening on port 3000");
 //     })
-
-
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-
-
-
-
-
-
-
-
-
 
 router.delete('/delete/:id', (req, res) => {
     console.log(req.params.id);
@@ -441,9 +408,6 @@ router.delete('/delete/:id', (req, res) => {
         });
     })
 })
-
-
-
 
 router.get('/tablerecord1', (req, res) => {
     return new Promise((resolve, reject) => {
@@ -462,5 +426,63 @@ router.get('/tablerecord1', (req, res) => {
     })
 
 })
+
+router.post('/inserterror', (req, res) => {
+    console.log("inside insert");
+
+    return new Promise((resolve, reject) => {
+        // console.log("inside insert");
+        ErrorDescription.create(req.body).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+})
+
+// router.get('/viewerror', (req, res) => {
+//     return new Promise((resolve, reject) => {
+//         ErrorDescription.findAll({ where: { deleteStatus: false, active: true } }).then(function (result) {
+//             sendSuccess(res, result);
+//         }).catch(function (err) {
+//             sendError(res, err);
+//         });
+//     })
+
+// })
+
+router.get('/viewerror/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        ErrorDescription.findAll({ where: { deleteStatus: false, InstrumentCode: req.params.id } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
+})
+
+router.put('/updateerror/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        // console.log('data', id, req.body);
+        ErrorDescription.update(req.body, { where: { id: req.params.id } }).then(function (result) {
+            console.log('res', res);
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+})
+
+router.put('/deleteerror/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        ErrorDescription.update({ deleteStatus: true }, { where: { id: req.params.id } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+})
+
 
 module.exports = router

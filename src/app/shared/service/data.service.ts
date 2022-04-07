@@ -884,4 +884,28 @@ export class DataService {
 
     return this.http.get<any>(`${environment.attachment}/view/${id}`);
   }
+
+  getMaster_Error(id: any) {
+    return this.http.get<any>(
+      `${environment.Calibration_Master}/viewerror/${id}`
+    );
+  }
+  postMaster_Error(data: any) {
+    return this.http.post<any>(
+      `${environment.Calibration_Master}/inserterror`,
+      data
+    );
+  }
+  deleteMaster_Error(id: any, data: any) {
+    return this.http.delete<any>(
+      `${environment.Calibration_Master}/deleteerror/${id}`,
+      data
+    );
+  }
+  updateMaster_Error(id: any, data: any) {
+    return this.http.put<any>(
+      `${environment.Calibration_Master}/updateerror/${id}`,
+      data
+    );
+  }
 }

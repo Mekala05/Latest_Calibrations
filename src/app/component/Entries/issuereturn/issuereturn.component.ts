@@ -93,9 +93,11 @@ export class IssuereturnComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    let datas = useraccess.filter((element: any) => element.moduleid === 14);
-    this.editAccess = datas[0].Edit;
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 14);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
+
     // this.collection = [];
     // document.getElementById('tabledata')
     //this.tabledata();
@@ -123,9 +125,9 @@ export class IssuereturnComponent implements OnInit {
     });
 
     this.dataservice.BreakageRequest_getView().subscribe((data) => {
-      console.log('cardcode', data);
+      // console.log('cardcode', data);
       this.MachineCode = data.data;
-      console.log('dep', data.data);
+      // console.log('dep', data.data);
     });
 
     this.dataservice.MasterTest_getView().subscribe((data) => {

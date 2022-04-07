@@ -54,15 +54,10 @@ export class MakemasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    console.log(useraccess);
-
-    // this.dataservice.useraccess.subscribe((item: any) => {
-    //   console.log('item', item);
-    let datas = useraccess.filter((element: any) => element.moduleid === 4);
-    console.log(datas);
-    this.editAccess = datas[0].Edit;
-    console.log(!this.editAccess);
+    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // let datas = useraccess.filter((element: any) => element.moduleid === 4);
+    // this.editAccess = datas[0].Edit;
+    this.editAccess = true;
 
     // useraccess.map((element: any) => {
     //   if (element.moduleid === 4) {
