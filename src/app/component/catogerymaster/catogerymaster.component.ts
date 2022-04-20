@@ -55,10 +55,14 @@ export class CatogerymasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 6);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // console.log('user',useraccess);
+    
+    let datas = useraccess.filter((element: any) => element.moduleid === 1);
+    // console.log('data',datas);
+    
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     this.dataservice.getViewOhem().subscribe((item: any) => {
       console.log('ohem', item);
@@ -206,5 +210,6 @@ export class CatogerymasterComponent implements OnInit {
 
   reset() {
     this.registerDetails.category = '';
+    this.registerDetails.id = "";
   }
 }

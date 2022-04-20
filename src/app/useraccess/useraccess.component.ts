@@ -31,23 +31,10 @@ export class UseraccessComponent implements OnInit {
 
   ngOnInit(): void {
     this.accessgiven = [];
-    this.dataservice.getViewOhem().subscribe((item: any) => {
-      this.userDetails = item.data;
-      item.data.map((data: any) => {
-        if (data.branch) {
-          this.units.push(data.branch);
-        }
-        if (data.dept) {
-          this.dep.push(data.dept);
-        }
-        if (data.firstName) {
-          this.emp.push({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            empID: data.empID,
-          });
-        }
-      });
+    this.getLocation();
+
+    this.dataservice.getUser_Data().subscribe((item: any) => {
+      this.userDetails = item.recordset;
     });
 
     this.dataservice.useracess_gets().subscribe((data: any) => {
@@ -55,7 +42,16 @@ export class UseraccessComponent implements OnInit {
     });
   }
 
+  getLocation() {
+    this.dataservice.User_getolct().subscribe((data: any) => {
+      this.units = data.data;
+    });
+  }
+
   getUser(data: any) {
+    console.log('data', data);
+    this.unit('', data.unit);
+    this.department('', data.department);
     this.update = true;
     this.load();
     this.registerDetails = data;
@@ -63,32 +59,48 @@ export class UseraccessComponent implements OnInit {
     this.tableData = data;
   }
 
-  unit(eve: any) {
-    let eventValue = eve.target.value;
-    this.userDetails.map((data: any) => {
-      if (JSON.stringify(data.branch) === eventValue) {
-        let dept = [];
-        dept.push(data.dept);
-        this.dep = dept;
+  unit(eve: any, unit: any) {
+    let eventValue: any;
+
+    if (unit !== '') {
+      eventValue = unit;
+    } else {
+      eventValue = eve.target.value;
+    }
+    // let eventValue = eve.target.value;
+    let dept = this.userDetails.filter(
+      (item: any) => item.Location === eventValue && item.Department !== null
+    );
+
+    let DuplicateFree = dept.reduce((unique: any, o: any) => {
+      if (
+        !unique.some(
+          (obj: any) =>
+            obj.Department === o.Department && obj.DeptCode === o.DeptCode
+        )
+      ) {
+        unique.push(o);
       }
-    });
+      return unique;
+    }, []);
+
+    this.dep = DuplicateFree;
   }
 
-  department(eve: any) {
-    let emp = eve.target.value;
-    this.userDetails.map((data: any) => {
-      if (JSON.stringify(data.dept) === emp) {
-        let employee = [];
+  department(eve: any, dept: any) {
+    let emp: any;
+    // console.log('emp', emp);
+    if (dept !== '') {
+      emp = dept;
+    } else {
+      emp = eve.target.value;
+    }
+    let employee = this.userDetails.filter(
+      (item: any) => item.DeptCode === parseInt(emp)
+    );
+    // console.log('employee', employee);
 
-        employee.push({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          empID: data.empID,
-        });
-
-        this.emp = employee;
-      }
-    });
+    this.emp = employee;
   }
 
   load() {
@@ -169,7 +181,9 @@ export class UseraccessComponent implements OnInit {
 
     this.registered.map((item: any) => {
       this.dataservice.useracess_post(item).subscribe((data: any) => {
-        this.tableData = data;
+        this.tableData = data.data;
+        this.dataservice.setUser(data.data);
+        // localStorage.setItem('userAccess', JSON.stringify(data.data));
       });
     });
     let currentUrl = this.router.url;

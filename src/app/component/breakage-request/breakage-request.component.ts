@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
-import { BreakageRequest } from './model';
+import { Attachment, BreakageRequest } from './model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-breakage-request',
@@ -23,11 +24,39 @@ export class BreakageRequestComponent implements OnInit {
   selectedCountryAdvanced: any[] = [];
   filteredCountries: any[] = [];
   countries: any[] = [];
+  imageSrc: any[] = [];
   public user_name: any = [];
   public InstrumentNameof: any = [];
   public InstrumentCodeof: any = [];
   public MachineCode: any = [];
   editAccess: boolean = false;
+  attachmentImage: Attachment[] = [];
+  uploadedFiles: any = [];
+  public collectiondata: any[] = [];
+
+  public Heading = [
+    {
+      name: 'SI No',
+    },
+    // {
+    //   name: 'File Section',
+    // },
+    // {
+    //   name: 'Choosefile',
+    // },
+    {
+      name: 'File name',
+    },
+    // {
+    //   name: 'View',
+    // },
+    {
+      name: 'Download',
+    },
+    {
+      name: 'Delete',
+    },
+  ];
 
   public TableHeading = [
     {
@@ -89,10 +118,10 @@ export class BreakageRequestComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 11);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');    
+    let datas = useraccess.filter((element: any) => element.moduleid === 11);
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     this.tabledata();
     this.getEmployee();
@@ -102,12 +131,109 @@ export class BreakageRequestComponent implements OnInit {
     this.user_name = localStorage.getItem('Login_name');
 
     this.dataservice.BreakageRequest_getViewParticular().subscribe((data) => {
-      // console.log(data.data[0].id);
-      let limitId = parseInt(data.data[0].id);
-      let BreakageNo = 'U4-BR-2022_' + (limitId + 1);
-      this.registerDetails.BreakageNo = BreakageNo;
+      if (data.data.length !== 0) {
+        let limitId = parseInt(data.data[0].id);
+        let BreakageNo = 'U4-BR-2022_' + (limitId + 1);
+        this.registerDetails.BreakageNo = BreakageNo;
+      } else {
+        let BreakageNo = 'U4-BR-2022_' + 1;
+        this.registerDetails.BreakageNo = BreakageNo;
+      }
     });
   }
+
+  download(data: any, i: any) {
+    this.imageSrc = [];
+    let image = data.filepath.split('\\');
+    // console.log(image);
+    this.imageSrc[i] = image[2];
+    // console.log('image src', this.imageSrc[i]);
+
+    this.downloadMyFile(this.imageSrc[i]);
+  }
+
+  downloadMyFile(file: string) {
+    // console.log('file', file);
+
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', `${environment.breakageFile}/${file}`);
+    // link.setAttribute('download', `products.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  delete(id: any, data: any) {
+    this.collectiondata.pop();
+    this.toastr.success('New row deleted successfully');
+    console.log('data', data);
+
+    data.active = false;
+    this.dataservice.fileupdatemulti_Master(id, data).subscribe((data: any) => {
+      console.log('delete', data);
+    });
+  }
+
+  public selectimage(eve: any) {
+    this.uploadedFiles = eve.target.files;
+    this.uploadImage();
+  }
+
+  public uploadImage() {
+    this.collectiondata = [];
+    let formDatas = new FormData();
+    this.attachmentImage = [];
+
+    for (var i = 0; i < this.uploadedFiles.length; i++) {
+      formDatas.append(
+        'uploads[]',
+        this.uploadedFiles[i],
+        this.uploadedFiles[i].name
+      );
+      // console.log(this.uploadedFiles[i]);
+
+      this.attachmentImage.push({
+        breakageNo: this.registerDetails.BreakageNo,
+        InstrumentCode: this.registerDetails.InstrumentCode,
+        filename: this.uploadedFiles[i].name,
+        type: this.uploadedFiles[i].type,
+        active: true,
+      });
+    }
+    let imageDatas: any[] = [];
+
+    this.dataservice
+      .fileuploadmulti_breakage(formDatas)
+      .subscribe((data: any) => {
+        imageDatas = data.message.uploads;
+        // console.log('image', imageDatas);
+        // console.log('att1', this.attachmentImage);
+
+        this.attachmentImage.map((item: any) => {
+          imageDatas.map((element: any) => {
+            if (item.filename === element.originalFilename) {
+              item.filepath = element.path;
+              return item;
+            }
+          });
+          // console.log(item);
+        });
+
+        // console.log('atta2', this.attachmentImage);
+
+        this.attachmentImage.map((item: any) => {
+          this.dataservice
+            .fileinsertmulti_breakage(item)
+            .subscribe((datas: any) => {
+              // console.log('datas', datas);
+              this.collectiondata.push(datas.data);
+            });
+        });
+      });
+    // console.log('coll data', this.collectiondata);
+  }
+
   filterCountry(event: any) {
     //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     let filtered: any[] = [];
@@ -338,6 +464,7 @@ export class BreakageRequestComponent implements OnInit {
     //   });
     //   (<HTMLInputElement>document.getElementById('id')).focus();
     // }
+    this.uploadImage();
     this.registerDetails.RefNo = this.registerDetails.BreakageNo;
     console.log('register', this.registerDetails);
 
@@ -385,8 +512,15 @@ export class BreakageRequestComponent implements OnInit {
   }
   public getEmployee(): void {
     this.dataservice.GetEmplyee_user().subscribe((data) => {
-      console.log('name', data.data[0].name);
-      this.registerDetails.Employee = data.data[0].name;
+      // console.log(data);
+      let loginUser = localStorage.getItem('Login_name');
+      // console.log(loginUser);
+
+      let name = data.data.filter(
+        (item: any) => loginUser === item.U_usernameC
+      );
+      // console.log('name', name);
+      this.registerDetails.Employee = name[0].firstName;
       // console.log("usdhfshdgoifdhgi");
       // console.log(this.Employee);
       // this.BackUpdata = data.data;
@@ -419,7 +553,7 @@ export class BreakageRequestComponent implements OnInit {
 
   public MachineCodeof(): void {
     this.dataservice.BreakageRequest_getView().subscribe((data) => {
-      console.log('cardcode', data);
+      // console.log('cardcode', data);
 
       this.MachineCode = data.data;
       console.log('dep', data.data);

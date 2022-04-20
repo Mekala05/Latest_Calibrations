@@ -66,9 +66,10 @@ export class LoginComponent implements OnInit {
           });
 
           this.dataservice.useracess_get(data.user.id).subscribe((data) => {
-            console.log(data.data);
+            // console.log(data.data);
+            localStorage.setItem('AccessDetails', JSON.stringify(data.data));
             localStorage.setItem('userAccess', JSON.stringify(data.data));
-            // this.dataservice.setUser(data);
+            // this.dataservice.setUser(data.data);
           });
           this.router.navigate(['/header']);
         }

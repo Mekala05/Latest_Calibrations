@@ -9,8 +9,15 @@ const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({
     uploadDir: '../uploads'
 });
+const breakageMultipart = multipart({
+    uploadDir: '../breakage'
+});
 
-const { ImageAttachment } = require('../models');
+const entryMultipart = multipart({
+    uploadDir: '../entry'
+});
+
+const { ImageAttachment, BreakageFile,FileAttachment } = require('../models');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -114,5 +121,70 @@ app.put('/attachment/update/:id', (req, res) => {
         });
     })
 })
+
+app.post('/entry/upload', entryMultipart, (req, res) => {
+    return res.json({
+        'message': req.files
+    });
+});
+
+app.post('/breakage/upload', breakageMultipart, (req, res) => {
+    return res.json({
+        'message': req.files
+    });
+});
+
+
+app.post('/entry/insert', entryMultipart, (req, res) => {
+    return new Promise((resolve, reject) => {
+        FileAttachment.create(req.body).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+});
+
+app.get('/entry/view', (req, res) => {
+    return new Promise((resolve, reject) => {
+        FileAttachment.findAll({ where: { deleteStatus: false, ids: req.params.instrumentCode, active: true } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
+})
+app.post('/breakage/insert', breakageMultipart, (req, res) => {
+    return new Promise((resolve, reject) => {
+        BreakageFile.create(req.body).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+});
+
+app.put('/breakage/update/:id', (req, res) => {
+    return new Promise((resolve, reject) => {
+        BreakageFile.update(req.body, { where: { id: req.params.id } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+})
+
+app.get('/breakage/view', (req, res) => {
+    return new Promise((resolve, reject) => {
+        BreakageFile.findAll({ where: { deleteStatus: false, ids: req.params.instrumentCode, active: true } }).then(function (result) {
+            sendSuccess(res, result);
+        }).catch(function (err) {
+            sendError(res, err);
+        });
+    })
+
+})
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

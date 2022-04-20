@@ -5,6 +5,7 @@ var path = require('path')
 var config = require('./config')
 var passport = require('passport');
 const mv = require('express-fileupload');
+var sequelize = require('sequelize');
 // var nodemailer = require('nodemailer')
 var http = require('http');
 const multer = require('multer')
@@ -48,6 +49,9 @@ app.use(
 app.use(bodyParser.json({ limit: '50mb' }));
 
 app.use(express.static(require('path').join(__dirname, 'uploads')));
+app.use(express.static(require('path').join(__dirname, 'breakage')));
+app.use(express.static(require('path').join(__dirname, 'entry')));
+
 
 function errorHandler(err, req, res, next) {
   // if (!isProd)
@@ -162,6 +166,17 @@ app.listen(app.get('port'), () => {
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 app.get('/api/upload', (req, res) => {
+  res.json({
+    'message': 'hello'
+  });
+});
+
+app.get('/api/breakage', (req, res) => {
+  res.json({
+    'message': 'hello'
+  });
+});
+app.get('/api/entry', (req, res) => {
   res.json({
     'message': 'hello'
   });

@@ -22,12 +22,15 @@ const httpOptions = {
 export class DataService {
   // private setImageViewPopup: any;
   // public setImageViewPopupObserve: Observable<string>;
+  public datas: any[]= [];
   adminSubject$ = new BehaviorSubject<any>(null);
   admin = this.adminSubject$.asObservable();
   scrapDetails$ = new BehaviorSubject<any>(null);
   scrap = this.scrapDetails$.asObservable();
   url$ = new BehaviorSubject<any>(null);
   url = this.url$.asObservable();
+  userAccess$ = new BehaviorSubject<any>(null);
+  useraccess = this.userAccess$.asObservable();
   // userAccess$ = new BehaviorSubject<any>(null);
   // useraccess = this.userAccess$.asObservable();
 
@@ -65,6 +68,21 @@ export class DataService {
   setUrl(data: any) {
     this.url$.next(data);
   }
+
+  setUser(data: any) {
+    let access = JSON.parse(localStorage.getItem('AccessDetails') || '[]');
+    let newer = [];
+    newer.push(data);
+    console.log('old',access);
+    console.log('new',newer);
+    
+    this.datas = [...access,...newer];  
+    console.log('datas',this.datas);
+      
+    // this.userAccess$.next(this.datas);
+    localStorage.setItem('userAccess', JSON.stringify(this.datas));
+  }
+
 
   // setUser(data: any[]) {
   //   this.userAccess$.next(data);
@@ -476,7 +494,7 @@ export class DataService {
 
   CalibrationlocationmasterParticular_getView() {
     return this.http.get<any>(
-      `${environment.CalibrationLocationmaster}/viewData`
+      `${environment.CalibrationLocationmaster}/viewolct`
     );
   }
 
@@ -833,6 +851,10 @@ export class DataService {
     return this.http.get<any>(`${environment.Useraccess}/view/${id}`);
   }
 
+  getUser_Data() {
+    return this.http.get<any>(`${environment.Useraccess}/viewuserData`);
+  }
+
   useracess_gets() {
     return this.http.get<any>(`${environment.Useraccess}/view`);
   }
@@ -907,5 +929,67 @@ export class DataService {
       `${environment.Calibration_Master}/updateerror/${id}`,
       data
     );
+  }
+
+  getEntry_Error(id: any) {
+    return this.http.get<any>(
+      `${environment.Calibration_Entry}/viewEntryerror/${id}`
+    );
+  }
+  postEntry_Error(data: any) {
+    return this.http.post<any>(
+      `${environment.Calibration_Entry}/insertEntryerror`,
+      data
+    );
+  }
+  deleteEntry_Error(id: any, data: any) {
+    return this.http.delete<any>(
+      `${environment.Calibration_Entry}/deleteEntryerror/${id}`,
+      data
+    );
+  }
+  updateEntry_Error(id: any, data: any) {
+    return this.http.put<any>(
+      `${environment.Calibration_Entry}/updateEntryerror/${id}`,
+      data
+    );
+  }
+
+  fileuploadmulti_entry(data: any) {
+    return this.http.post<any>(`${environment.entryAttachment}/upload`, data);
+  }
+
+  fileinsertmulti_entry(data: any) {
+    return this.http.post<any>(`${environment.entryAttachment}/insert`, data);
+  }
+
+  fileviewmulti_entry(id: any) {
+    return this.http.get<any>(`${environment.entryAttachment}/view/${id}`);
+  }
+
+  fileuploadmulti_breakage(data: any) {
+    // debugger;
+    return this.http.post<any>(
+      `${environment.breakageAttachment}/upload`,
+      data
+    );
+  }
+
+  fileinsertmulti_breakage(data: any) {
+    return this.http.post<any>(
+      `${environment.breakageAttachment}/insert`,
+      data
+    );
+  }
+
+  fileupdatemulti_breakage(id: any, data: any) {
+    return this.http.put<any>(
+      `${environment.breakageAttachment}/update/${id}`,
+      data
+    );
+  }
+
+  fileviewmulti_breakage(id: any) {
+    return this.http.get<any>(`${environment.breakageAttachment}/view/${id}`);
   }
 }

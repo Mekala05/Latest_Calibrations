@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/shared/service/data.service';
-import { calibrationEntry } from './model';
+import { calibrationEntry, EntryErrorDescription } from './model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe, getLocaleFirstDayOfWeek } from '@angular/common';
@@ -10,7 +10,9 @@ import { DialogContent1 } from './contentdialogmodel';
 // import { conrejection2 } from './conrejection2';
 import { conrejection } from './con-rejection';
 import { modaltextbox } from './modal-textbox';
+import { environment } from 'src/environments/environment';
 
+// import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-calibrationentry',
   templateUrl: './calibrationEntry.component.html',
@@ -23,7 +25,7 @@ export class CalibrationentryComponent implements OnInit {
   public HighlightHead: any = 1;
   public SearchField: string = 'Type';
   public registerDetails: calibrationEntry = {};
-
+  public ids: any;
   public BackUpdata = [] as any;
   public timeout: any = null;
   public instrmentCode: any[] = [];
@@ -52,6 +54,7 @@ export class CalibrationentryComponent implements OnInit {
   public date: any;
   public breakagerequestNo: any = [];
   test = false;
+  public showButton: any;
   public Redate: any;
   public MxLifeTimeNumber: any;
   public MxLifeTime: any;
@@ -59,6 +62,9 @@ export class CalibrationentryComponent implements OnInit {
   public TotalDay: any;
   public dueDate: string = '';
   public editAccess: boolean = false;
+  attachmentImage: any[] = [];
+  uploadedFiles: any;
+  closeResult: string = '';
   public TableHeading = [
     {
       name: 'Description',
@@ -85,12 +91,21 @@ export class CalibrationentryComponent implements OnInit {
       name: 'Update By',
     },
     {
+      name: 'Attachment',
+    },
+    {
+      name: 'Upload',
+    },
+    {
       name: 'Edit',
     },
     {
       name: 'Delete',
     },
   ];
+  collectiondata: any[] = [];
+  headerimagePatch: string = '';
+
   constructor(
     private dataservice: DataService,
     public dialog: MatDialog,
@@ -100,10 +115,10 @@ export class CalibrationentryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 10);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 10);
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     // this.tabledata();
     this.getRequestType();
@@ -113,34 +128,89 @@ export class CalibrationentryComponent implements OnInit {
     this.user_name = localStorage.getItem('Login_name');
   }
 
+  public selectimage(eve: any, id: any) {
+    this.uploadedFiles = eve.target.files;
+    this.showButton = id;
+  }
+
+  public uploadImage(data: any, id: any) {
+    // this.collectiondata = [];
+    let formDatas = new FormData();
+    this.ids = id;
+
+    this.attachmentImage = [];
+
+    for (var i = 0; i < this.uploadedFiles.length; i++) {
+      formDatas.append(
+        'uploads[]',
+        this.uploadedFiles[i],
+        this.uploadedFiles[i].name
+      );
+      this.attachmentImage.push({
+        instrumentCode: this.registerDetails.InstrumentCode,
+        filename: this.uploadedFiles[i].name,
+        instrumentName: this.registerDetails.InstrumentName,
+        type: this.uploadedFiles[i].type,
+        active: true,
+        ids: this.ids,
+      });
+    }
+
+    let imageDatas: any[] = [];
+
+    this.dataservice.fileuploadmulti_entry(formDatas).subscribe((data: any) => {
+      imageDatas = data.message.uploads;
+
+      this.attachmentImage.map((item: any) => {
+        imageDatas.map((element: any) => {
+          if (item.filename === element.originalFilename) {
+            item.filepath = element.path;
+            return item;
+          }
+        });
+        this.dataservice.fileinsertmulti_entry(item).subscribe((data: any) => {
+          // console.log(data.data);
+          let headerimagename = data.data.filepath.split('\\');
+          this.headerimagePatch = `${environment.imgUrl}/${headerimagename[2]}`;
+
+          // console.log('header', this.headerimagePatch);
+
+          this.collectiondata.push({'path':this.headerimagePatch,'type': data.data.type});
+          // console.log('collect', this.collectiondata);
+        });
+      });
+      this.showButton = true;
+    });
+  }
+
   conrejection() {
     if (
       this.registerDetails.date === undefined ||
-      this.registerDetails.ScheduleNo === undefined ||
+      // this.registerDetails.ScheduleNo === undefined ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
+      // this.registerDetails.LPIdentification === '' ||
       this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity === undefined ||
-      this.registerDetails.collabrationCost === undefined ||
+      // this.registerDetails.Quantity === undefined ||
+      // this.registerDetails.collabrationCost === undefined ||
       this.registerDetails.DCDetails === '' ||
       this.registerDetails.ReportNo === '' ||
       this.registerDetails.ReportDate === undefined ||
       this.registerDetails.date.toString() === '' ||
-      this.registerDetails.ScheduleNo === '' ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity.toString() === '' ||
-      this.registerDetails.collabrationCost.toString() === '' ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate.toString() === '' ||
-      this.registerDetails.Observation === '' ||
-      this.registerDetails.Description === '' ||
-      this.registerDetails.Remark === '' ||
-      this.registerDetails.Specification === ''
+      // this.registerDetails.ScheduleNo === '' ||
+      // this.registerDetails.InstrumentCode === '' ||
+      // this.registerDetails.InstrumentName === '' ||
+      // this.registerDetails.LPIdentification === '' ||
+      // this.registerDetails.partySelection === '' ||
+      // this.registerDetails.Quantity.toString() === '' ||
+      // this.registerDetails.collabrationCost.toString() === '' ||
+      // this.registerDetails.DCDetails === '' ||
+      // this.registerDetails.ReportNo === '' ||
+      this.registerDetails.ReportDate.toString() === ''
+      // this.registerDetails.Observation === '' ||
+      // this.registerDetails.Description === '' ||
+      // this.registerDetails.Remark === '' ||
+      // this.registerDetails.Specification === ''
     ) {
       alert('Enter the Details');
     } else {
@@ -155,31 +225,30 @@ export class CalibrationentryComponent implements OnInit {
   Dialogbox() {
     if (
       this.registerDetails.date === undefined ||
-      this.registerDetails.ScheduleNo === undefined ||
+      // this.registerDetails.ScheduleNo === undefined ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
       this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity === undefined ||
-      this.registerDetails.collabrationCost === undefined ||
+      // this.registerDetails.Quantity === undefined ||
+      // this.registerDetails.collabrationCost === undefined ||
       this.registerDetails.DCDetails === '' ||
       this.registerDetails.ReportNo === '' ||
       this.registerDetails.ReportDate === undefined ||
       this.registerDetails.date.toString() === '' ||
-      this.registerDetails.ScheduleNo === '' ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity.toString() === '' ||
-      this.registerDetails.collabrationCost.toString() === '' ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate.toString() === '' ||
-      this.registerDetails.Observation === '' ||
-      this.registerDetails.Description === '' ||
-      this.registerDetails.Remark === '' ||
-      this.registerDetails.Specification === ''
+      // this.registerDetails.ScheduleNo === '' ||
+      // this.registerDetails.InstrumentCode === '' ||
+      // this.registerDetails.InstrumentName === '' ||
+      // this.registerDetails.LPIdentification === '' ||
+      // this.registerDetails.partySelection === '' ||
+      // this.registerDetails.Quantity.toString() === '' ||
+      // this.registerDetails.collabrationCost.toString() === '' ||
+      // this.registerDetails.DCDetails === '' ||
+      // this.registerDetails.ReportNo === '' ||
+      this.registerDetails.ReportDate.toString() === ''
+      // this.registerDetails.Observation === '' ||
+      // this.registerDetails.Description === '' ||
+      // this.registerDetails.Remark === '' ||
+      // this.registerDetails.Specification === ''
     ) {
       alert('Enter the Details');
     } else {
@@ -191,31 +260,31 @@ export class CalibrationentryComponent implements OnInit {
   openDialog() {
     if (
       this.registerDetails.date === undefined ||
-      this.registerDetails.ScheduleNo === undefined ||
+      // this.registerDetails.ScheduleNo === undefined ||
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
+      // this.registerDetails.LPIdentification === '' ||
       this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity === undefined ||
-      this.registerDetails.collabrationCost === undefined ||
+      // this.registerDetails.Quantity === undefined ||
+      // this.registerDetails.collabrationCost === undefined ||
       this.registerDetails.DCDetails === '' ||
       this.registerDetails.ReportNo === '' ||
       this.registerDetails.ReportDate === undefined ||
       this.registerDetails.date.toString() === '' ||
-      this.registerDetails.ScheduleNo === '' ||
-      this.registerDetails.InstrumentCode === '' ||
-      this.registerDetails.InstrumentName === '' ||
-      this.registerDetails.LPIdentification === '' ||
-      this.registerDetails.partySelection === '' ||
-      this.registerDetails.Quantity.toString() === '' ||
-      this.registerDetails.collabrationCost.toString() === '' ||
-      this.registerDetails.DCDetails === '' ||
-      this.registerDetails.ReportNo === '' ||
-      this.registerDetails.ReportDate.toString() === '' ||
-      this.registerDetails.Observation === '' ||
-      this.registerDetails.Description === '' ||
-      this.registerDetails.Remark === '' ||
-      this.registerDetails.Specification === ''
+      // this.registerDetails.ScheduleNo === '' ||
+      // this.registerDetails.InstrumentCode === '' ||
+      // this.registerDetails.InstrumentName === '' ||
+      // this.registerDetails.LPIdentification === '' ||
+      // this.registerDetails.partySelection === '' ||
+      // this.registerDetails.Quantity.toString() === '' ||
+      // this.registerDetails.collabrationCost.toString() === '' ||
+      // this.registerDetails.DCDetails === '' ||
+      // this.registerDetails.ReportNo === '' ||
+      this.registerDetails.ReportDate.toString() === ''
+      // this.registerDetails.Observation === '' ||
+      // this.registerDetails.Description === '' ||
+      // this.registerDetails.Remark === '' ||
+      // this.registerDetails.Specification === ''
     ) {
       alert('Enter the Details');
     } else {
@@ -260,7 +329,7 @@ export class CalibrationentryComponent implements OnInit {
     });
   }
 
-  instru(event: any) {
+  instru(event: any): void {
     let selectedLaw: any = event.target.value;
 
     let splitValue = selectedLaw.split(',');
@@ -810,33 +879,62 @@ export class CalibrationentryComponent implements OnInit {
     //   });
     //   (<HTMLInputElement>document.getElementById('id')).focus();
     // }
+    // this.dataservice.postMaster_Error()
+
     this.registerDetails.status = 'Accept';
     this.registerDetails.option = 'None';
     if (this.registerDetails) {
-      this.dataservice
-        .Entry_postUser(this.registerDetails)
-        .subscribe((data) => {
-          this.collection = data.data;
-          this.BackUpdata = data.data;
+      // this.dataservice
+      //   .Entry_postUser(this.registerDetails)
+      //   .subscribe((data) => {
+      // console.log('data', data.data);
 
-          // let currentUrl = this.router.url;
-          // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          // this.router.onSameUrlNavigation = 'reload';
-          // this.router.navigate([currentUrl]);
-          // this.tabledata();
-          // this.collection = [];
+      // this.collection = data.data;
+      // this.BackUpdata = data.data;
+
+      // let currentUrl = this.router.url;
+      // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      // this.router.onSameUrlNavigation = 'reload';
+      // this.router.navigate([currentUrl]);
+      // this.tabledata();
+      // this.collection = [];
+
+      // this.dataservice.Tabledata1_getView().subscribe((item: any) => {
+      //   // console.log('data collection', data.data);
+
+      //   this.collection = item.data;
+      //   this.BackUpdata = item.data;
+      // });
+      // });
+      let description: EntryErrorDescription = {};
+      // console.log('ins', this.registerDetails.InstrumentCode);
+      // console.log('name', this.registerDetails.InstrumentName);
+      // console.log('des', this.registerDetails.Description);
+      // errorDes {
+
+      
+      (description.InstrumentCode = this.registerDetails.InstrumentCode[0]),
+        (description.InstrumentName = this.registerDetails.InstrumentName[1]),
+        (description.Description = this.registerDetails.Description),
+        (description.Remark = this.registerDetails.Remark),
+        (description.Observation = this.registerDetails.Observation),
+        (description.Specification = this.registerDetails.Specification),
+        (description.active = true),
+        this.dataservice.postEntry_Error(description).subscribe((data: any) => {
+          console.log(data.data);
+
+          this.collection.push(data.data);
+          this.BackUpdata.push(data.data);
+          console.log('inside', this.collection);
+
           (this.registerDetails.Description = ''),
             (this.registerDetails.Specification = ''),
             (this.registerDetails.Observation = ''),
             (this.registerDetails.Remark = ''),
             (this.test = true);
-          this.dataservice.Tabledata1_getView().subscribe((item: any) => {
-            // console.log('data collection', data.data);
-
-            this.collection = item.data;
-            this.BackUpdata = item.data;
-          });
         });
+
+      console.log('accept', this.collection);
     }
   }
 
@@ -853,265 +951,9 @@ export class CalibrationentryComponent implements OnInit {
           // console.log('item', item.InstrumentCode);
           // console.log('code', code);
           this.modifyDate(item.date, this.registerDetails.ReportDate, item);
-          // this.dataservice.Tabledata1_getView().subscribe((item: any) => {
-          //   console.log('data collection', data.data);
-
-          //   this.collection = item.data;
-          //   this.BackUpdata = item.data;
-          // });
-
-          // let date1 = this.datePipe.transform(
-          //   new Date(item.date),
-          //   'YYYY-MM-dd'
-          // );
-          // console.log('sample', date1);
-          // let date2 = this.datePipe.transform(
-          //   this.registerDetails.ReportDate,
-          //   'YYYY-MM-dd'
-          // );
-          // if (date1 && date2) {
-          //   if (date2 === date1) {
-          //     let dateValue = new Date(date2);
-          //     // if(dateValue !== null) {
-          //     this.dueDate = JSON.stringify(
-          //       this.datePipe.transform(dateValue, 'dd-MMM-YYYY')
-          //     );
-          //     // }
-          //   }
-
-          //   if (date1 < date2) {
-          //     this.TotalDay = 0;
-          //     let today = new Date();
-          //     let todayDate = this.datePipe.transform(today, 'MM/dd/YYYY');
-          //     let compareDate1 = new Date(`${todayDate}`);
-
-          //     let reversedDate1 = this.datePipe.transform(date1, 'MM/dd/YYYY');
-          //     let compareDate2 = new Date(`${reversedDate1}`);
-          //     let reversedDate2 = this.datePipe.transform(date2, 'MM/dd/YYYY');
-          //     let compareDate3 = new Date(`${reversedDate2}`);
-
-          //     var Time1 = compareDate1.getTime() - compareDate2.getTime();
-          //     var Time2 = compareDate3.getTime() - compareDate1.getTime();
-
-          //     var Day1 = Time1 / (1000 * 3600 * 24); //Difference in Day
-          //     var Day2 = Time2 / (1000 * 3600 * 24);
-          //     // console.log(Day1, Day2);
-
-          //     this.TotalDay = Day1 + Day2;
-          //     console.log('total', this.TotalDay);
-          //   }
-
-          //   if (item.MxLifeTime === 'Week') {
-          //     console.log('week');
-
-          //     let week = Math.round(this.TotalDay / 7);
-          //     let weekValue = week * 7;
-          //     //  console.log(weekValue);
-          //     let send_date: any = new Date();
-          //     send_date.setDate(send_date.getDate() + weekValue);
-          //     if (send_date != 'Invalid Date') {
-          //       let setDate: any = this.datePipe.transform(
-          //         send_date,
-          //         'dd-MMM-YYYY'
-          //       );
-          //       //  console.log(setDate);
-          //       this.dueDate = setDate;
-          //     }
-          //     this.MxLifeTime = 'Week';
-          //     this.MxLifeTimeNumber = week;
-          //   }
-
-          //   if (item.MxLifeTime === 'Day') {
-          //     console.log('Day');
-
-          //     let Day = this.TotalDay;
-          //     let weekValue = Day * 1;
-          //     //  console.log(weekValue);
-          //     let send_date: any = new Date();
-          //     send_date.setDate(send_date.getDate() + weekValue);
-          //     if (send_date != 'Invalid Date') {
-          //       let setDate: any = this.datePipe.transform(
-          //         send_date,
-          //         'dd-MMM-YYYY'
-          //       );
-          //       //  console.log(setDate);
-          //       this.dueDate = setDate;
-          //     }
-          //     this.MxLifeTimeNumber = Day;
-          //     this.MxLifeTime = 'Day';
-          //   }
-
-          //   if (
-          //     item.MxLifeTime === 'Month' ||
-          //     item.MxLifeTime === 'Quarterly||3'
-          //   ) {
-          //     console.log('inside month');
-
-          //     let Day = parseInt(this.TotalDay) * 1;
-          //     let send_date: any = new Date(item.date);
-          //     send_date.setDate(send_date.getDate() + Day);
-
-          //     if (send_date != 'Invalid Date') {
-          //       let setDate: any = send_date.setMonth(send_date.getMonth());
-          //       let setmonths = this.datePipe.transform(setDate, 'dd-MM-YYYY');
-          //       let setitem = this.datePipe.transform(item.date, 'dd-MM-YYYY');
-          //       // console.log(setmonths);
-          //       if (setmonths && setitem) {
-          //         let dateMonth1 = setmonths.split('-');
-          //         let dateMonth2 = setitem.split('-');
-          //         let mon1 = dateMonth1[1];
-          //         let mon2 = dateMonth2[1];
-          //         let total_month = parseInt(mon2) - parseInt(mon1);
-          //         if (total_month < 0) {
-          //           total_month = total_month * -1;
-          //         }
-          //         // console.log('setDate', setDate);
-
-          //         this.MxLifeTimeNumber = total_month;
-          //         if (total_month === 3) {
-          //           this.MxLifeTime = 'Quarterly||3';
-          //         } else {
-          //           this.MxLifeTime = 'Month';
-          //         }
-          //         this.dueDate = setmonths;
-          //       }
-
-          //       // let settedMonth = dateMonth[1]
-          //     }
-          //   }
-          //   if (item.MxLifeTime === 'Year') {
-          //     console.log('year');
-
-          //     let Day = parseInt(this.TotalDay) * 1;
-          //     let send_date: any = new Date(item.date);
-          //     send_date.setDate(send_date.getDate() + Day);
-          //     let year = send_date.setFullYear(send_date.getFullYear());
-          //     // console.log('year', year);
-          //     // console.log('item', item.year);
-
-          //     let setdate1 = this.datePipe.transform(year, 'dd-MM-YYYY');
-          //     let setdate2 = this.datePipe.transform(item.date, 'dd-MM-YYYY');
-
-          //     if (setdate1 && setdate2) {
-          //       let splityear1 = setdate1.split('-');
-          //       let splityear2 = setdate2.split('-');
-          //       let year1 = splityear1[2];
-          //       let year2 = splityear2[2];
-          //       let total = parseInt(year1) - parseInt(year2);
-          //       if (total < 0) {
-          //         total = total * -1;
-          //       }
-
-          //       this.dueDate = setdate1;
-          //       this.MxLifeTimeNumber = total;
-          //       this.MxLifeTime = 'Year';
-          //     }
-          //   }
-          // }
-          // let dateDetails = new Date(this.dueDate);
-          // console.log(dateDetails);
-
-          // this.dueDate = JSON.stringify(
-          //   this.datePipe.transform(dateDetails, 'dd-MMM-YYYY')
-          // );
-          // console.log(this.dueDate);
-
-          // this.masterDetails.push({
-          //   dueDate: this.dueDate,
-          //   MxLifeTime: this.MxLifeTime,
-          //   MxLifeTimeNumber: this.MxLifeTimeNumber,
-          // });
-
-          // console.log(this.masterDetails);
-
-          // this.dataservice
-          //   .MasterTest_updateSingleUser(item.id, this.masterDetails)
-          //   .subscribe((data) => {
-          //     console.log(data);
-          //   });
         }
       });
     });
-
-    // console.log(this.registerDetails.Description);
-
-    // this.EntryScheNo = this.registerDetails.ScheduleNo?.toString();
-    // this.registerDetails.ScheduleNo = this.EntryScheNo;
-    // this.EntryInsName = this.registerDetails.InstrumentName?.toString();
-    // this.registerDetails.InstrumentName = this.EntryInsName;
-    // this.EntryInsCode = this.registerDetails.InstrumentCode?.toString();
-    // this.registerDetails.InstrumentCode = this.EntryInsCode;
-    // this.EntryPartySelect = this.registerDetails.partySelection?.toString();
-    // this.registerDetails.partySelection = this.EntryPartySelect;
-    // // console.log(this.registerDetails.ScheduleNo);
-    // // console.log(this.registerDetails.InstrumentName);
-    // // console.log(this.registerDetails.InstrumentCode);
-    // // console.log(this.registerDetails.Description);
-
-    // if (
-    //   this.registerDetails.date === undefined ||
-    //   this.registerDetails.ScheduleNo === undefined ||
-    //   this.registerDetails.InstrumentCode === '' ||
-    //   this.registerDetails.InstrumentName === '' ||
-    //   this.registerDetails.LPIdentification === '' ||
-    //   this.registerDetails.partySelection === '' ||
-    //   this.registerDetails.Quantity === undefined ||
-    //   this.registerDetails.collabrationCost === undefined ||
-    //   this.registerDetails.DCDetails === '' ||
-    //   this.registerDetails.ReportNo === '' ||
-    //   this.registerDetails.ReportDate === undefined ||
-    //   this.registerDetails.date.toString() === '' ||
-    //   this.registerDetails.ScheduleNo === '' ||
-    //   this.registerDetails.InstrumentCode === '' ||
-    //   this.registerDetails.InstrumentName === '' ||
-    //   this.registerDetails.LPIdentification === '' ||
-    //   this.registerDetails.partySelection === '' ||
-    //   this.registerDetails.Quantity.toString() === '' ||
-    //   this.registerDetails.collabrationCost.toString() === '' ||
-    //   this.registerDetails.DCDetails === '' ||
-    //   this.registerDetails.ReportNo === '' ||
-    //   this.registerDetails.ReportDate.toString() === '' ||
-    //   this.registerDetails.Observation === '' ||
-    //   this.registerDetails.Description === '' ||
-    //   this.registerDetails.Remark === '' ||
-    //   this.registerDetails.Specification === ''
-    // ) {
-    //   alert('Enter the Details');
-    // } else {
-    //   this.dataservice.Entry_postUser(this.registerDetails).subscribe(
-    //     (data) => {
-    //       // alert("Added");
-    //       console.log(data.data);
-
-    //       if (data.data) {
-    //         this.toastr.success('Created!!!', 'Entry Created Successfully.', {
-    //           timeOut: 3000,
-    //         });
-
-    //         this.registerDetails.Description = '';
-    //         this.registerDetails.Specification = '';
-    //         this.registerDetails.Observation = '';
-    //         this.registerDetails.Remark = '';
-
-    //         // let currentUrl = this.router.url;
-    //         // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    //         // this.router.onSameUrlNavigation = 'reload';
-    //         // this.router.navigate([currentUrl]);
-    //         this.tabledata();
-    //       }
-    //       // else {
-    //       //   if (data.error.errors[0].validatorKey) {
-    //       //     this.toastr.error('Error!!!', 'Category Already Exists.', {
-    //       //       timeOut: 3000,
-    //       //     });
-    //       //   }
-    //       // }
-    //       // console.log(data.error.errors[0].validatorKey);
-    //     },
-    //     (err) => console.log('its error')
-    //   );
-    // }
-    // console.log(this.registerDetails.InstrumentCode.toString());
 
     var date = this.registerDetails.date;
     var ScheduleNo = this.registerDetails.ScheduleNo?.toString();
@@ -1287,6 +1129,15 @@ export class CalibrationentryComponent implements OnInit {
           // });
         });
     }
+
+    if (
+      this.registerDetails.Description !== '' ||
+      this.registerDetails.Observation !== '' ||
+      this.registerDetails.Remark !== '' ||
+      this.registerDetails.Specification !== ''
+    ) {
+      this.store();
+    }
   }
 
   modifyDate(_modifydate1: any, _modifydate2: any, data: any) {
@@ -1453,6 +1304,24 @@ export class CalibrationentryComponent implements OnInit {
       .subscribe((data: any) => {});
   }
 
+  // open(content:any) {
+  //   this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
+  // }
+
+  // private getDismissReason(reason: any): string {
+  //   if (reason === ModalDismissReasons.ESC) {
+  //     return 'by pressing ESC';
+  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+  //     return 'by clicking on a backdrop';
+  //   } else {
+  //     return  `with: ${reason}`;
+  //   }
+  // }
+
   error() {
     this.dataservice.Entry_postUser(this.registerDetails).subscribe((data) => {
       (this.registerDetails.Description = ''),
@@ -1595,7 +1464,15 @@ export class CalibrationentryComponent implements OnInit {
   }
 
   getUser(id: object) {
-    this.registerDetails = { ...id };
+    // this.registerDetails = { ...id };
+    // this.registerDetails.Description = id
+    let datas : EntryErrorDescription = { ...id};
+    this.registerDetails.Description = datas.Description;
+    this.registerDetails.Specification = datas.Specification;
+    this.registerDetails.Observation = datas.Observation;
+    this.registerDetails.Remark = datas.Remark;
+    this.registerDetails.id = datas.id;
+
     this.date = this.datePipe.transform(
       this.registerDetails.date,
       'yyyy-MM-dd'
@@ -1713,6 +1590,7 @@ export class CalibrationentryComponent implements OnInit {
       (this.registerDetails.Specification = ''),
       (this.registerDetails.Observation = ''),
       (this.registerDetails.Remark = '');
+      this.registerDetails.id = undefined;
   }
   // public onKeySearch(event: any) {
   //   clearTimeout(this.timeout);
@@ -1809,6 +1687,9 @@ export class rejectionmodalbox {
   type: any;
   refno: string = '';
   Data: any;
+  collection: any;
+  BackUpdata: any;
+  test: boolean = false;
   constructor(
     public dialogRef: MatDialogRef<rejectionmodalbox>,
     private dataservice: DataService,
@@ -1945,6 +1826,487 @@ export class rejectionmodalbox {
     });
   }
 
+  // public store(): void {
+  //   // let dueDate, maxLifeTime, Day;
+  //   this.dataservice.MasterTest_getViewData().subscribe((data: any) => {
+  //     console.log('data', data);
+  //     data.data.map((item: any) => {
+  //       let splittedCode = this.registerDetails.InstrumentCode.split(',');
+  //       let code = splittedCode[0];
+  //       let name = splittedCode[1];
+
+  //       if (item.InstrumentCode === code && item.InstrumentName === name) {
+  //         // console.log('item', item.InstrumentCode);
+  //         // console.log('code', code);
+  //         // this.modifyDate(item.date, this.registerDetails.ReportDate, item);
+  //         // this.dataservice.Tabledata1_getView().subscribe((item: any) => {
+  //         //   console.log('data collection', data.data);
+
+  //         //   this.collection = item.data;
+  //         //   this.BackUpdata = item.data;
+  //         // });
+
+  //         // let date1 = this.datePipe.transform(
+  //         //   new Date(item.date),
+  //         //   'YYYY-MM-dd'
+  //         // );
+  //         // console.log('sample', date1);
+  //         // let date2 = this.datePipe.transform(
+  //         //   this.registerDetails.ReportDate,
+  //         //   'YYYY-MM-dd'
+  //         // );
+  //         // if (date1 && date2) {
+  //         //   if (date2 === date1) {
+  //         //     let dateValue = new Date(date2);
+  //         //     // if(dateValue !== null) {
+  //         //     this.dueDate = JSON.stringify(
+  //         //       this.datePipe.transform(dateValue, 'dd-MMM-YYYY')
+  //         //     );
+  //         //     // }
+  //         //   }
+
+  //         //   if (date1 < date2) {
+  //         //     this.TotalDay = 0;
+  //         //     let today = new Date();
+  //         //     let todayDate = this.datePipe.transform(today, 'MM/dd/YYYY');
+  //         //     let compareDate1 = new Date(`${todayDate}`);
+
+  //         //     let reversedDate1 = this.datePipe.transform(date1, 'MM/dd/YYYY');
+  //         //     let compareDate2 = new Date(`${reversedDate1}`);
+  //         //     let reversedDate2 = this.datePipe.transform(date2, 'MM/dd/YYYY');
+  //         //     let compareDate3 = new Date(`${reversedDate2}`);
+
+  //         //     var Time1 = compareDate1.getTime() - compareDate2.getTime();
+  //         //     var Time2 = compareDate3.getTime() - compareDate1.getTime();
+
+  //         //     var Day1 = Time1 / (1000 * 3600 * 24); //Difference in Day
+  //         //     var Day2 = Time2 / (1000 * 3600 * 24);
+  //         //     // console.log(Day1, Day2);
+
+  //         //     this.TotalDay = Day1 + Day2;
+  //         //     console.log('total', this.TotalDay);
+  //         //   }
+
+  //         //   if (item.MxLifeTime === 'Week') {
+  //         //     console.log('week');
+
+  //         //     let week = Math.round(this.TotalDay / 7);
+  //         //     let weekValue = week * 7;
+  //         //     //  console.log(weekValue);
+  //         //     let send_date: any = new Date();
+  //         //     send_date.setDate(send_date.getDate() + weekValue);
+  //         //     if (send_date != 'Invalid Date') {
+  //         //       let setDate: any = this.datePipe.transform(
+  //         //         send_date,
+  //         //         'dd-MMM-YYYY'
+  //         //       );
+  //         //       //  console.log(setDate);
+  //         //       this.dueDate = setDate;
+  //         //     }
+  //         //     this.MxLifeTime = 'Week';
+  //         //     this.MxLifeTimeNumber = week;
+  //         //   }
+
+  //         //   if (item.MxLifeTime === 'Day') {
+  //         //     console.log('Day');
+
+  //         //     let Day = this.TotalDay;
+  //         //     let weekValue = Day * 1;
+  //         //     //  console.log(weekValue);
+  //         //     let send_date: any = new Date();
+  //         //     send_date.setDate(send_date.getDate() + weekValue);
+  //         //     if (send_date != 'Invalid Date') {
+  //         //       let setDate: any = this.datePipe.transform(
+  //         //         send_date,
+  //         //         'dd-MMM-YYYY'
+  //         //       );
+  //         //       //  console.log(setDate);
+  //         //       this.dueDate = setDate;
+  //         //     }
+  //         //     this.MxLifeTimeNumber = Day;
+  //         //     this.MxLifeTime = 'Day';
+  //         //   }
+
+  //         //   if (
+  //         //     item.MxLifeTime === 'Month' ||
+  //         //     item.MxLifeTime === 'Quarterly||3'
+  //         //   ) {
+  //         //     console.log('inside month');
+
+  //         //     let Day = parseInt(this.TotalDay) * 1;
+  //         //     let send_date: any = new Date(item.date);
+  //         //     send_date.setDate(send_date.getDate() + Day);
+
+  //         //     if (send_date != 'Invalid Date') {
+  //         //       let setDate: any = send_date.setMonth(send_date.getMonth());
+  //         //       let setmonths = this.datePipe.transform(setDate, 'dd-MM-YYYY');
+  //         //       let setitem = this.datePipe.transform(item.date, 'dd-MM-YYYY');
+  //         //       // console.log(setmonths);
+  //         //       if (setmonths && setitem) {
+  //         //         let dateMonth1 = setmonths.split('-');
+  //         //         let dateMonth2 = setitem.split('-');
+  //         //         let mon1 = dateMonth1[1];
+  //         //         let mon2 = dateMonth2[1];
+  //         //         let total_month = parseInt(mon2) - parseInt(mon1);
+  //         //         if (total_month < 0) {
+  //         //           total_month = total_month * -1;
+  //         //         }
+  //         //         // console.log('setDate', setDate);
+
+  //         //         this.MxLifeTimeNumber = total_month;
+  //         //         if (total_month === 3) {
+  //         //           this.MxLifeTime = 'Quarterly||3';
+  //         //         } else {
+  //         //           this.MxLifeTime = 'Month';
+  //         //         }
+  //         //         this.dueDate = setmonths;
+  //         //       }
+
+  //         //       // let settedMonth = dateMonth[1]
+  //         //     }
+  //         //   }
+  //         //   if (item.MxLifeTime === 'Year') {
+  //         //     console.log('year');
+
+  //         //     let Day = parseInt(this.TotalDay) * 1;
+  //         //     let send_date: any = new Date(item.date);
+  //         //     send_date.setDate(send_date.getDate() + Day);
+  //         //     let year = send_date.setFullYear(send_date.getFullYear());
+  //         //     // console.log('year', year);
+  //         //     // console.log('item', item.year);
+
+  //         //     let setdate1 = this.datePipe.transform(year, 'dd-MM-YYYY');
+  //         //     let setdate2 = this.datePipe.transform(item.date, 'dd-MM-YYYY');
+
+  //         //     if (setdate1 && setdate2) {
+  //         //       let splityear1 = setdate1.split('-');
+  //         //       let splityear2 = setdate2.split('-');
+  //         //       let year1 = splityear1[2];
+  //         //       let year2 = splityear2[2];
+  //         //       let total = parseInt(year1) - parseInt(year2);
+  //         //       if (total < 0) {
+  //         //         total = total * -1;
+  //         //       }
+
+  //         //       this.dueDate = setdate1;
+  //         //       this.MxLifeTimeNumber = total;
+  //         //       this.MxLifeTime = 'Year';
+  //         //     }
+  //         //   }
+  //         // }
+  //         // let dateDetails = new Date(this.dueDate);
+  //         // console.log(dateDetails);
+
+  //         // this.dueDate = JSON.stringify(
+  //         //   this.datePipe.transform(dateDetails, 'dd-MMM-YYYY')
+  //         // );
+  //         // console.log(this.dueDate);
+
+  //         // this.masterDetails.push({
+  //         //   dueDate: this.dueDate,
+  //         //   MxLifeTime: this.MxLifeTime,
+  //         //   MxLifeTimeNumber: this.MxLifeTimeNumber,
+  //         // });
+
+  //         // console.log(this.masterDetails);
+
+  //         // this.dataservice
+  //         //   .MasterTest_updateSingleUser(item.id, this.masterDetails)
+  //         //   .subscribe((data) => {
+  //         //     console.log(data);
+  //         //   });
+  //       }
+  //     });
+  //   });
+
+  //   // console.log(this.registerDetails.Description);
+
+  //   // this.EntryScheNo = this.registerDetails.ScheduleNo?.toString();
+  //   // this.registerDetails.ScheduleNo = this.EntryScheNo;
+  //   // this.EntryInsName = this.registerDetails.InstrumentName?.toString();
+  //   // this.registerDetails.InstrumentName = this.EntryInsName;
+  //   // this.EntryInsCode = this.registerDetails.InstrumentCode?.toString();
+  //   // this.registerDetails.InstrumentCode = this.EntryInsCode;
+  //   // this.EntryPartySelect = this.registerDetails.partySelection?.toString();
+  //   // this.registerDetails.partySelection = this.EntryPartySelect;
+  //   // // console.log(this.registerDetails.ScheduleNo);
+  //   // // console.log(this.registerDetails.InstrumentName);
+  //   // // console.log(this.registerDetails.InstrumentCode);
+  //   // // console.log(this.registerDetails.Description);
+
+  //   // if (
+  //   //   this.registerDetails.date === undefined ||
+  //   //   this.registerDetails.ScheduleNo === undefined ||
+  //   //   this.registerDetails.InstrumentCode === '' ||
+  //   //   this.registerDetails.InstrumentName === '' ||
+  //   //   this.registerDetails.LPIdentification === '' ||
+  //   //   this.registerDetails.partySelection === '' ||
+  //   //   this.registerDetails.Quantity === undefined ||
+  //   //   this.registerDetails.collabrationCost === undefined ||
+  //   //   this.registerDetails.DCDetails === '' ||
+  //   //   this.registerDetails.ReportNo === '' ||
+  //   //   this.registerDetails.ReportDate === undefined ||
+  //   //   this.registerDetails.date.toString() === '' ||
+  //   //   this.registerDetails.ScheduleNo === '' ||
+  //   //   this.registerDetails.InstrumentCode === '' ||
+  //   //   this.registerDetails.InstrumentName === '' ||
+  //   //   this.registerDetails.LPIdentification === '' ||
+  //   //   this.registerDetails.partySelection === '' ||
+  //   //   this.registerDetails.Quantity.toString() === '' ||
+  //   //   this.registerDetails.collabrationCost.toString() === '' ||
+  //   //   this.registerDetails.DCDetails === '' ||
+  //   //   this.registerDetails.ReportNo === '' ||
+  //   //   this.registerDetails.ReportDate.toString() === '' ||
+  //   //   this.registerDetails.Observation === '' ||
+  //   //   this.registerDetails.Description === '' ||
+  //   //   this.registerDetails.Remark === '' ||
+  //   //   this.registerDetails.Specification === ''
+  //   // ) {
+  //   //   alert('Enter the Details');
+  //   // } else {
+  //   //   this.dataservice.Entry_postUser(this.registerDetails).subscribe(
+  //   //     (data) => {
+  //   //       // alert("Added");
+  //   //       console.log(data.data);
+
+  //   //       if (data.data) {
+  //   //         this.toastr.success('Created!!!', 'Entry Created Successfully.', {
+  //   //           timeOut: 3000,
+  //   //         });
+
+  //   //         this.registerDetails.Description = '';
+  //   //         this.registerDetails.Specification = '';
+  //   //         this.registerDetails.Observation = '';
+  //   //         this.registerDetails.Remark = '';
+
+  //   //         // let currentUrl = this.router.url;
+  //   //         // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  //   //         // this.router.onSameUrlNavigation = 'reload';
+  //   //         // this.router.navigate([currentUrl]);
+  //   //         this.tabledata();
+  //   //       }
+  //   //       // else {
+  //   //       //   if (data.error.errors[0].validatorKey) {
+  //   //       //     this.toastr.error('Error!!!', 'Category Already Exists.', {
+  //   //       //       timeOut: 3000,
+  //   //       //     });
+  //   //       //   }
+  //   //       // }
+  //   //       // console.log(data.error.errors[0].validatorKey);
+  //   //     },
+  //   //     (err) => console.log('its error')
+  //   //   );
+  //   // }
+  //   // console.log(this.registerDetails.InstrumentCode.toString());
+
+  //   var date = this.registerDetails.date;
+  //   var ScheduleNo = this.registerDetails.ScheduleNo?.toString();
+  //   var InstrumentCode = this.registerDetails.InstrumentCode?.toString();
+  //   var InstrumentName = this.registerDetails.InstrumentName?.toString();
+  //   // var LPIdentification = this.registerDetails.LPIdentification;
+  //   var partySelection = this.registerDetails.partySelection?.toString();
+  //   var Quantity = this.registerDetails.Quantity;
+  //   var collabrationCost = this.registerDetails.collabrationCost;
+  //   var DCDetails = this.registerDetails.DCDetails;
+  //   var ReportNo = this.registerDetails.ReportNo;
+  //   var ReportDate = this.registerDetails.ReportDate;
+  //   var RequestType = this.registerDetails.RequestType;
+  //   var Description = this.registerDetails.Description;
+  //   var Specification = this.registerDetails.Specification;
+  //   var Observation = this.registerDetails.Observation;
+  //   var fileErrorDiscription = this.registerDetails.fileErrorDiscription;
+  //   var Remark = this.registerDetails.Remark;
+  //   // var Requesttypeselected = this.registerDetails.Requesttypeselected;
+
+  //   if (date == undefined || date == undefined) {
+  //     this.toastr.warning('Warning!!!', 'date is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   // if (ScheduleNo == '' || ScheduleNo == undefined) {
+  //   //   this.toastr.warning('Warning!!!', 'ScheduleNo  is required!', {
+  //   //     timeOut: 3000,
+  //   //   });
+  //   //   (<HTMLInputElement>document.getElementById('id')).focus();
+  //   // }
+
+  //   if (InstrumentCode == '' || InstrumentCode == undefined) {
+  //     this.toastr.warning('Warning!!!', 'InstrumentCode is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (InstrumentName == '' || InstrumentName == undefined) {
+  //     this.toastr.warning('Warning!!!', 'InstrumentName is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   // if (LPIdentification == '' || LPIdentification == undefined) {
+  //   //   this.toastr.warning('Warning!!!', 'LPIdentification  is required!', {
+  //   //     timeOut: 3000,
+  //   //   });
+  //   //   (<HTMLInputElement>document.getElementById('id')).focus();
+  //   // }
+
+  //   if (partySelection == '' || partySelection == undefined) {
+  //     this.toastr.warning('Warning!!!', 'partySelection   is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (Quantity == '' || Quantity == undefined) {
+  //     this.toastr.warning('Warning!!!', 'Quantity   is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (collabrationCost == undefined || collabrationCost == undefined) {
+  //     this.toastr.warning('Warning!!!', 'collabrationCost    is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (DCDetails == '' || DCDetails == undefined) {
+  //     this.toastr.warning('Warning!!!', 'DCDetails   is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (ReportNo == '' || ReportNo == undefined) {
+  //     this.toastr.warning('Warning!!!', 'ReportNo   is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (ReportDate == undefined || ReportDate == undefined) {
+  //     this.toastr.warning('Warning!!!', 'ReportDate    is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (RequestType == '' || RequestType == undefined) {
+  //     this.toastr.warning('Warning!!!', 'RequestType    is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (Description == '' || Description == undefined) {
+  //     this.toastr.warning('Warning!!!', 'Description      is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (Specification == '' || Specification == undefined) {
+  //     this.toastr.warning('Warning!!!', 'Specification       is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   if (Observation == '' || Observation == undefined) {
+  //     this.toastr.warning('Warning!!!', 'Observation        is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   // if (
+  //   //   fileErrorDiscription == undefined ||
+  //   //   fileErrorDiscription == undefined
+  //   // ) {
+  //   //   this.toastr.warning(
+  //   //     'Warning!!!',
+  //   //     'fileErrorDiscription         is required!',
+  //   //     {
+  //   //       timeOut: 3000,
+  //   //     }
+  //   //   );
+  //   //   (<HTMLInputElement>document.getElementById('id')).focus();
+  //   // }
+
+  //   if (Remark == '' || Remark == undefined) {
+  //     this.toastr.warning('Warning!!!', 'Remark          is required!', {
+  //       timeOut: 3000,
+  //     });
+  //     (<HTMLInputElement>document.getElementById('id')).focus();
+  //   }
+
+  //   // if (Requesttypeselected == undefined || Requesttypeselected == undefined) {
+  //   //   this.toastr.warning('Warning!!!', 'Requesttypeselected  is required!', {
+  //   //     timeOut: 3000,
+  //   //   });
+  //   //   (<HTMLInputElement>document.getElementById('id')).focus();
+  //   // }
+  //   // this.dataservice.postMaster_Error()
+
+  //   this.registerDetails.status = 'Accept';
+  //   this.registerDetails.option = 'None';
+  //   if (this.registerDetails) {
+  //     // this.dataservice
+  //     //   .Entry_postUser(this.registerDetails)
+  //     //   .subscribe((data) => {
+  //     // console.log('data', data.data);
+
+  //     // this.collection = data.data;
+  //     // this.BackUpdata = data.data;
+
+  //     // let currentUrl = this.router.url;
+  //     // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  //     // this.router.onSameUrlNavigation = 'reload';
+  //     // this.router.navigate([currentUrl]);
+  //     // this.tabledata();
+  //     // this.collection = [];
+
+  //     // this.dataservice.Tabledata1_getView().subscribe((item: any) => {
+  //     //   // console.log('data collection', data.data);
+
+  //     //   this.collection = item.data;
+  //     //   this.BackUpdata = item.data;
+  //     // });
+  //     // });
+  //     let description: EntryErrorDescription = {};
+  //     // console.log('ins', this.registerDetails.InstrumentCode);
+  //     // console.log('name', this.registerDetails.InstrumentName);
+  //     // console.log('des', this.registerDetails.Description);
+  //     // errorDes {
+  //     (description.InstrumentCode = this.registerDetails.InstrumentCode),
+  //       (description.InstrumentName = this.registerDetails.InstrumentName),
+  //       (description.Description = this.registerDetails.Description),
+  //       (description.Remark = this.registerDetails.Remark),
+  //       (description.Observation = this.registerDetails.Observation),
+  //       (description.Specification = this.registerDetails.Specification),
+  //       (description.active = true),
+  //       this.dataservice.postEntry_Error(description).subscribe((data: any) => {
+  //         console.log(data.data);
+
+  //         this.collection.push(data.data);
+  //         this.BackUpdata.push(data.data);
+  //         console.log('inside', this.collection);
+
+  //         (this.registerDetails.Description = ''),
+  //           (this.registerDetails.Specification = ''),
+  //           (this.registerDetails.Observation = ''),
+  //           (this.registerDetails.Remark = ''),
+  //           (this.test = true);
+  //       });
+
+  //     console.log('accept', this.collection);
+  //   }
+  // }
+
   onNoClick(): void {
     // console.log(this.Data);
 
@@ -1955,7 +2317,7 @@ export class rejectionmodalbox {
 
     // console.log('reference', this.refno?.toString());
 
-    console.log(this.Data);
+    // console.log(this.Data);
     if (this.Data) {
       this.dataservice.Entry_postUser(this.Data).subscribe((data) => {
         if (this.type === 'Scrap') {

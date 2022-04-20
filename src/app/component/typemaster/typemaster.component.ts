@@ -63,10 +63,14 @@ export class TypemasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 7);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    console.log('user',useraccess);
+    
+    let datas = useraccess.filter((element: any) => element.moduleid === 2);
+    console.log('type',datas);
+    
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true; 
 
     this.tabledata();
     this.getCategory();
@@ -240,7 +244,10 @@ export class TypemasterComponent implements OnInit {
     }
   }
   getUser(id: object) {
+    
     this.registerDetails = { ...id };
+    // console.log(this.registerDetails);
+
   }
 
   public Click_Head(index: number, heading: string): void {
@@ -267,6 +274,8 @@ export class TypemasterComponent implements OnInit {
   reset() {
     this.registerDetails.type = '';
     this.registerDetails.shortName = '';
-    this.registerDetails.categoryId = '';
+    this.registerDetails.categoryId = undefined;
+    this.registerDetails.id = '';
+    this.getCategory();
   }
 }

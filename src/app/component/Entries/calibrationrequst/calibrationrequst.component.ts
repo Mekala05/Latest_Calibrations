@@ -51,7 +51,7 @@ export class CalibrationrequstComponent implements OnInit {
 
   public TableHeading = [
     {
-      name: '',
+      name: 'Select',
     },
     {
       name: 'SI No',
@@ -123,10 +123,10 @@ export class CalibrationrequstComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 9);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 9);
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     this.buttonShow = true;
     this.tabledata();
@@ -537,11 +537,17 @@ export class CalibrationrequstComponent implements OnInit {
     }
   }
 
-  getRequestTypeDetails(type: any) {
+  getRequestTypeDetails(type: any,num: any) {
     // debugger;
     // const requestType=event.value;
     // console.log('type', type.target.value);
-    let target = type.target.value;
+    let target;
+    if(num !== null && num !== "" && num !== undefined) {
+      target = num;
+    } else {
+      target = type.target.value;
+    }
+    // let target = type.target.value;
     // console.log('target', typeof target.toLowerCase());
     // console.log(typeof 'breakage');
 
@@ -549,7 +555,7 @@ export class CalibrationrequstComponent implements OnInit {
 
     if (target.toLowerCase().trim() === 'breakage'.trim()) {
       this.dataservice.BreakageRequestno_getView().subscribe((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         data.data.map((item: any) => {
           this.Requesttypelist.push(item.BreakageNo);
         });
@@ -606,7 +612,10 @@ export class CalibrationrequstComponent implements OnInit {
     // }
   }
   getUser(id: object) {
+    // console.log('data',id);
+    
     this.registerDetails = { ...id };
+    this.getRequestTypeDetails('',this.registerDetails.RequestType)
     this.date = this.datePipe.transform(
       this.registerDetails.date,
       'yyyy-MM-dd'
@@ -706,17 +715,18 @@ export class CalibrationrequstComponent implements OnInit {
   }
 
   reset() {
-    (this.registerDetails.date = undefined),
-      (this.registerDetails.RequestType = ''),
-      (this.registerDetails.InstrumentName = ''),
-      (this.registerDetails.InstrumentCode = ''),
-      (this.registerDetails.LPIdentification = ''),
-      (this.registerDetails.Party = ''),
+    this.registerDetails.date = undefined,
+      (this.registerDetails.RequestType = undefined),
+      (this.registerDetails.InstrumentName = undefined),
+      (this.registerDetails.InstrumentCode = undefined),
+      (this.registerDetails.LPIdentification = ""),
+      (this.registerDetails.Party = undefined),
       // this.registerDetails.Quantity = '',
-      (this.registerDetails.calibrationlocation = ''),
-      (this.registerDetails.calibrationtype = ''),
-      (this.registerDetails.BreakageNo = ''),
-      (this.registerDetails.RaiseDc = '');
+      (this.registerDetails.calibrationlocation = undefined),
+      (this.registerDetails.calibrationtype = undefined),
+      (this.registerDetails.BreakageNo = undefined),
+      (this.registerDetails.RaiseDc = undefined);
+      this.registerDetails.id = ""
   }
   requesttypedetails(event: any) {
     // debugger;

@@ -248,3 +248,33 @@ tbody td {
 .frequency {
   max-width: 35%;
 }
+
+.upload-image {
+  float: right;
+  background-color: #3f5161;
+  color: white;
+  line-height: 1.9rem;
+  font-size: 0.7rem;
+  font-family: $font-family;
+}
+
+.addrow-button {
+  font-size: 0.7rem;
+  font-family: $font-family;
+  background-color: #3f5161;
+  color: white;
+  float: right;
+  margin-right: 20px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.move-button {
+  margin-top: 20px;
+}
+
+.m-20 {
+  margin: 20px
+}

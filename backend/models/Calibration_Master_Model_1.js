@@ -39,9 +39,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(250),
             field: 'range'
         },
-        masterspecification: {
+        leastcount: {
             type: DataTypes.STRING(250),
-            field: 'masterspecification',
+            field: 'leastcount',
             // unique : true
 
         },

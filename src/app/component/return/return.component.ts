@@ -132,10 +132,10 @@ export class ReturnComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 15);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');    
+    let datas = useraccess.filter((element: any) => element.moduleid === 15);    
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     this.tabledata();
     this.registerDetails.ReturnDate = new Date();

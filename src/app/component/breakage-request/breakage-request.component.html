@@ -239,14 +239,31 @@
 
       <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
         <div class="row form-group align-items-center">
-          <div class="col-xl-3">
-            <input type="file" [(ngModel)]="registerDetails.file" />
+          <div class="col-md-6">
+            <mat-label class="gene_name newname">
+              Breakage Attachment
+            </mat-label>
           </div>
-          <div class="col-6">
-            <button type="button" class="Viewbtn" style="margin-left: 98px">
-              VIEW
+          <div class="col-md-6">
+            <input
+              (change)="selectimage($event)"
+              type="file"
+              id="inputGroupFile01"
+              [(ngModel)]="registerDetails.file"
+              aria-describedby="inputGroupFileAddon01"
+              #fileUpload
+              multiple
+            />
+          </div>
+          <!-- <div class="col-md-8">
+            <button
+              mat-stroked-button
+              class="upload-image addrow-button"
+              (click)="uploadImage()"
+            >
+              UPLOAD
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -319,6 +336,51 @@
 </div>
 
 <br />
+<table class="table table-borderless table-hover">
+  <thead>
+    <tr class="header_color">
+      <td
+        scope="col"
+        *ngFor="let head of Heading; let i = index"
+        class="gene_name tablethtd"
+        [style.background-color]="i == HighlightHead ? '#dfdfdf ' : '#dfdfdf'"
+      >
+        {{ head.name }}
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      class="table table-sm"
+      *ngFor="
+        let data of collectiondata | searchfilter: searchvalue:['Description'];
+        let i = index
+      "
+    >
+      <td class="gene_name tablethtd">{{ i + 1 }}</td>
+
+      <td>{{ data.filename }}</td>
+
+      <td class="gene_name tablethtd icons">
+        <button
+          *ngIf="data.filename"
+          mat-stroked-button
+          class="submit-button"
+          (click)="download(data, i)"
+        >
+          Download
+        </button>
+      </td>
+      <td class="gene_name tablethtd dicons">
+        <i
+          class="fa fa-trash"
+          aria-hidden="true"
+          (click)="delete(data.id, data)"
+        ></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- <div class="searchbox">
     <div class="has-search text-right">

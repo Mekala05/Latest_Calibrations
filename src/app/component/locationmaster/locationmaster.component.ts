@@ -67,10 +67,10 @@ export class LocationmasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 5);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 5);
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     this.tabledata();
     this.getCategory();
@@ -109,7 +109,10 @@ export class LocationmasterComponent implements OnInit {
     this.dataservice
       .CalibrationlocationmasterParticular_getView()
       .subscribe((data) => {
+        console.log('branch', data.data);
+
         this.Branchunit = data.data;
+        // console.log(this.Branchunit);
       });
   }
 
@@ -295,9 +298,12 @@ export class LocationmasterComponent implements OnInit {
   }
 
   reset() {
-    (this.registerDetails.BranchUnit = ''),
-      (this.registerDetails.Division = ''),
-      (this.registerDetails.Department = ''),
-      (this.registerDetails.ShortName = undefined);
+    (this.registerDetails.BranchUnit = undefined),
+      (this.registerDetails.Division = undefined),
+      (this.registerDetails.Department = undefined),
+      (this.registerDetails.ShortName = '');
+    this.registerDetails.id = '';
+    this.Branchunitfun();
+    this.Departmentfun();
   }
 }

@@ -43,13 +43,16 @@
 //   RaiseDC: 'http://10.0.0.11:3000/api/RaiseDC',
 //   header: 'http://10.0.0.11:3001/header',
 //   attachment: 'http://10.0.0.11:3001/attachment',
-
+//   breakageAttachment: 'http://10.0.0.11:3001/breakage',
+//   entryAttachment: 'http://10.0.0.11:3001/entry',
 //   imgUrl: 'http://10.0.0.11:3000',
+//   breakageFile: 'http://10.0.0.11:3000',
 // };
 
 export const environment = {
   production: false,
   imgUrl: 'http://localhost:3000',
+  breakageFile: 'http://localhost:3000',
   url: 'http://localhost:3000/api/category',
   Typeurl: 'http://localhost:3000/api/type',
   Makeurl: 'http://localhost:3000/api/make',
@@ -87,6 +90,8 @@ export const environment = {
   Moduledescription: 'http://localhost:3000/api/iddescription',
   header: 'http://localhost:3001/header',
   attachment: 'http://localhost:3001/attachment',
+  breakageAttachment: 'http://localhost:3001/breakage',
+  entryAttachment: 'http://localhost:3001/entry',
 };
 
 /*

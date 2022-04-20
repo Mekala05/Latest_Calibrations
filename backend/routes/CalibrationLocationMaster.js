@@ -103,9 +103,6 @@ router.get('/viewData', (req, res) => {
             sendError(res, err);
         });
     })
-
-
-
 })
 
 router.get('/viewDataname', (req, res) => {

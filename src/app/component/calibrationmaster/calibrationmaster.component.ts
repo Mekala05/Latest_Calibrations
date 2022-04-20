@@ -77,6 +77,7 @@ export class CalibrationmasterComponent implements OnInit {
   public image: any[] = [];
   updateButton: boolean = false;
   updateErrors: boolean = false;
+  index: any;
 
   // showImage: any[] = [];
 
@@ -277,8 +278,8 @@ export class CalibrationmasterComponent implements OnInit {
               this.registerDetails.Department = instrument[0].Department;
               this.registerDetails.range = instrument[0].range;
               // this.registerDetails.Specification = instrument[0].Specification;
-              this.registerDetails.masterspecification =
-                instrument[0].masterspecification;
+              this.registerDetails.leastcount =
+                instrument[0].leastcount;
 
               // this.registerDetails.Description = instrument[0].Description;
               // this.registerDetails.Remark = instrument[0].Remark;
@@ -447,7 +448,7 @@ export class CalibrationmasterComponent implements OnInit {
   public loadInstrument(): void {}
   private tabledata1(): void {
     this.dataservice.MasterTest_getViewtablerecord1().subscribe((data) => {
-      console.log('inside tabel');
+      // console.log('inside tabel');
 
       this.collection = data.data;
       this.BackUpdata = data.data;
@@ -559,7 +560,7 @@ export class CalibrationmasterComponent implements OnInit {
     }
     // console.log('formdatas', formDatas);
     // console.log('attachment', typeof this.uploadedFiles);
-    console.log('collectiondata', this.collectiondata);
+    // console.log('collectiondata', this.collectiondata);
 
     let imageDatas: any[] = [];
     this.dataservice
@@ -588,7 +589,7 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   update() {
-    console.log('inside update error');
+    // console.log('inside update error');
 
     // let date1 = this.datePipe.transform(
     //   this.registerDetails.date,
@@ -608,7 +609,7 @@ export class CalibrationmasterComponent implements OnInit {
       this.registerDetails.InstrumentCode === '' ||
       this.registerDetails.InstrumentName === '' ||
       this.registerDetails.dueDate === undefined ||
-      this.registerDetails.masterspecification === '' ||
+      this.registerDetails.leastcount === '' ||
       this.registerDetails.date === undefined ||
       // this.registerDetails.MxLifeTime === '' ||
       this.registerDetails.MxLifeTimeNumber === '' ||
@@ -616,7 +617,7 @@ export class CalibrationmasterComponent implements OnInit {
       // this.registerDetails.active === undefined ||
       this.registerDetails.amccheckbox === undefined ||
       this.registerDetails.Observation === '' ||
-      this.registerDetails.Remark === '' ||
+      // this.registerDetails.Remark === '' ||
       // this.registerDetails.Description === '' ||
       // this.registerDetails.Specification === '' ||
       this.registerDetails.CurrentLocation === '' ||
@@ -650,8 +651,8 @@ export class CalibrationmasterComponent implements OnInit {
     ) {
       alert('Enter the Details');
     } else {
-      console.log('register', this.registerDetails);
-      console.log('log empty');
+      // console.log('register', this.registerDetails);
+      // console.log('log empty');
 
       this.collection = [];
       this.collection.push(this.registerDetails);
@@ -660,8 +661,8 @@ export class CalibrationmasterComponent implements OnInit {
         this.registerDetails.dueDate
       ).toISOString();
       // this.ids = this.registerDetails.id;
-      console.log('details', this.registerDetails);
-      console.log('id', this.registerDetails.id);
+      // console.log('details', this.registerDetails);
+      // console.log('id', this.registerDetails.id);
 
       this.dataservice
         .MasterTest_updateSingleUser(
@@ -676,7 +677,7 @@ export class CalibrationmasterComponent implements OnInit {
                 .subscribe((data) => {
                   // console.log('col', data.data);
                   this.registerDetails = data.data;
-                  console.log('update id');
+                  // console.log('update id');
 
                   // this.collection = data.data;
                   // this.BackUpdata = data.data;
@@ -763,14 +764,8 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   getUser(id: any) {
-    // this.updateButton = true;
     this.updateErrors = true;
     this.updateButton = true;
-    // this.registerDetails = { ...id };
-    // let data = id;
-    // console.log(id);
-    // this.registerDetails.dueDate = new Date(id.dueDate);
-    // this.registerDetails.date = new Date(id.date);
     this.ids = id.id;
     this.registerDetails.id = id.id;
     this.registerDetails.Location = id.Location;
@@ -778,36 +773,10 @@ export class CalibrationmasterComponent implements OnInit {
     this.registerDetails.Observation = id.Observation;
     this.registerDetails.Remark = id.Remark;
     this.registerDetails.Specification = id.Specification;
-
-    // this.registerDetails.Description = id.Description
-    // this.date = this.datePipe.transform(
-    //   this.registerDetails.date,
-    //   'dd-mm-yyyy'
-    // );
-    // // console.log('date', this.date);
-    // // console.log('register', this.registerDetails.date);
-    // let dueDate: any;
-    // dueDate = this.datePipe.transform(
-    //   this.registerDetails.dueDate,
-    //   'dd-mm-yyyy'
-    // );
-
-    // this.registerDetails.date = this.date;
-    // this.registerDetails.dueDate = dueDate;
     this.user_name = this.user_name;
   }
-  // public deleteUsers(id: Number): void {
-  //   // console.log(id);
-  //   this.dataservice.MasterTest_DeleteSingleUser(id, this.collection).subscribe(
-  //     () => {
-  //       this.tabledata();
-  //     },
-  //     () => console.log('its error')
-  //   );
-  // }
 
   public deleteUsers(id: string): void {
-    // debugger;
     this.dataservice.MasterTest_DeleteSingleUser(id, this.collection).subscribe(
       (data: any) => {
         this.tabledata();
@@ -816,64 +785,14 @@ export class CalibrationmasterComponent implements OnInit {
     );
   }
 
-  // viewImages() {
-
-  // }
-
   fileChange(element: any, i?: any) {
-    // if (
-    //   this.registerDetails.InstrumentCode &&
-    //   this.registerDetails.InstrumentName
-    // ) {
-    //   this.showButton = false;
-    // }
+    this.showButton = this.index;
     this.uploadedFiles = element.target.files;
-    // this.updateFile = i;
-    // this.updateImage(i);
-
-    // const reader = new FileReader();
-    // if (this.uploadedFiles && this.uploadedFiles.length) {
-    //   // console.log(element.target.files[0]);
-
-    //   if (this.uploadedFiles && this.uploadedFiles[0]) {
-    //     const numberOfFiles = this.uploadedFiles.length;
-
-    //     for (let i = 0; i < numberOfFiles; i++) {
-    //       let reader = new FileReader();
-
-    //       reader.onload = (e: any) => {
-    //         // console.log(e.target.result);
-    //         this.imageSrc = e.target.re/
-    //       };
-    //       reader.readAsDataURL(this.uploadedFiles[i]);
-    //     }
-    // reader.onload = (e: any) => {
-    //   // console.log(e.target.result);
-    //   this.imageSrc = e.target.result;
-    //   console.log('img', this.imageSrc);
-    // };
-    // }
-    // }
-    // this.dataservice.MasterTest_getView().subscribe((itemData: any) => {
-    //   console.log(itemData);
-    //   if (itemData.length === 0) {
-    //     let num = 100;
-    //     this.registerDetails.ErrorReferenceCode = num.toString();
-    //   } else {
-    //     console.log('itemData', itemData.length);
-    //   }
-    // });
   }
 
   public selectimage(eve: any) {
     this.images = eve.target.files;
     const file = eve.target.files[0];
-
-    // this.myForm.patchValue({
-    //   img: file
-    // });
-
-    // this.myForm.get('img').updateValueAndValidity()
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -885,13 +804,8 @@ export class CalibrationmasterComponent implements OnInit {
   }
 
   public uploadImage(data: any) {
-    // this.chooseFile = false;
     let formDatas = new FormData();
     this.ids = data;
-    // console.log(this.uploadedFiles.length);
-    // console.log('len', this.uploadedFiles.length);
-    // console.log('attach', this.attachmentImage);
-    // console.log('col', this.collectiondata);
 
     this.attachmentImage = [];
 
@@ -910,20 +824,14 @@ export class CalibrationmasterComponent implements OnInit {
         ids: this.ids,
       });
     }
-    // console.log('formdatas', formDatas);
-    // console.log('attachment', typeof this.uploadedFiles);
 
     let imageDatas: any[] = [];
 
     this.dataservice
       .fileuploadmulti_Master(formDatas)
       .subscribe((data: any) => {
-        // console.log(data.message.uploads);
         imageDatas = data.message.uploads;
         this.collectiondata.pop();
-
-        // console.log('image', imageDatas);
-        // console.log('att', this.attachmentImage);
 
         this.attachmentImage.map((item: any) => {
           imageDatas.map((element: any) => {
@@ -1024,7 +932,7 @@ export class CalibrationmasterComponent implements OnInit {
     //   this.registerDetails.InstrumentName === '' ||
     //   this.registerDetails.make === '' ||
     //   this.registerDetails.range === '' ||
-    //   this.registerDetails.masterspecification === '' ||
+    //   this.registerDetails.leastcount === '' ||
     //   this.registerDetails.MxLifeTime === '' ||
     //   this.registerDetails.MxLifeTimeNumber === '' ||
     //   this.registerDetails.MxLifeTimeNumber === '' ||
@@ -1045,7 +953,7 @@ export class CalibrationmasterComponent implements OnInit {
     //   this.registerDetails.InstrumentName === '' ||
     //   this.registerDetails.make === '' ||
     //   // this.registerDetails.range === '' ||
-    //   this.registerDetails.masterspecification === '' ||
+    //   this.registerDetails.leastcount === '' ||
     //   // this.registerDetails.MxLifeTime === '' ||
     //   // this.registerDetails.MxLifeTimeNumber === '' ||
     //   this.registerDetails.MxLifeTimeNumber === ''
@@ -1107,7 +1015,7 @@ export class CalibrationmasterComponent implements OnInit {
     var InstrumentName = this.registerDetails.InstrumentName;
     var make = this.registerDetails.make;
     var range = this.registerDetails.range;
-    var masterspecification = this.registerDetails.masterspecification;
+    var leastcount = this.registerDetails.leastcount;
     var CurrentLocation = this.registerDetails.CurrentLocation;
     var date = this.registerDetails.date;
     // var MxLifeTime = this.registerDetails.MxLifeTime;
@@ -1186,8 +1094,8 @@ export class CalibrationmasterComponent implements OnInit {
       // return false;
     }
 
-    if (masterspecification == '' || masterspecification == undefined) {
-      this.toastr.warning('Warning!!!', 'masterspecification is required!', {
+    if (leastcount == '' || leastcount == undefined) {
+      this.toastr.warning('Warning!!!', 'leastcount is required!', {
         timeOut: 3000,
       });
       (<HTMLInputElement>document.getElementById('id')).focus();
@@ -1274,13 +1182,13 @@ export class CalibrationmasterComponent implements OnInit {
       // return false;
     }
 
-    if (Remark == '' || Remark == undefined) {
-      this.toastr.warning('Warning!!!', 'Remark is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-      // return false;
-    }
+    // if (Remark == '' || Remark == undefined) {
+    //   this.toastr.warning('Warning!!!', 'Remark is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    //   // return false;
+    // }
 
     // if (
     //   fileErrorDiscription == undefined ||
@@ -1408,7 +1316,7 @@ export class CalibrationmasterComponent implements OnInit {
     var Description = this.registerDetails.Description;
     var Specification = this.registerDetails.Specification;
     var Observation = this.registerDetails.Observation;
-    var Remark = this.registerDetails.Remark;
+    // var Remark = this.registerDetails.Remark;
 
     if (InstrumentCode == '' || InstrumentCode == undefined) {
       this.toastr.warning('Warning!!!', 'InstrumentCode is required!', {
@@ -1444,12 +1352,12 @@ export class CalibrationmasterComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (Remark == '' || Remark == undefined) {
-      this.toastr.warning('Warning!!!', 'Remark is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (Remark == '' || Remark == undefined) {
+    //   this.toastr.warning('Warning!!!', 'Remark is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     // let description: any;
     // description.push({
@@ -1504,7 +1412,7 @@ export class CalibrationmasterComponent implements OnInit {
     var InstrumentName = this.registerDetails.InstrumentName;
     var make = this.registerDetails.make;
     var range = this.registerDetails.range;
-    var masterspecification = this.registerDetails.masterspecification;
+    var leastcount = this.registerDetails.leastcount;
     var CurrentLocation = this.registerDetails.CurrentLocation;
     var date = this.registerDetails.date;
     // var MxLifeTime = this.registerDetails.MxLifeTime;
@@ -1516,7 +1424,7 @@ export class CalibrationmasterComponent implements OnInit {
     var Description = this.registerDetails.Description;
     var Specification = this.registerDetails.Specification;
     var Observation = this.registerDetails.Observation;
-    var Remark = this.registerDetails.Remark;
+    // var Remark = this.registerDetails.Remark;
     // var fileErrorDiscription = this.registerDetails.fileErrorDiscription;
     var InstrumentRefferenceCode =
       this.registerDetails.InstrumentRefferenceCode;
@@ -1574,8 +1482,8 @@ export class CalibrationmasterComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (masterspecification == '' || masterspecification == undefined) {
-      this.toastr.warning('Warning!!!', 'masterspecification is required!', {
+    if (leastcount == '' || leastcount == undefined) {
+      this.toastr.warning('Warning!!!', 'leastcount is required!', {
         timeOut: 3000,
       });
       (<HTMLInputElement>document.getElementById('id')).focus();
@@ -1655,12 +1563,12 @@ export class CalibrationmasterComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
 
-    if (Remark == '' || Remark == undefined) {
-      this.toastr.warning('Warning!!!', 'Remark is required!', {
-        timeOut: 3000,
-      });
-      (<HTMLInputElement>document.getElementById('id')).focus();
-    }
+    // if (Remark == '' || Remark == undefined) {
+    //   this.toastr.warning('Warning!!!', 'Remark is required!', {
+    //     timeOut: 3000,
+    //   });
+    //   (<HTMLInputElement>document.getElementById('id')).focus();
+    // }
 
     // if (
     //   fileErrorDiscription == undefined ||
@@ -1866,49 +1774,78 @@ export class CalibrationmasterComponent implements OnInit {
     // if (event.target.value) {
     // }
 
-    console.log('select', selectedLaw);
-    event
-      ? (selectedLaw = event.target.value)
-      : (selectedLaw = this.userLocation);
+    // console.log('select', selectedLaw);
+    if (
+      (this.registerDetails.MasterType !== undefined ||
+        this.registerDetails.MasterType === '') &&
+      (this.registerDetails.type !== undefined ||
+        this.registerDetails.type === '')
+    ) {
+      event
+        ? (selectedLaw = event.target.value)
+        : (selectedLaw = this.userLocation);
 
-    selectedLaw = event.target.value;
+      selectedLaw = event.target.value;
 
-    // this.locationselect = selectedLaw;
-    //console.log('00000000          ' + selectedLaw);
-    var shortname = selectedLaw.split(',');
-    // console.log('short', shortname);
-    console.log('select', shortname);
+      // this.locationselect = selectedLaw;
+      //console.log('00000000          ' + selectedLaw);
+      var shortname = selectedLaw.split(',');
+      // console.log('short', shortname);
+      // console.log('select', shortname);
 
-    var instrument_code: any = this.InstrumentCodeof;
-    // console.log(instrument_code);
-    let code = instrument_code.split('||');
-    let typesortname = this.valueof;
-    let tsortname = typesortname.split('||');
-    // console.log('inssd', code[0]);
-    this.registerDetails.InstrumentRefferenceCode = shortname[0];
-    this.registerDetails.InstrumentCode = shortname[0];
+      var instrument_code: any = this.InstrumentCodeof;
+      // console.log(instrument_code);
+      let code = instrument_code.split('||');
+      let typesortname = this.valueof;
+      let tsortname = typesortname.split('||');
+      // console.log('inssd', code[0]);
+      this.registerDetails.InstrumentRefferenceCode = shortname[0];
+      this.registerDetails.InstrumentCode = shortname[0];
 
-    this.codeValue = this.locationselect + '-' + this.InstrumentCodeof;
-    this.registerDetails.InstrumentRefferenceCode =
-      shortname[0] + '-' + this.InstrumentCodeof;
-    this.registerDetails.InstrumentCode =
-      shortname[0] + '-' + tsortname[1] + '-' + code[0];
+      this.codeValue = this.locationselect + '-' + this.InstrumentCodeof;
+      this.registerDetails.InstrumentRefferenceCode =
+        shortname[0] + '-' + this.InstrumentCodeof;
+      this.registerDetails.InstrumentCode =
+        shortname[0] + '-' + tsortname[1] + '-' + code[0];
 
-    this.InstrumentCodeof + '-' + shortname[0];
+      this.InstrumentCodeof + '-' + shortname[0];
 
-    this.registerDetails.InstrumentRefferenceCode =
-      shortname[0] + '-' + tsortname[1] + '-' + code[0];
+      this.registerDetails.InstrumentRefferenceCode =
+        shortname[0] + '-' + tsortname[1] + '-' + code[0];
 
-    // this.InstrumentRefferenceCode + '-' + shortname[0];
+      // this.InstrumentRefferenceCode + '-' + shortname[0];
 
-    this.registerDetails.Department = selectedLaw[2];
+      this.registerDetails.Department = selectedLaw[2];
 
-    this.dataservice.departmentdata(shortname[0]).subscribe((data) => {
-      // console.log(data.data[0].Department);
-      this.registerDetails.Department = data.data[0].Department;
-    });
+      this.dataservice.departmentdata(shortname[0]).subscribe((data) => {
+        // console.log(data.data[0].Department);
+        this.registerDetails.Department = data.data[0].Department;
+      });
 
-    this.getSapReferenceCode(shortname[1]);
+      this.getSapReferenceCode(shortname[1]);
+    } else {
+      if (
+        this.registerDetails.type == '' ||
+        this.registerDetails.type == undefined
+      ) {
+        this.toastr.warning('Warning!!!', 'type  is required!', {
+          timeOut: 3000,
+        });
+        (<HTMLInputElement>document.getElementById('id')).focus();
+        // return false;
+      }
+
+      if (
+        this.registerDetails.MasterType == '' ||
+        this.registerDetails.MasterType == undefined
+      ) {
+        this.toastr.warning('Warning!!!', 'MasterType is required!', {
+          timeOut: 3000,
+        });
+        (<HTMLInputElement>document.getElementById('id')).focus();
+        // return false;
+      }
+    }
   }
 
   public getSapReferenceCode(data?: any) {
@@ -2240,41 +2177,21 @@ export class CalibrationmasterComponent implements OnInit {
   // }
 
   AddRow(i: any, show: boolean, id: any) {
-    // if (
-    //   this.registerDetails.InstrumentCode &&
-    //   this.registerDetails.InstrumentName
-    // ) {
-    //   this.showButton = false;
-    // }
-    // this.dataservice = {};
-    // console.log('col', this.collectiondata.length);
-    // console.log(i);
-    // document.getElementById("showbtn"+i).disabled = false;
-    // (document.getElementById('showbtn' + i) as HTMLInputElement).disabled =
-    //   false;
-    // debugger;
-    // var element = <HTMLButtonElement>document.getElementById('showbtn');
-    // element.disabled = false;
-    // this.showTable.push(true);
-    // this.showTable[i] = false;
-    this.showButton = i;
+    this.index = i;
     this.ids = id;
 
     if (this.collectiondata.length === 0) {
       this.collectiondata.push(this.newDynamic);
-      // this.toastr.success('New row added successfully', 'New Row');
     } else {
       this.chooseFile = true;
-      this.collectiondata.push(this.newDynamic);
-      // this.toastr.success('New row added successfully', 'New Row');
+      let len = this.collectiondata[this.collectiondata.length - 1];
+      if (len.length === 0) {
+        this.collectiondata.pop();
+        this.collectiondata.push(this.newDynamic);
+      } else {
+        this.collectiondata.push(this.newDynamic);
+      }
     }
-
-    // if (this.viewimage) {
-    // console.log('len', this.collectiondata.length);
-
-    // }
-
-    // console.log(this.dynamicArray);
     return true;
   }
 
@@ -2285,11 +2202,11 @@ export class CalibrationmasterComponent implements OnInit {
   delete(id: any, data: any) {
     this.collectiondata.pop();
     this.toastr.success('New row deleted successfully');
-    console.log('data', data);
+    // console.log('data', data);
 
     data.active = false;
     this.dataservice.fileupdatemulti_Master(id, data).subscribe((data: any) => {
-      console.log('delete', data);
+      // console.log('delete', data);
     });
   }
 

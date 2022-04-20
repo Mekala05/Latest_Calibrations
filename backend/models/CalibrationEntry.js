@@ -1,28 +1,28 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     let CalibrationEntry = sequelize.define('CalibrationEntry', {
 
-       id: {
+        id: {
             type: DataTypes.INTEGER(11).UNSIGNED,
             field: 'id',
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        date:{
+        date: {
             type: DataTypes.DATE,
             field: 'date'
         },
 
-        ScheduleNo:{
+        ScheduleNo: {
             type: DataTypes.STRING(250),
             field: 'ScheduleNo'
         },
-        InstrumentCode:{
+        InstrumentCode: {
             type: DataTypes.STRING(250),
             field: 'InstrumentCode'
         },
 
-        InstrumentName:{
+        InstrumentName: {
             type: DataTypes.STRING(250),
             field: 'InstrumentName'
         },
@@ -31,36 +31,36 @@ module.exports = function(sequelize, DataTypes) {
         //     field: 'LPIdentification'
         // },
 
-        partySelection:{
+        partySelection: {
             type: DataTypes.STRING(250),
             field: 'partySelection'
         },
-    //    Quantity:{
-    //         type: DataTypes.INTEGER(11),
-    //         field: 'Quantity'
-    //     },
-        
+        //    Quantity:{
+        //         type: DataTypes.INTEGER(11),
+        //         field: 'Quantity'
+        //     },
 
-        collabrationCost:{
-            type: DataTypes.FLOAT(250,2),
+
+        collabrationCost: {
+            type: DataTypes.FLOAT(250, 2),
             field: 'collabrationCost'
         },
-       
-        DCDetails:{
+
+        DCDetails: {
             type: DataTypes.STRING(250),
             field: 'DCDetails'
         },
 
-        ReportNo:{
+        ReportNo: {
             type: DataTypes.STRING(250),
             field: 'ReportNo'
         },
 
-        ReportDate:{
+        ReportDate: {
             type: DataTypes.DATE,
             field: 'ReportDate'
         },
-        RequestType:{
+        RequestType: {
             type: DataTypes.STRING(250),
             field: 'RequestType'
         },
@@ -69,39 +69,39 @@ module.exports = function(sequelize, DataTypes) {
         //     field: 'description'
         // },
 
-        Description: {
-            type: DataTypes.STRING(250),
-            field: 'Description'
-        },
-        Specification: {
-            type: DataTypes.STRING(250),
-            field: 'Specification'
-        },
-        Observation:{
-            type: DataTypes.STRING(250),
-            field: 'Observation'
-        },
-        Remark:{
-            type: DataTypes.STRING(250),
-            field: 'Remark'
-        },
-        status:{
+        // Description: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'Description'
+        // },
+        // Specification: {
+        //     type: DataTypes.STRING(250),
+        //     field: 'Specification'
+        // },
+        // Observation:{
+        //     type: DataTypes.STRING(250),
+        //     field: 'Observation'
+        // },
+        // Remark:{
+        //     type: DataTypes.STRING(250),
+        //     field: 'Remark'
+        // },
+        status: {
             type: DataTypes.STRING(250),
             field: 'Status'
         },
-        option:{
+        option: {
             type: DataTypes.STRING(250),
             field: 'Option'
         },
-        ReferenceCode:{
+        ReferenceCode: {
             type: DataTypes.STRING(250),
             field: 'ReferenceCode'
         },
-        conditionRemark:{
+        conditionRemark: {
             type: DataTypes.STRING(500),
             field: 'conditionRemark'
         },
-   
+
         createdBy: {
             type: DataTypes.STRING(50),
             field: 'created_by'
@@ -122,9 +122,9 @@ module.exports = function(sequelize, DataTypes) {
         },
     },
         {
-            timestamps:true,
-            tableName:'CalibrationEntry'
+            timestamps: true,
+            tableName: 'CalibrationEntry'
         })
-        
-        return CalibrationEntry
-    }
+
+    return CalibrationEntry
+}

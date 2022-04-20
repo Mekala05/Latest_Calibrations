@@ -28,7 +28,7 @@
                 *ngFor="let data of Branchunit; let i = index"
                 [value]="data.Location"
               >
-                {{ data.Location }}
+                {{data.Location}}
               </option>
             </select>
           </div>
@@ -47,7 +47,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.Division"
             >
-              <option value="">--select--</option>
+              <option value="undefined" selected>--select--</option>
               <option value="Division1">Division1</option>
               <option value="Division2">Division2</option>
               <option value="Division3">Division3</option>
@@ -69,12 +69,12 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.Department"
             >
-              <option selected disabled value="undefined">Select</option>
+              <option value="undefined" selected>Select</option>
               <option
                 *ngFor="let data of Department; let i = index"
-                [value]="data.U_BranchName"
+                [value]="data.Name"
               >
-                {{ data.U_BranchName }}
+                {{ data.Name }}
               </option>
             </select>
           </div>

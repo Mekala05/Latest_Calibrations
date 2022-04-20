@@ -380,7 +380,12 @@ export class IssuereturnComponent implements OnInit {
       });
       (<HTMLInputElement>document.getElementById('id')).focus();
     }
-
+    // let code = this.registerDetails.InstrumentCode;
+    // // this.registerDetails.InstrumentCode = 
+    // console.log('code',code[0]);
+    console.log(typeof this.registerDetails.InstrumentCode);
+    
+    
     this.dataservice
       .IssueReturn_postUser(this.registerDetails)
       .subscribe((data) => {

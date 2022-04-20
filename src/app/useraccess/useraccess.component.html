@@ -17,11 +17,14 @@
             id=""
             class="form-control input_text"
             [(ngModel)]="registerDetails.unit"
-            (change)="unit($event)"
+            (change)="unit($event, '')"
           >
             <option disabled selected value="">--Select--</option>
-            <option *ngFor="let unit of units; let i = index" [value]="unit">
-              {{ unit }}
+            <option
+              *ngFor="let unit of units; let i = index"
+              [value]="unit.Location"
+            >
+              {{ unit.Location }}
             </option>
             <!-- <option value="2">2</option> -->
           </select>
@@ -41,11 +44,14 @@
             id=""
             class="form-control input_text"
             [(ngModel)]="registerDetails.department"
-            (change)="department($event)"
+            (change)="department($event, '')"
           >
             <option disabled selected value="">--Select--</option>
-            <option *ngFor="let depart of dep; let i = index" [value]="depart">
-              {{ depart }}
+            <option
+              *ngFor="let depart of dep; let i = index"
+              [value]="depart.DeptCode"
+            >
+              {{ depart.Department }}
             </option>
           </select>
         </div>
@@ -75,7 +81,7 @@
               *ngFor="let employee of emp; let i = index"
               [value]="employee.empID"
             >
-              {{ employee.firstName }} .{{ employee.lastName }}
+              {{ employee.U_empName }}
             </option>
           </select>
         </div>

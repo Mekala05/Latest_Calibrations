@@ -39,7 +39,7 @@
               id=""
               class="form-control input_text"
               [(ngModel)]="registerDetails.RequestType"
-              (change)="getRequestTypeDetails($event)"
+              (change)="getRequestTypeDetails($event,'')"
             >
               <option disabled selected value="undefined">--Select--</option>
               <option
@@ -256,7 +256,7 @@
               class="form-control input_text"
               [(ngModel)]="registerDetails.calibrationlocation"
             >
-              <option value="">--select--</option>
+              <option disabled selected value="undefined">--select--</option>
               <option value="Internal">Internal</option>
               <option value="External">External</option>
             </select>
@@ -358,6 +358,7 @@
     <thead>
       <tr class="header_color text-nowrap">
         <td
+        style="min-width: 40px; text-align: center"
           scope="col"
           *ngFor="let head of TableHeading; let i = index"
           class="gene_name tablethtd"

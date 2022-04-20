@@ -54,10 +54,14 @@ export class MakemasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 4);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    // console.log('user',useraccess);
+    
+    let datas = useraccess.filter((element: any) => element.moduleid === 4);
+    // console.log('data',datas);
+    
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     // useraccess.map((element: any) => {
     //   if (element.moduleid === 4) {
@@ -246,5 +250,6 @@ export class MakemasterComponent implements OnInit {
 
   reset() {
     this.registerDetails.description = '';
+    this.registerDetails.id = "";
   }
 }

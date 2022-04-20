@@ -7,7 +7,7 @@ export interface master {
   InstrumentName?: string;
   make?: string;
   range?: string;
-  masterspecification?: string;
+  leastcount?: string;
   CurrentLocation?: string;
   date?: any;
   MxLifeTime?: string;

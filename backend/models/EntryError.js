@@ -1,5 +1,8 @@
+const CalibrationLocationMaster = require("./CalibrationLocationMaster")
+
 module.exports = function (sequelize, DataTypes) {
-    let useraccess = sequelize.define('useraccess', {
+    let EntryError = sequelize.define('EntryError', {
+
         id: {
             type: DataTypes.INTEGER(11).UNSIGNED,
             field: 'id',
@@ -7,51 +10,34 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true,
             allowNull: false
         },
-
-        moduleid: {
-            type: DataTypes.INTEGER(11).UNSIGNED,
-            field: 'moduleid',
-            // autoIncrement: true,
-            // primaryKey: true,
-            // allowNull: false
-        },
-        ModuleidDescription: {
+        InstrumentCode: {
             type: DataTypes.STRING(250),
-            field: 'ModuleidDescription',
-
+            field: 'InstrumentCode'
         },
-        unit: {
+        InstrumentName: {
             type: DataTypes.STRING(250),
-            field: 'unit',
+            field: 'InstrumentName',
         },
-        department: {
-            type: DataTypes.STRING(250),
-            field: 'department',
-        },
-        // departmentName: {
-        //     type: DataTypes.STRING(250),
-        //     field: 'departmentName',
-        // },
-        // employeeName: {
-        //     type: DataTypes.STRING(250),
-        //     field: 'employeeName',
-        // },
-
-        employeeid: {
-            type: DataTypes.STRING(250),
-            field: 'employeeid',
-        },
-
-        view: {
+        active: {
             type: DataTypes.BOOLEAN,
-            field: 'view',
+            field: 'active'
         },
-
-        Edit: {
-            type: DataTypes.BOOLEAN,
-            field: 'Edit',
+        Description: {
+            type: DataTypes.STRING(250),
+            field: 'Description',
         },
-
+        Specification: {
+            type: DataTypes.STRING(250),
+            field: 'Specification',
+        },
+        Observation: {
+            type: DataTypes.STRING(250),
+            field: 'Observation',
+        },
+        Remark: {
+            type: DataTypes.STRING(250),
+            field: 'Remark',
+        },
         createdBy: {
             type: DataTypes.STRING(50),
             field: 'created_by'
@@ -73,10 +59,7 @@ module.exports = function (sequelize, DataTypes) {
     },
         {
             timestamps: true,
-            tableName: 'useraccess'
+            tableName: 'EntryError'
         })
-
-
-    return useraccess
-
+    return EntryError
 }

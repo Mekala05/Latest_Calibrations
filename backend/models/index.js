@@ -1,7 +1,7 @@
 const { Model } = require('sequelize');
 const Sequelize = require('sequelize');
 const op = require('sequelize').op;
-const { dbConfig, dbConfigTest } = require('../startup')
+const { dbConfig, dbConfigTest, configExport } = require('../startup')
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig)
 
 let models = {};
@@ -10,6 +10,9 @@ let models = {};
 models.User = require("./ohem.js")(sequelize, Sequelize)
 models.CategoryMaster = require("./CategoryMaster.js")(sequelize, Sequelize)
 models.ImageAttachment = require("./ImageAttachment.js")(sequelize, Sequelize)
+models.BreakageFile = require("./BreakageFile.js")(sequelize, Sequelize)
+models.EntryError = require("./EntryError.js")(sequelize, Sequelize)
+models.FileAttachment = require("./FileAttachment.js")(sequelize, Sequelize)
 
 models.TypeMaster = require("./TypeMaster.js")(sequelize, Sequelize)
 models.EquipmentMaster = require("./EquipmentMaster.js")(sequelize, Sequelize)
@@ -47,17 +50,14 @@ models.useraccess = require("./useraccess")(sequelize, Sequelize)
 models.iddescription = require("./iddescription")(sequelize, Sequelize)
 models.ErrorDescription = require("./ErrorDescription")(sequelize, Sequelize)
 
-
-
-
-
-
-
 models.ErrorDescription.sync();
 models.User.sync();
+models.FileAttachment.sync();
+
 models.CategoryMaster.sync();
 models.ImageAttachment.sync();
-
+models.BreakageFile.sync();
+models.EntryError.sync();
 models.TypeMaster.sync();
 models.EquipmentMaster.sync();
 models.GaugesMaster.sync();
@@ -92,16 +92,6 @@ models.CalibrationMasterListReport.sync();
 models.RaiseDC.sync();
 models.useraccess.sync();
 models.iddescription.sync();
-
-
-
-
-
-
-
-
-
-
 
 Object.keys(models).forEach(modelName => {
     if ('associate' in models[modelName]) {

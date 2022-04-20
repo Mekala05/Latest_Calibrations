@@ -16,3 +16,12 @@ export interface BreakageRequest {
   file?: File;
   RefNo?: string;
 }
+
+export interface Attachment {
+  breakageNo?: string;
+  InstrumentCode?: string;
+  filename?: string;
+  filepath?: string;
+  type?: string;
+  active?: boolean;
+}

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router()
+var env = require('../env');
 
 const { useraccess, ohem, Olct, OUDP } = require('../models');
-
 
 function sendError(res, err) {
     var result = {
@@ -57,7 +57,6 @@ router.get('/view/:id', (req, res) => {
 
 router.put('/update/:id', (req, res) => {
     return new Promise((resolve, reject) => {
-        // console.log('req.body', req.body);
         useraccess.update(req.body, { where: { id: req.params.id } }).then(function (result) {
             sendSuccess(res, result);
         }).catch(function (err) {
@@ -89,35 +88,20 @@ router.delete('/delete/:id', (req, res) => {
     })
 })
 
+var sql = require("mssql");
 
-// router.get('/viewuseraccess', (req, res) => {
-//     return new Promise((resolve, reject) => { //models.Olct 
-//         odep.findAll({
-//             include: [{
-//                 model: Olct // will create a left join
-//             }]
-//         }).then(function (result) {
-//             sendSuccess(res, result);
-//         }).catch(function (err) {
-//             sendError(res, err);
-//         });
-//     })
 
-// })
+router.get('/viewuserData', function (req, res) {
+    var selectQuery = "select a.empID,b.U_empName,c.Location'Location',d.Name'Department',a.dept 'DeptCode' from OHEM a left join [@INPR_OECI] b on a.empID=U_empID inner join OLCT c on c.code=b.U_Location left join OUDP d on b.u_dept=d.Code where c.code='1'";
+    sql.connect(env.getConnection(), function (err) {
+        var request = new sql.Request();
+        request.query(selectQuery, function (err, data) {
+            if (err) console.log(err);
+            // console.log(data);
+            res.send(data);
+        })
+    });
+});
 
-router.get('/viewuserData', (req, res) => {
-    return new Promise((resolve, reject) => { //models.Olct 
-        ohem.findAll({
-            include: [{
-                model: Olct // will create a left join
-            }]
-        }).then(function (result) {
-            sendSuccess(res, result);
-        }).catch(function (err) {
-            sendError(res, err);
-        });
-    })
-
-})
 
 module.exports = router

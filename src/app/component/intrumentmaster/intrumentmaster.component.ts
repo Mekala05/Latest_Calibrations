@@ -68,10 +68,10 @@ export class IntrumentmasterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
-    // let datas = useraccess.filter((element: any) => element.moduleid === 3);
-    // this.editAccess = datas[0].Edit;
-    this.editAccess = true;
+    let useraccess = JSON.parse(localStorage.getItem('userAccess') || '[]');
+    let datas = useraccess.filter((element: any) => element.moduleid === 3);
+    this.editAccess = datas[0].Edit;
+    // this.editAccess = true;
 
     this.tabledata();
     this.getCategory();
@@ -348,8 +348,11 @@ export class IntrumentmasterComponent implements OnInit {
   reset() {
     (this.registerDetails.InstrumentName = ''),
       (this.registerDetails.shortName = ''),
-      (this.registerDetails.categoryId = ''),
-      (this.registerDetails.typeId = '');
+      (this.registerDetails.categoryId = undefined),
+      (this.registerDetails.typeId = undefined);
+    this.registerDetails.id = '';
+    this.getCategory();
+    this.getType();
   }
 
   // public Click_Head(index: number, heading: string): void {
